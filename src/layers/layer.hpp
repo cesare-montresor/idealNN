@@ -10,7 +10,7 @@
 struct layer {
     std::vector<int> *dims;
     layer();
-    forward();
+    double forward();
 };
 
 
