@@ -1,15 +1,15 @@
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.16)
 project(
     idealNN
-#        CUDA
         DESCRIPTION  "A ideal Neural Network C++ Library"
         HOMEPAGE_URL "github.com/cesare-montresor/IdealNN"
         LANGUAGES    CXX
 )
 
-set(CMAKE_CUDA_STANDARD             17)
 set(CMAKE_CXX_STANDARD_REQUIRED     ON)
 set(CMAKE_CXX_EXTENSIONS            OFF)
+
+file(GLOB SOURCES_TEST ${PROJECT_SOURCE_DIR}/test/*.cpp)
 
 # Compile with coverage support
 option(TEST_COVERAGE "Enable test coverage" ON)
@@ -25,25 +25,50 @@ set(LINKER_FLAGS
 
 set(INCLUDES
     ${PROJECT_SOURCE_DIR}/third_party
-    ${PROJECT_SOURCE_DIR}/test
 )
+#    ${PROJECT_SOURCE_DIR}/test
+
+
+
+add_library(
+    idealNN
+        src/Layers/Layer.cpp
+        src/Layers/Layer.h
+        src/Layers/Sequential.cpp
+        src/Layers/Sequential.h
+        src/Layers/Dense.cpp src/Layers/Dense.h src/Tensor.cpp src/Tensor.h)
+
+
+find_package (Eigen3 REQUIRED)
+target_link_libraries(idealNN Eigen3::Eigen)
+
+
+# ==== Testing ====
 
 add_executable(
-    idealNN
-        src/main.cpp
-        src/layers/layer.cpp
-        src/layers/layer.hpp
-        src/sequential.cpp
-        src/sequential.hpp
+    idealNN_test
+        EXCLUDE_FROM_ALL
+        third_party/catch2/catch.hpp
+        test/base_test.cpp
+)
+target_link_libraries(idealNN_test idealNN)
+
+target_sources(idealNN_test PRIVATE ${SOURCES_TEST})
+target_include_directories(
+    idealNN_test
+        PRIVATE src/
+        PRIVATE test/
+        PRIVATE ${INCLUDES}
 )
 
+enable_testing()
 
-set_target_properties(
-    idealNN
-        PROPERTIES
-            CUDA_SEPARABLE_COMPILATION ON
-)
+add_test(NAME test
+        COMMAND ${CMAKE_BINARY_DIR}/idealNN_test )
 
+add_test(NAME valgrind
+        COMMAND valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes
+        ${CMAKE_BINARY_DIR}/idealNN_test)
 
 # ===== Documentation =====
 find_package(Doxygen)
@@ -52,12 +77,7 @@ if (DOXYGEN_FOUND)
         COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_SOURCE_DIR}/Doxyfile
         COMMENT "Generating API documentation with Doxygen"
     )
-    install(
-        FILES       ${CMAKE_BINARY_DIR}/doc
-        DESTINATION ${PROJECT_SOURCE_DIR}
-        # Skip if documentation hasn't been generated
-        OPTIONAL
-    )
+
 endif()
 
 
