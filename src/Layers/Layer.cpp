@@ -8,10 +8,3 @@ Layer::Layer(){
     this->dims = new std::vector<int>();
 }
 
-double Layer::forward() {
-
-}
-
-double Layer::backward() {
-
-}

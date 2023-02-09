@@ -6,11 +6,13 @@
 #define IDEALNN_TENSOR_H
 
 #include <Eigen/Dense>
-#include <list>
+#include <vector>
+
+using TensorDims = std::vector<int>;
 
 struct Tensor {
-    std::list<int> dims;
-    Tensor(std::list<int> dims);
+    TensorDims dims;
+    Tensor(TensorDims dims);
 };
 
 

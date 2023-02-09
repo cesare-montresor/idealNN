@@ -36,7 +36,7 @@ add_library(
         src/Layers/Layer.h
         src/Layers/Sequential.cpp
         src/Layers/Sequential.h
-        src/Layers/Dense.cpp src/Layers/Dense.h src/Tensor.cpp src/Tensor.h)
+        src/Layers/Dense.cpp src/Layers/Dense.h src/Tensor.cpp src/Tensor.h src/DataLoader.cpp src/DataLoader.h)
 
 
 find_package (Eigen3 REQUIRED)

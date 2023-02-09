@@ -3,3 +3,8 @@
 //
 
 #include "Tensor.h"
+
+Tensor::Tensor(TensorDims dims){
+
+}
+
