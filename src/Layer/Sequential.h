@@ -6,19 +6,14 @@
 
 #include "Layer.h"
 
-#include <list>
-
-
 /**
  * Sequential thing
  */
 struct Sequential: Layer {
-    std::list<Layer> layers;
-    bool compiled = false;
+    LayerList layers;
 
     Sequential();
     void add(Layer *layer);
-    void compile();
 };
 
 

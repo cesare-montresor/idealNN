@@ -32,11 +32,11 @@ set(INCLUDES
 
 add_library(
     idealNN
-        src/Layers/Layer.cpp
-        src/Layers/Layer.h
-        src/Layers/Sequential.cpp
-        src/Layers/Sequential.h
-        src/Layers/Dense.cpp src/Layers/Dense.h src/Tensor.cpp src/Tensor.h src/DataLoader.cpp src/DataLoader.h)
+        src/Layer/Layer.cpp
+        src/Layer/Layer.h
+        src/Layer/Sequential.cpp
+        src/Layer/Sequential.h
+        src/Layer/Dense.cpp src/Layer/Dense.h src/Tensor.cpp src/Tensor.h src/DataLoader/DataLoader.cpp src/DataLoader/DataLoader.h src/Common.h src/DataLoader/CSVDataLoader.h src/DataLoader/CSVDataLoader.cpp)
 
 
 find_package (Eigen3 REQUIRED)

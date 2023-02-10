@@ -15,7 +15,7 @@ struct Layer;
 using LayerRef = std::unique_ptr<Layer>;
 
 struct Layer{
-    std::vector<int> *dims;
+    LayerList dims;
 
     Layer();
     virtual Tensor forward(const Tensor& input) = 0;

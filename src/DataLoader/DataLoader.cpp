@@ -8,7 +8,3 @@
 DataLoader::DataLoader(int batch_size){
 
 }
-
-Tensor DataLoader::getData(){
-
-}

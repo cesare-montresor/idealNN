@@ -5,6 +5,6 @@
 #include "Layer.h"
 
 Layer::Layer(){
-    this->dims = new std::vector<int>();
+    this->dims = DimList();
 }
 

@@ -4,7 +4,15 @@
 
 #include "Tensor.h"
 
-Tensor::Tensor(TensorDims dims){
+using Eigen::MatrixXd;
+using Eigen::EigenBase;
 
+Tensor::Tensor(DimList dims){
+
+}
+
+Tensor::Tensor(MatrixXd data){
+    this->data = data;
+    this->dims =data.
 }
 

@@ -6,14 +6,12 @@
 #define IDEALNN_DATALOADER_H
 
 #include <memory>
-#include "Tensor.h"
+#include "../Tensor.h"
 
-struct DataLoader;
-using DataLoaderRef = std::unique_ptr<DataLoader>;
 
 struct DataLoader {
     DataLoader(int batch_size);
-    Tensor getData() = 0;
+    virtual Tensor getData() = 0;
 };
 
 
