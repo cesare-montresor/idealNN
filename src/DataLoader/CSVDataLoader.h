@@ -5,12 +5,24 @@
 #ifndef IDEALNN_DATALOADER_H
 #define IDEALNN_DATALOADER_H
 
-#include "../Tensor.h"
+#include "../Tensor/Tensor.h"
+#include <random>
 
 struct CSVDataLoader{
-    Tensor *dataset;
-    CSVDataLoader(int batch_size, std::string path);
-    Tensor getData();
+    VectorRowArray data;
+    ArrayIndex current=0;
+    ArraySize batch_size;
+
+    CSVDataLoader(int batch_size, string path);
+
+
+    void rewind();
+    void shuffle();
+    ArraySize numRows();
+    VectorRowArray getData();
+
+private:
+    default_random_engine rndEngine;
 };
 
 

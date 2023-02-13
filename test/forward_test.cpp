@@ -1,35 +1,54 @@
-#define CATCH_CONFIG_MAIN
 #include "catch2/catch.hpp"
-#include "Layers/Sequential.h"
-#include "Layers/Dense.h"
+#include "Layer/Dense.h"
+#include "DataLoader/CSVDataLoader.h"
+#include <iostream>
 
 
-TEST_CASE("Base Test") {
+TEST_CASE("Forward: 2 layers") {
+    auto batch_size = 3;
+    auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
+    auto dl = new CSVDataLoader(batch_size, path);
+    auto batch = dl->getData();
 
-    auto fc1 =
-    Dense *fc1 = new Dense(3, 5);
-    Dense *fc2 = new Dense(5, 51);
-    Dense *fc3 = new Dense(51, 5);
+    auto row = batch[0];
+    auto x = row->head(4);
+    auto y = row->tail(1);
 
+    auto fc1 = Dense::MakeDense(4, 10);
+    auto fc2 = Dense::MakeDense(10, 1);
 
+    auto a1 = fc1->forward(x);
+    auto y_hat = fc2->forward(a1);
 
-    for (int i = 0)
-    {
-        Tensor input = load_tensor();
-        Tensor
+    cout << y.array() << endl;
+    cout << y_hat.array() << endl;
+    auto error = y.array()[0]-y_hat.array()[0];
+    cout << "Error: " << error << endl;
 
-    }
-
-    Tensor input,x ;
-    x = fc1->forward(input);
-    x = fc2->forward(x);
-    x = fc3->forward(x);
-
-
-    REQUIRE(true);
+    REQUIRE(error == -4.46594);
 }
 
 
+TEST_CASE("Forward: 1 layer") {
+    auto batch_size = 3;
+    auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
+    auto dl = new CSVDataLoader(batch_size, path);
+    auto batch = dl->getData();
+
+    auto row = batch[0];
+    auto x = row->head(4);
+    auto y = row->tail(1);
+
+    auto fc1 = Dense::MakeDense(4, 1);
+    auto y_hat = fc1->forward(x);
+    cout << y.array() << endl;
+    cout << y_hat.array() << endl;
+
+    auto error = y.array()[0]-y_hat.array()[0];
+    cout << "Error: " << error << endl;
+
+    REQUIRE(error == -4.46594);
+}
 
 
 /*

@@ -9,10 +9,8 @@
 
 #include <vector>
 #include <memory>
-#include "../Tensor.h"
+#include "../Tensor/Tensor.h"
 
-struct Layer;
-using LayerRef = std::unique_ptr<Layer>;
 
 struct Layer{
     LayerList dims;

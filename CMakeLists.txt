@@ -36,7 +36,7 @@ add_library(
         src/Layer/Layer.h
         src/Layer/Sequential.cpp
         src/Layer/Sequential.h
-        src/Layer/Dense.cpp src/Layer/Dense.h src/Tensor.cpp src/Tensor.h src/DataLoader/DataLoader.cpp src/DataLoader/DataLoader.h src/Common.h src/DataLoader/CSVDataLoader.h src/DataLoader/CSVDataLoader.cpp)
+        src/Layer/Dense.cpp src/Layer/Dense.h src/Tensor/Tensor.cpp src/Tensor/Tensor.h src/DataLoader/DataLoader.cpp src/DataLoader/DataLoader.h src/Common.h src/DataLoader/CSVDataLoader.h src/DataLoader/CSVDataLoader.cpp src/Tensor/Tensor1D.h src/Tensor/Tensor1D.cpp src/Utils.h)
 
 
 find_package (Eigen3 REQUIRED)
@@ -49,8 +49,8 @@ add_executable(
     idealNN_test
         EXCLUDE_FROM_ALL
         third_party/catch2/catch.hpp
-        test/base_test.cpp
-)
+        test/main_test.cpp
+        test/csv_loader.cpp test/forward_test.cpp)
 target_link_libraries(idealNN_test idealNN)
 
 target_sources(idealNN_test PRIVATE ${SOURCES_TEST})

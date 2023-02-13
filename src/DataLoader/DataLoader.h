@@ -6,7 +6,7 @@
 #define IDEALNN_DATALOADER_H
 
 #include <memory>
-#include "../Tensor.h"
+#include "../Tensor/Tensor.h"
 
 
 struct DataLoader {

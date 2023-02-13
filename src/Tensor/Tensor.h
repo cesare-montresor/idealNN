@@ -6,7 +6,7 @@
 #define IDEALNN_TENSOR_H
 
 #include <Eigen/Dense>
-#include "Common.h"
+#include "../Common.h"
 
 struct Tensor {
     Eigen::MatrixXd data;
