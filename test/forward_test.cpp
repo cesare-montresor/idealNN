@@ -15,8 +15,9 @@ namespace IdealNN {
         auto x = row.head(1);
         auto y = row.tail(1);
 
-        auto fc1 = Dense::MakeDense(4, 10);
-        auto fc2 = Dense::MakeDense(10, 1);
+    auto row = batch[0];
+    MatrixRef x = make_shared<Matrix>(row->head(4));
+    auto y = row->tail(1);
 
         auto a1 = fc1->forward(x);
         auto y_hat = fc2->forward(a1);
