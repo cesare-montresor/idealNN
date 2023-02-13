@@ -8,22 +8,26 @@
 #include "../Tensor/Tensor.h"
 #include <random>
 
-struct CSVDataLoader{
-    VectorRowArray data;
-    ArrayIndex current=0;
-    ArraySize batch_size;
+namespace IdealNN {
+    struct CSVDataLoader {
+        MatrixArray data;
+        ArrayIndex current = 0;
+        ArraySize batch_size;
 
-    CSVDataLoader(int batch_size, string path);
+        CSVDataLoader(int batch_size, string path);
 
 
-    void rewind();
-    void shuffle();
-    ArraySize numRows();
-    VectorRowArray getData();
+        void rewind();
 
-private:
-    default_random_engine rndEngine;
-};
+        void shuffle();
 
+        ArraySize numRows();
+
+        MatrixArray getData();
+
+    private:
+        default_random_engine rndEngine;
+    };
+}
 
 #endif //IDEALNN_DATALOADER_H

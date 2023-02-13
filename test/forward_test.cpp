@@ -3,53 +3,54 @@
 #include "DataLoader/CSVDataLoader.h"
 #include <iostream>
 
+namespace IdealNN {
+    TEST_CASE("Forward: 2 layers") {
+        auto batch_size = 3;
+        auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
+        auto dl = new CSVDataLoader(batch_size, path);
+        auto batch = dl->getData();
+        auto batch0 = batch[0];
 
-TEST_CASE("Forward: 2 layers") {
-    auto batch_size = 3;
-    auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
-    auto dl = new CSVDataLoader(batch_size, path);
-    auto batch = dl->getData();
+        auto row = batch0->row(0);
+        auto x = row.head(1);
+        auto y = row.tail(1);
 
-    auto row = batch[0];
-    auto x = row->head(4);
-    auto y = row->tail(1);
+        auto fc1 = Dense::MakeDense(4, 10);
+        auto fc2 = Dense::MakeDense(10, 1);
 
-    auto fc1 = Dense::MakeDense(4, 10);
-    auto fc2 = Dense::MakeDense(10, 1);
+        auto a1 = fc1->forward(x);
+        auto y_hat = fc2->forward(a1);
 
-    auto a1 = fc1->forward(x);
-    auto y_hat = fc2->forward(a1);
+        cout << y.array() << endl;
+        cout << y_hat.array() << endl;
+        auto error = y.array()[0] - y_hat.array()[0];
+        cout << "Error: " << error << endl;
 
-    cout << y.array() << endl;
-    cout << y_hat.array() << endl;
-    auto error = y.array()[0]-y_hat.array()[0];
-    cout << "Error: " << error << endl;
+        REQUIRE(error == -4.46594);
+    }
 
-    REQUIRE(error == -4.46594);
+
+    TEST_CASE("Forward: 1 layer") {
+        auto batch_size = 3;
+        auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
+        auto dl = new CSVDataLoader(batch_size, path);
+        auto batch = dl->getData();
+
+        auto row = batch[0];
+        auto x = row->head(4);
+        auto y = row->tail(1);
+
+        auto fc1 = Dense::MakeDense(4, 1);
+        auto y_hat = fc1->forward(x);
+        cout << y.array() << endl;
+        cout << y_hat.array() << endl;
+
+        auto error = y.array()[0] - y_hat.array()[0];
+        cout << "Error: " << error << endl;
+
+        REQUIRE(error == -4.46594);
+    }
 }
-
-
-TEST_CASE("Forward: 1 layer") {
-    auto batch_size = 3;
-    auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
-    auto dl = new CSVDataLoader(batch_size, path);
-    auto batch = dl->getData();
-
-    auto row = batch[0];
-    auto x = row->head(4);
-    auto y = row->tail(1);
-
-    auto fc1 = Dense::MakeDense(4, 1);
-    auto y_hat = fc1->forward(x);
-    cout << y.array() << endl;
-    cout << y_hat.array() << endl;
-
-    auto error = y.array()[0]-y_hat.array()[0];
-    cout << "Error: " << error << endl;
-
-    REQUIRE(error == -4.46594);
-}
-
 
 /*
 

@@ -4,10 +4,13 @@
 
 #include "Sequential.h"
 
-Sequential::Sequential(){
+namespace IdealNN {
 
-}
+    Sequential::Sequential() {
 
-void Sequential::add(Layer *layer) {
+    }
 
+    void Sequential::add(Layer *layer) {
+
+    }
 }

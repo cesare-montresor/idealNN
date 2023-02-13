@@ -4,7 +4,8 @@
 
 #include "DataLoader.h"
 
+namespace IdealNN {
+    DataLoader::DataLoader(int batch_size) {
 
-DataLoader::DataLoader(int batch_size){
-
+    }
 }

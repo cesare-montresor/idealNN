@@ -11,15 +11,20 @@
 #include <memory>
 #include "../Tensor/Tensor.h"
 
+namespace IdealNN {
 
-struct Layer{
-    LayerList dims;
 
-    Layer();
-    virtual Tensor forward(const Tensor& input) = 0;
-    virtual void backward() = 0;
-};
 
+    struct Layer {
+        LayerList dims;
+
+        Layer();
+
+        virtual Tensor forward(const Tensor &input) = 0;
+
+        virtual void backward() = 0;
+    };
+}
 
 
 

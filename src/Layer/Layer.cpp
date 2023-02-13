@@ -3,8 +3,9 @@
 //
 
 #include "Layer.h"
+namespace IdealNN {
+    Layer::Layer() {
+        this->dims = DimList();
+    }
 
-Layer::Layer(){
-    this->dims = DimList();
 }
-

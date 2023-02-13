@@ -5,16 +5,21 @@
 #ifndef IDEALNN_TENSOR_H
 #define IDEALNN_TENSOR_H
 
+
 #include <Eigen/Dense>
 #include "../Common.h"
 
-struct Tensor {
-    Eigen::MatrixXd data;
-    DimList dims;
+namespace IdealNN {
 
-    Tensor(DimList dims);
-    Tensor(Eigen::MatrixXd data);
-};
 
+    struct Tensor {
+        Eigen::MatrixXd data;
+        DimList dims;
+
+        Tensor(DimList dims);
+
+        Tensor(Eigen::MatrixXd data);
+    };
+}
 
 #endif //IDEALNN_TENSOR_H

@@ -7,23 +7,38 @@
 
 #include "Common.h"
 
-struct Utils{
+namespace IdealNN{
+    namespace Utils{
 
-    static VectorRowArray slice(VectorRowArray array, ArrayIndex start, ArraySize count){
-        if(start + 1 >= array.size() ) {return VectorRowArray();}
-        auto items_count = start + count < array.size() ? count : (array.size() - start);
+        /*
+        VectorRowArray slice(VectorRowArray array, ArrayIndex start, ArraySize count){
+            if(start + 1 >= array.size() ) {return VectorRowArray();}
+            auto items_count = start + count < array.size() ? count : (array.size() - start);
 
-        auto first = array.begin() + start;
-        auto last = array.begin() + start + items_count;
+            auto first = array.begin() + start;
+            auto last = array.begin() + start + items_count;
 
-        return VectorRowArray(first, last);
+            return VectorRowArray(first, last);
+        }
+         */
+
+        MatrixArray slice(MatrixArray array, ArrayIndex start, ArraySize count){
+            if(start + 1 >= array.size() ) {return MatrixArray();}
+            auto items_count = start + count < array.size() ? count : (array.size() - start);
+
+            auto first = array.begin() + start;
+            auto last = array.begin() + start + items_count;
+
+            return MatrixArray(first, last);
+        }
+
+        /*
+        VectorRowRef MakeVectorRow(ArraySize size) { return make_shared<VectorRow>(size); }
+        VectorColRef MakeVectorCol(ArraySize size) { return make_shared<VectorCol>(size); }
+        */
+        MatrixRef MakeMatrix(ArraySize in, ArraySize out) { return make_shared<Matrix>(in, out); }
     }
-
-
-    static VectorRowRef MakeVectorRow(ArraySize size) { return make_unique<VectorRow>(size); }
-    static VectorColRef MakeVectorCol(ArraySize size) { return make_unique<VectorCol>(size); }
-    static MatrixRef MakeMatrix(ArraySize in, ArraySize out) { return make_unique<Matrix>(in, out); }
-};
+}
 
 #endif //IDEALNN_UTILS_H
 

@@ -6,15 +6,17 @@
 
 #include "Layer.h"
 
+namespace IdealNN {
 /**
  * Sequential thing
  */
-struct Sequential: Layer {
-    LayerList layers;
+    struct Sequential : Layer {
+        LayerList layers;
 
-    Sequential();
-    void add(Layer *layer);
-};
+        Sequential();
 
+        void add(Layer *layer);
+    };
+}
 
 #endif //IDEALNN_SEQUENTIAL_H

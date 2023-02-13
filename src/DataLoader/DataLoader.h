@@ -8,11 +8,12 @@
 #include <memory>
 #include "../Tensor/Tensor.h"
 
+namespace IdealNN {
+    struct DataLoader {
+        DataLoader(int batch_size);
 
-struct DataLoader {
-    DataLoader(int batch_size);
-    virtual Tensor getData() = 0;
-};
+        virtual Tensor getData() = 0;
+    };
 
-
+}
 #endif //IDEALNN_DATALOADER_H
