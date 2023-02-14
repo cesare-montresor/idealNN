@@ -9,16 +9,38 @@
 #include <Eigen/Dense>
 #include "../Common.h"
 
-namespace IdealNN {
 
+namespace IdealNN {
+    struct Tensor;
+    using TensorRef = shared_ptr<Tensor>;
+
+    typedef vector<TensorRef> TensorArray;
 
     struct Tensor {
-        Eigen::MatrixXd data;
-        DimList dims;
 
-        Tensor(DimList dims);
+        //static
+        static TensorRef MakeTensor();
+        static TensorRef MakeTensor(ArraySize in, ArraySize out);
+        static TensorRef MakeTensor(Tensor const &tensor);
+        static TensorRef MakeTensor(TensorRef tensor);
+        static TensorRef MakeTensor(MatrixRef matrix);
+        static TensorRef MakeTensor(Matrix const &matrix);
 
-        Tensor(Eigen::MatrixXd data);
+
+        //constructors
+        Tensor();
+        Tensor(ArraySize rows, ArraySize cols );
+        Tensor(Tensor const &tensor);
+        Tensor(TensorRef tensor);
+        Tensor(MatrixRef matrix);
+        Tensor(Matrix const &matrix);
+
+
+        //Properties
+        MatrixRef data;
+
+        //Methods
+        TensorRef view(ArraySize row_min, ArraySize row_max, ArraySize col_min, ArraySize col_max);
     };
 }
 

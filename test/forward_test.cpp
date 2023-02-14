@@ -9,11 +9,9 @@ namespace IdealNN {
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto batch = dl->getData();
-        auto batch0 = batch[0];
 
-        auto row = batch0->row(0);
-        auto x = row.head(1);
-        auto y = row.tail(1);
+        auto x = batch->view(0,0,0,4);
+        auto y = batch->view(0,0,4,1);
 
         auto fc1 = Dense::MakeDense(4, 10);
         auto fc2 = Dense::MakeDense(10, 1);
@@ -21,9 +19,9 @@ namespace IdealNN {
         auto a1 = fc1->forward(x);
         auto y_hat = fc2->forward(a1);
 
-        cout << y.array() << endl;
-        cout << y_hat.array() << endl;
-        auto error = y.array()[0] - y_hat.array()[0];
+        cout << y->data->array() << endl;
+        cout << y_hat->data->array() << endl;
+        auto error = y->data->array()(0) - y_hat->data->array()(0);
         cout << "Error: " << error << endl;
 
         REQUIRE(error == -4.46594);
@@ -36,16 +34,15 @@ namespace IdealNN {
         auto dl = new CSVDataLoader(batch_size, path);
         auto batch = dl->getData();
 
-        auto row = batch[0];
-        auto x = row->head(4);
-        auto y = row->tail(1);
+        auto x = batch->view(0,0,0,4);
+        auto y = batch->view(0,0,4,1);
 
         auto fc1 = Dense::MakeDense(4, 1);
         auto y_hat = fc1->forward(x);
-        cout << y.array() << endl;
-        cout << y_hat.array() << endl;
+        cout << y->data->array() << endl;
+        cout << y_hat->data->array() << endl;
 
-        auto error = y.array()[0] - y_hat.array()[0];
+        auto error = y->data->array()(0) - y_hat->data->array()(0);
         cout << "Error: " << error << endl;
 
         REQUIRE(error == -4.46594);

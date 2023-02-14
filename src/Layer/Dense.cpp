@@ -12,15 +12,15 @@ namespace IdealNN {
         this->in = in;
         this->out = out;
 
-        weights = Utils::MakeMatrix(in, out);
-        bias = Utils::MakeMatrix(out, 1);
-        activations = Utils::MakeMatrix(in, out);
-        gradients = Utils::MakeMatrix(in, out);
+        weights = Tensor::MakeTensor(in, out);
+        bias = Tensor::MakeTensor(out, 1);
+        activations = Tensor::MakeTensor(in, out);
+        gradients = Tensor::MakeTensor(in, out);
 
-        weights->setRandom();
-        bias->setRandom();
-        activations->setZero();
-        gradients->setZero();
+        weights->data->setRandom();
+        bias->data->setRandom();
+        activations->data->setZero();
+        gradients->data->setZero();
     }
 
 //Static
@@ -28,14 +28,16 @@ namespace IdealNN {
         return make_unique<Dense>(in, out);
     }
 
-
-    Tensor Dense::forward(const Tensor &input) {
-
+    TensorRef Dense::forward(TensorRef input) {
+        auto result = ((*input->data) * (*weights->data)) + (*bias->data);
+        activations = Tensor::MakeTensor( result );
+        return activations;
     }
 
-    MatrixRef Dense::forward(const MatrixRef &input) {
-        (*activations) = ((*input) * (*weights)) + (*bias);
-        return activations;
+
+    TensorRef Dense::forward(Tensor const &input) {
+        auto tensor = Tensor::MakeTensor(input);
+        return forward( tensor );
     }
 
     void Dense::backward() {

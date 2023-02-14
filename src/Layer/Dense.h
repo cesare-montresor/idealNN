@@ -22,17 +22,16 @@ namespace IdealNN {
         static DenseRef MakeDense(int in, int out);
 
         int in, out;
-        MatrixRef weights;
-        MatrixRef bias;
-        MatrixRef gradients;
-        MatrixRef activations;
+        TensorRef weights;
+        TensorRef bias;
+        TensorRef gradients;
+        TensorRef activations;
 
         Dense(int in, int out);
 
+        TensorRef forward(TensorRef input) override;
+        TensorRef forward(Tensor const &input) override;
 
-        Tensor forward(const Tensor &input) override;
-
-        MatrixRef forward(const MatrixRef &input); // override;
         void backward() override;
 
     };

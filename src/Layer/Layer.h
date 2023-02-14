@@ -20,7 +20,8 @@ namespace IdealNN {
 
         Layer();
 
-        virtual Tensor forward(const Tensor &input) = 0;
+        virtual TensorRef forward(TensorRef input) = 0;
+        virtual TensorRef forward(Tensor const &input) = 0;
 
         virtual void backward() = 0;
     };

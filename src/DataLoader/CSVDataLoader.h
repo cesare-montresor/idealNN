@@ -10,9 +10,11 @@
 
 namespace IdealNN {
     struct CSVDataLoader {
-        MatrixArray data;
+        TensorArray rows;
+
         ArrayIndex current = 0;
         ArraySize batch_size;
+        ArraySize col_nums;
 
         CSVDataLoader(int batch_size, string path);
 
@@ -23,7 +25,7 @@ namespace IdealNN {
 
         ArraySize numRows();
 
-        MatrixArray getData();
+        TensorRef getData();
 
     private:
         default_random_engine rndEngine;

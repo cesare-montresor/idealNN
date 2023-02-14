@@ -10,6 +10,7 @@
 #include <Eigen/Eigen>
 
 
+
 using namespace std;
 
 namespace IdealNN{
