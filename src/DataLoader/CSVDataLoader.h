@@ -25,7 +25,7 @@ namespace IdealNN {
 
         ArraySize numRows();
 
-        TensorRef getData();
+        TensorArray getData();
 
     private:
         default_random_engine rndEngine;

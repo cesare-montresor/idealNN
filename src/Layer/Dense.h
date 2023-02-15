@@ -25,12 +25,11 @@ namespace IdealNN {
         TensorRef weights;
         TensorRef bias;
         TensorRef gradients;
-        TensorRef activations;
+        TensorArrayRef activations;
 
         Dense(int in, int out);
 
-        TensorRef forward(TensorRef input) override;
-        TensorRef forward(Tensor const &input) override;
+        TensorArrayRef forward(TensorArrayRef batch) override;
 
         void backward() override;
 

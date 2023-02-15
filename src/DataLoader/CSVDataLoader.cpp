@@ -31,10 +31,10 @@ namespace IdealNN {
         if (file.is_open()) {
             while (getline(file, line, '\n')) {
                 stringstream ss(line);
-                auto row = Tensor::MakeTensor(1, col_nums);
+                auto row = Tensor::MakeTensor(col_nums, 1);
                 uint i = 0;
                 while (getline(ss, word, ',')) {
-                    row->data->row(0).coeffRef(i) = Scalar(stof(&word[0]));
+                    row->data->col(0).coeffRef(i) = Scalar(stof(&word[0]));
                     i++;
                 }
                 rows.push_back( row );
@@ -57,18 +57,10 @@ namespace IdealNN {
         this->rewind();
     }
 
-    TensorRef CSVDataLoader::getData() {
+    TensorArray CSVDataLoader::getData() {
         auto batchRows = Utils::slice(rows,current,batch_size);
-        auto numRows = batchRows.size();
-        if(numRows == 0){return Tensor::MakeTensor(0,col_nums);}
 
-        auto batch = Tensor::MakeTensor(numRows, col_nums );
-        for(int i=0; i<numRows; i++){
-            batch->data->row(i) = rows[current+i]->data->row(0);;
-        }
-        current+=numRows;
-
-        return batch;
+        return batchRows;
     }
 
 }

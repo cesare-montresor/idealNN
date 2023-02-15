@@ -46,7 +46,7 @@ add_library(
         src/DataLoader/CSVDataLoader.h
         src/DataLoader/CSVDataLoader.cpp
         src/Utils.h
-)
+        test/loss_test.cpp src/Loss/MSELoss.cpp src/Loss/MSELoss.h)
 
 
 find_package (Eigen3 REQUIRED)

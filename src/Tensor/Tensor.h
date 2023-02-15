@@ -15,8 +15,13 @@ namespace IdealNN {
     using TensorRef = shared_ptr<Tensor>;
 
     typedef vector<TensorRef> TensorArray;
+    typedef shared_ptr<TensorArray> TensorArrayRef;
 
     struct Tensor {
+
+        //static array
+        static TensorArrayRef MakeTensorArray();
+        static TensorArrayRef MakeTensorArray(ArraySize size);
 
         //static
         static TensorRef MakeTensor();
@@ -40,7 +45,9 @@ namespace IdealNN {
         MatrixRef data;
 
         //Methods
-        TensorRef view(ArraySize row_min, ArraySize row_max, ArraySize col_min, ArraySize col_max);
+        TensorRef view(ArraySize row_min, ArraySize col_min, ArraySize row_count, ArraySize col_count);
+
+
     };
 }
 

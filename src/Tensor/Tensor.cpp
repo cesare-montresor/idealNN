@@ -6,6 +6,9 @@
 #include "../Utils.h"
 
 namespace IdealNN {
+    TensorArrayRef Tensor::MakeTensorArray(){ return make_shared<TensorArray>(); }
+    TensorArrayRef Tensor::MakeTensorArray(ArraySize size){ return make_shared<TensorArray>(size); }
+
 
     TensorRef Tensor::MakeTensor(){ return make_shared<Tensor>(); }
     TensorRef Tensor::MakeTensor(ArraySize rows, ArraySize cols){ return make_shared<Tensor>(rows, cols); }
@@ -23,8 +26,8 @@ namespace IdealNN {
     Tensor::Tensor(Matrix const &matrix){ this->data = make_shared<Matrix>(matrix); }
 
 
-    TensorRef Tensor::view(ArraySize row_min, ArraySize row_max, ArraySize col_min, ArraySize col_max){
-        auto view = data->block(row_min,row_max,col_min,col_max);
+    TensorRef Tensor::view(ArraySize row_min, ArraySize col_min, ArraySize row_count, ArraySize col_count){
+        auto view = data->block(row_min,col_min, row_count, col_count);
         return MakeTensor(view);
     }
 
