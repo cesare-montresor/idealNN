@@ -12,8 +12,8 @@
 
 namespace IdealNN {
     struct Tensor;
-    using TensorRef = shared_ptr<Tensor>;
 
+    using TensorRef = shared_ptr<Tensor>;
     typedef vector<TensorRef> TensorArray;
     typedef shared_ptr<TensorArray> TensorArrayRef;
 
@@ -22,6 +22,7 @@ namespace IdealNN {
         //static array
         static TensorArrayRef MakeTensorArray();
         static TensorArrayRef MakeTensorArray(ArraySize size);
+        static TensorArrayRef MakeTensorArray(TensorArray tensorArray);
 
         //static
         static TensorRef MakeTensor();

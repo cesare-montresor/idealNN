@@ -8,6 +8,7 @@
 namespace IdealNN {
     TensorArrayRef Tensor::MakeTensorArray(){ return make_shared<TensorArray>(); }
     TensorArrayRef Tensor::MakeTensorArray(ArraySize size){ return make_shared<TensorArray>(size); }
+    TensorArrayRef Tensor::MakeTensorArray(TensorArray tensorArray){ return make_shared<TensorArray>(tensorArray); }
 
 
     TensorRef Tensor::MakeTensor(){ return make_shared<Tensor>(); }

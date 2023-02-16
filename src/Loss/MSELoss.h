@@ -5,9 +5,13 @@
 #ifndef IDEALNN_MSELOSS_H
 #define IDEALNN_MSELOSS_H
 
-namespace IdealNN {
-    struct MSELoss {
+#import "../Common.h"
+#import "../Tensor/Tensor.h"
+#import "Loss.h"
 
+namespace IdealNN {
+    struct MSELoss:Loss {
+        Scalar loss(TensorArrayRef y, TensorArrayRef y_hat ) override;
     };
 }
 

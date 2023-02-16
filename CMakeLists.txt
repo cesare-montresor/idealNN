@@ -32,7 +32,6 @@ set(INCLUDES
 
 add_library(
     idealNN
-        src/Layer/Layer.cpp
         src/Layer/Layer.h
         src/Layer/Sequential.cpp
         src/Layer/Sequential.h
@@ -46,7 +45,10 @@ add_library(
         src/DataLoader/CSVDataLoader.h
         src/DataLoader/CSVDataLoader.cpp
         src/Utils.h
-        test/loss_test.cpp src/Loss/MSELoss.cpp src/Loss/MSELoss.h)
+        src/Utils.cpp
+        src/Loss/MSELoss.cpp
+        src/Loss/MSELoss.h
+        src/Loss/Loss.h)
 
 
 find_package (Eigen3 REQUIRED)
@@ -60,7 +62,10 @@ add_executable(
         EXCLUDE_FROM_ALL
         third_party/catch2/catch.hpp
         test/main_test.cpp
-        test/csv_loader.cpp test/forward_test.cpp)
+        test/csv_loader.cpp
+        test/forward_test.cpp
+        test/loss_test.cpp
+)
 target_link_libraries(idealNN_test idealNN)
 
 target_sources(idealNN_test PRIVATE ${SOURCES_TEST})

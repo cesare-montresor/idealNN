@@ -12,16 +12,8 @@
 #include "../Tensor/Tensor.h"
 
 namespace IdealNN {
-
-
-
     struct Layer {
-        LayerList dims;
-
-        Layer();
-
         virtual TensorArrayRef forward(TensorArrayRef batch) = 0 ;
-
         virtual void backward() = 0;
     };
 }
