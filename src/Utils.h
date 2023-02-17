@@ -18,6 +18,20 @@ namespace IdealNN{
         VectorColRef MakeVectorCol(ArraySize size) { return make_shared<VectorCol>(size); }
         */
         MatrixRef MakeMatrix(ArraySize in, ArraySize out);
+
+
+
+        LayerArrayRef MakeLayerArray();
+        LayerArrayRef MakeLayerArray(ArraySize size);
+        LayerArrayRef MakeLayerArray(LayerArray tensorArray);
+
+        TensorArrayRef MakeTensorArray();
+        TensorArrayRef MakeTensorArray(ArraySize size);
+        TensorArrayRef MakeTensorArray(TensorArray tensorArray);
+
+        DenseRef MakeDense(int in, int out);
+
+        bool Equal(Scalar a, Scalar b);
     };
 }
 

@@ -11,9 +11,9 @@ namespace IdealNN {
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto batch = dl->getData();
-        cout << "Batch size: " << batch.size() << endl;
+        cout << "Batch size: " << batch->size() << endl;
 
-        for (ArrayIndex i = 0; i < batch.size(); i++) {
+        for (ArrayIndex i = 0; i < batch->size(); i++) {
             //cout << "Item " << i << ": " << batch[i]->array() << endl;
         }
         REQUIRE(true);
@@ -31,11 +31,11 @@ namespace IdealNN {
 
         while (true) {
             auto batch = dl->getData();
-            if (batch.size() == 0) {
-                cout << "Final batch size: " << batch.size() << endl;
+            if (batch->size() == 0) {
+                cout << "Final batch size: " << batch->size() << endl;
                 break;
             }
-            for (ArrayIndex i = 0; i < batch.size(); i++) {
+            for (ArrayIndex i = 0; i < batch->size(); i++) {
                 cnt++;
                 //cout << "Item " << i << ": " << batch[i]->array() << endl;
             }
@@ -60,7 +60,7 @@ namespace IdealNN {
         cout << "Epoch 0: " << endl;
         while (true) {
             auto batch = dl->getData();
-            if (batch.size() == 0) {
+            if (batch->size() == 0) {
                 if (epochs < maxEpochs) {
                     cout << cnt << endl;
                     cnt = 0;
@@ -74,7 +74,7 @@ namespace IdealNN {
                 }
 
             }
-            for (ArrayIndex i = 0; i < batch.size(); i++) {
+            for (ArrayIndex i = 0; i < batch->size(); i++) {
                 cnt++;
                 //cout << "Item " << i << ": " << batch[i]->array() << endl;
             }
@@ -92,8 +92,8 @@ namespace IdealNN {
         auto batch = dl->getData();
         auto found = false;
 
-        for (ArrayIndex i = 0; i < batch.size(); i++) {
-            auto row = batch[i]->data->array();
+        for (ArrayIndex i = 0; i < batch->size(); i++) {
+            auto row = (*batch)[i]->data->array();
             auto cls = int(row(class_idx));
             if (cls >= 1) {
                 cout << "Item " << i << ": " << row << endl;

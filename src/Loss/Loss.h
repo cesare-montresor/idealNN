@@ -5,8 +5,8 @@
 #ifndef IDEALNN_LOSS_H
 #define IDEALNN_LOSS_H
 
-#import "../Common.h"
-#import "../Tensor/Tensor.h"
+#include "../Common.h"
+#include "../Tensor/Tensor.h"
 
 namespace IdealNN {
     struct Loss {

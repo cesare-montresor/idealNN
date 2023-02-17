@@ -2,6 +2,7 @@
 #include "Layer/Dense.h"
 #include "DataLoader/CSVDataLoader.h"
 #include <iostream>
+#include "Utils.h"
 
 namespace IdealNN {
     TEST_CASE("Forward: 2 layers") {
@@ -9,23 +10,25 @@ namespace IdealNN {
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto batch = dl->getData();
+        auto bs = batch->size();
 
-        auto xs = Tensor::MakeTensorArray(batch.size());
-        auto ys = Tensor::MakeTensorArray(batch.size());
-        auto errors = ScalarArray(batch.size());
 
-        for(int i =0 ; i< batch.size(); i++){
-            (*xs)[i] = batch[i]->view(0,0,4,1);
-            (*ys)[i] = batch[i]->view(4,0,1,1);
+        auto xs = Utils::MakeTensorArray(bs);
+        auto ys = Utils::MakeTensorArray(bs);
+        auto errors = ScalarArray(bs);
+
+        for(int i =0 ; i< bs; i++){
+            (*xs)[i] = (*batch)[i]->view(0,0,4,1);
+            (*ys)[i] = (*batch)[i]->view(4,0,1,1);
         }
 
-        auto fc1 = Dense::MakeDense(4, 10);
-        auto fc2 = Dense::MakeDense(10, 1);
+        auto fc1 = Utils::MakeDense(4, 10);
+        auto fc2 = Utils::MakeDense(10, 1);
 
         auto a1s = fc1->forward(xs);
         auto ys_hat = fc2->forward(a1s);
 
-        for(int i =0 ; i< batch.size(); i++){
+        for(int i =0 ; i< bs; i++){
             auto y = (*ys)[i];
             auto y_hat = (*ys_hat)[i];
             auto error = y->data->coeff(0) - y_hat->data->coeff(0);
@@ -33,7 +36,7 @@ namespace IdealNN {
             errors[i] = error;
         }
 
-        REQUIRE(errors[0] - -1.76887f < 0.000001);
+        REQUIRE( Utils::Equal(errors[0],-1.76887f) );
     }
 
 
@@ -42,20 +45,21 @@ namespace IdealNN {
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto batch = dl->getData();
+        auto bs = batch->size();
 
-        auto xs = Tensor::MakeTensorArray(batch.size());
-        auto ys = Tensor::MakeTensorArray(batch.size());
-        auto errors = ScalarArray(batch.size());
+        auto xs = Utils::MakeTensorArray(bs);
+        auto ys = Utils::MakeTensorArray(bs);
+        auto errors = ScalarArray(bs);
 
-        for(int i =0 ; i< batch.size(); i++){
-            (*xs)[i] = batch[i]->view(0,0,4,1);
-            (*ys)[i] = batch[i]->view(4,0,1,1);
+        for(int i =0 ; i< batch->size(); i++){
+            (*xs)[i] = (*batch)[i]->view(0,0,4,1);
+            (*ys)[i] = (*batch)[i]->view(4,0,1,1);
         }
 
-        auto fc1 = Dense::MakeDense(4, 1);
+        auto fc1 = Utils::MakeDense(4, 1);
         auto ys_hat = fc1->forward(xs);
 
-        for(int i =0 ; i< batch.size(); i++){
+        for(int i =0 ; i< batch->size(); i++){
             auto y = (*ys)[i];
             auto y_hat = (*ys_hat)[i];
             auto error = y->data->coeff(0) - y_hat->data->coeff(0);
@@ -63,7 +67,7 @@ namespace IdealNN {
             errors[i] = error;
         }
 
-        REQUIRE(errors[0] - -4.46594f < 0.000001);
+        REQUIRE( Utils::Equal( errors[0], -4.46594f) );
     }
 }
 

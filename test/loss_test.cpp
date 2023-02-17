@@ -2,35 +2,33 @@
 #include "Layer/Dense.h"
 #include "DataLoader/CSVDataLoader.h"
 #include <iostream>
+#include "Utils.h"
+#include "Loss/MSELoss.h"
 
 namespace IdealNN {
-    TEST_CASE("Loss: 1 layer") {
+    TEST_CASE("Loss: MSELoss") {
         auto batch_size = 3;
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto batch = dl->getData();
+        auto bs = batch->size();
 
-        auto xs = Tensor::MakeTensorArray(batch.size());
-        auto ys = Tensor::MakeTensorArray(batch.size());
-        auto errors = ScalarArray(batch.size());
+        auto xs = Utils::MakeTensorArray(bs);
+        auto ys = Utils::MakeTensorArray(bs);
+        auto errors = ScalarArray(bs);
 
-        for(int i =0 ; i< batch.size(); i++){
-            (*xs)[i] = batch[i]->view(0,0,4,1);
-            (*ys)[i] = batch[i]->view(4,0,1,1);
+        for(int i =0 ; i<bs ; i++){
+            (*xs)[i] = (*batch)[i]->view(0,0,4,1);
+            (*ys)[i] = (*batch)[i]->view(4,0,1,1);
         }
 
-        auto fc1 = Dense::MakeDense(4, 1);
+        auto fc1 = Utils::MakeDense(4, 1);
         auto ys_hat = fc1->forward(xs);
 
-        for(int i =0 ; i< batch.size(); i++){
-            auto y = (*ys)[i];
-            auto y_hat = (*ys_hat)[i];
-            auto error = y->data->coeff(0) - y_hat->data->coeff(0);
-            cout << "Error[" << i << "]: " << error << endl;
-            errors[i] = error;
-        }
+        auto criterion = new MSELoss();
+        auto loss = criterion->loss(ys,ys_hat);
 
-        REQUIRE(errors[0] - -4.46594f < 0.000001);
+        REQUIRE( Utils::Equal(loss,19.087584f) );
     }
 }
 

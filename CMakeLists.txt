@@ -62,7 +62,7 @@ add_executable(
         EXCLUDE_FROM_ALL
         third_party/catch2/catch.hpp
         test/main_test.cpp
-        test/csv_loader.cpp
+        test/csvloader_test.cpp
         test/forward_test.cpp
         test/loss_test.cpp
 )

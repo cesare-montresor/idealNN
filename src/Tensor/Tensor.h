@@ -10,20 +10,11 @@
 #include "../Common.h"
 
 
-namespace IdealNN {
-    struct Tensor;
 
-    using TensorRef = shared_ptr<Tensor>;
-    typedef vector<TensorRef> TensorArray;
-    typedef shared_ptr<TensorArray> TensorArrayRef;
+namespace IdealNN {
 
     struct Tensor {
-
-        //static array
-        static TensorArrayRef MakeTensorArray();
-        static TensorArrayRef MakeTensorArray(ArraySize size);
-        static TensorArrayRef MakeTensorArray(TensorArray tensorArray);
-
+        
         //static
         static TensorRef MakeTensor();
         static TensorRef MakeTensor(ArraySize in, ArraySize out);
@@ -47,6 +38,13 @@ namespace IdealNN {
 
         //Methods
         TensorRef view(ArraySize row_min, ArraySize col_min, ArraySize row_count, ArraySize col_count);
+
+        bool use_grads = true;
+        LayerArrayRef operations;
+
+        void inheritOperations(TensorRef tensor);
+        void addOperation(LayerRef layer);
+        void extendOperations(TensorRef tensor, LayerRef layer);
 
 
     };

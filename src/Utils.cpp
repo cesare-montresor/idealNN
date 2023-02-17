@@ -7,6 +7,7 @@
 
 #include "Common.h"
 #include "Tensor/Tensor.h"
+#include "Layer/Dense.h"
 
 namespace IdealNN{
     namespace Utils{
@@ -36,6 +37,24 @@ namespace IdealNN{
         VectorColRef MakeVectorCol(ArraySize size) { return make_shared<VectorCol>(size); }
         */
         MatrixRef MakeMatrix(ArraySize in, ArraySize out) { return make_shared<Matrix>(in, out); }
+
+        bool Equal(Scalar a, Scalar b){
+            return a - b < ScalarDelta;
+        }
+
+
+        LayerArrayRef MakeLayerArray(){ return make_shared<LayerArray>(); }
+        LayerArrayRef MakeLayerArray(ArraySize size){ return make_shared<LayerArray>(size); }
+        LayerArrayRef MakeLayerArray(LayerArray layerArray){ return make_shared<LayerArray>(layerArray); }
+
+
+        //static array
+        TensorArrayRef MakeTensorArray(){ return make_shared<TensorArray>(); }
+        TensorArrayRef MakeTensorArray(ArraySize size){ return make_shared<TensorArray>(size); }
+        TensorArrayRef MakeTensorArray(TensorArray tensorArray){ return make_shared<TensorArray>(tensorArray); }
+
+        //
+        DenseRef MakeDense(int in, int out) { return make_shared<Dense>(in, out); }
     };
 }
 

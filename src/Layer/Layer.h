@@ -9,10 +9,15 @@
 
 #include <vector>
 #include <memory>
-#include "../Tensor/Tensor.h"
+#include "../Common.h"
+
+
 
 namespace IdealNN {
+
     struct Layer {
+        //static array
+
         virtual TensorArrayRef forward(TensorArrayRef batch) = 0 ;
         virtual void backward() = 0;
     };

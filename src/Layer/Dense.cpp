@@ -14,7 +14,7 @@ namespace IdealNN {
 
         weights = Tensor::MakeTensor(out, in);
         bias = Tensor::MakeTensor(out, 1);
-        activations = Tensor::MakeTensorArray();
+        activations = Utils::MakeTensorArray();
         gradients = Tensor::MakeTensor(in, out);
 
         weights->data->setRandom();
@@ -23,17 +23,14 @@ namespace IdealNN {
     }
 
 //Static
-    DenseRef Dense::MakeDense(int in, int out) {
-        return make_unique<Dense>(in, out);
-    }
-
     TensorArrayRef Dense::forward(TensorArrayRef batch) {
         activations->clear();
         for(int i=0; i<batch->size(); i++){
             auto input = (*batch)[i];
             auto result = ( (*weights->data) * (*input->data) + (*bias->data));
-            auto tensor = Tensor::MakeTensor(result);
-            activations->push_back(tensor);
+            auto output = Tensor::MakeTensor(result);
+            output->extendOperations(input, shared_ptr<Dense>(this)) ;
+            activations->push_back(output);
         }
         return activations;
     }

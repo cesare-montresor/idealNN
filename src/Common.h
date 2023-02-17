@@ -14,11 +14,10 @@
 using namespace std;
 
 namespace IdealNN{
-    using DimList = vector<int>;
-    using LayerList = vector<int>;
-
 
     typedef float Scalar;
+    const Scalar ScalarDelta = 0.00001;
+
     //typedef Eigen::RowVectorXf VectorRow;
     //typedef Eigen::VectorXf VectorCol;
     typedef Eigen::MatrixXf Matrix;
@@ -34,8 +33,23 @@ namespace IdealNN{
 
     typedef unsigned long int ArrayIndex;
     typedef unsigned long int ArraySize;
+    using DimList = vector<ArraySize>;
 
 
+    // resolve circular deps Tensor <-> Layer
+    struct Tensor;
+    using TensorRef = shared_ptr<Tensor>;
+    typedef vector<TensorRef> TensorArray;
+    typedef shared_ptr<TensorArray> TensorArrayRef;
+
+
+    struct Layer;
+    using LayerRef = shared_ptr<Layer>;
+    typedef vector<LayerRef> LayerArray;
+    typedef shared_ptr<LayerArray> LayerArrayRef;
+
+    struct Dense;
+    using DenseRef = shared_ptr<Dense>;
 }
 
 

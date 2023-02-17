@@ -59,7 +59,8 @@ namespace IdealNN {
 
     TensorArrayRef CSVDataLoader::getData() {
         auto batchRows = Utils::slice(rows,current,batch_size);
-        return MakeTesnorArray(batchRows);
+        current += batchRows.size();
+        return Utils::MakeTensorArray(batchRows);
     }
 
 }

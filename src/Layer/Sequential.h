@@ -11,7 +11,6 @@ namespace IdealNN {
  * Sequential thing
  */
     struct Sequential : Layer {
-        LayerList layers;
 
         Sequential();
 

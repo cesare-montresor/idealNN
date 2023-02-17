@@ -14,12 +14,10 @@
 //
 
 namespace IdealNN {
-    
-    struct Dense;
-    using DenseRef = unique_ptr<Dense>;
+
 
     struct Dense : Layer {
-        static DenseRef MakeDense(int in, int out);
+
 
         int in, out;
         TensorRef weights;
