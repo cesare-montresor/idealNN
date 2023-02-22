@@ -19,8 +19,6 @@ namespace IdealNN{
         */
         MatrixRef MakeMatrix(ArraySize in, ArraySize out);
 
-
-
         LayerArrayRef MakeLayerArray();
         LayerArrayRef MakeLayerArray(ArraySize size);
         LayerArrayRef MakeLayerArray(LayerArray tensorArray);
@@ -29,9 +27,13 @@ namespace IdealNN{
         TensorArrayRef MakeTensorArray(ArraySize size);
         TensorArrayRef MakeTensorArray(TensorArray tensorArray);
 
+        ScalarArrayRef MakeScalarArray();
+        ScalarArrayRef MakeScalarArray(ArraySize size);
+        ScalarArrayRef MakeScalarArray(ScalarArray scalarArray);
+
         DenseRef MakeDense(int in, int out);
 
-        bool Equal(Scalar a, Scalar b);
+        bool Equal(ScalarValue a, ScalarValue b);
     };
 }
 

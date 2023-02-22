@@ -7,6 +7,8 @@
 namespace IdealNN {
     
     TEST_CASE("CSVDataLoader: show batch") {
+        srand(0);
+
         auto batch_size = 3;
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
@@ -20,6 +22,8 @@ namespace IdealNN {
     }
 
     TEST_CASE("CSVDataLoader: show all batch") {
+        srand(0);
+
         auto numRows = 150; //Hardcoded for iris dataset
 
         auto batch_size = 7;

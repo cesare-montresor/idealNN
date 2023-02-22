@@ -32,13 +32,10 @@ namespace IdealNN{
             return TensorArray(first, last);
         }
 
-        /*
-        VectorRowRef MakeVectorRow(ArraySize size) { return make_shared<VectorRow>(size); }
-        VectorColRef MakeVectorCol(ArraySize size) { return make_shared<VectorCol>(size); }
-        */
+
         MatrixRef MakeMatrix(ArraySize in, ArraySize out) { return make_shared<Matrix>(in, out); }
 
-        bool Equal(Scalar a, Scalar b){
+        bool Equal(ScalarValue a, ScalarValue b){
             return a - b < ScalarDelta;
         }
 
@@ -52,6 +49,11 @@ namespace IdealNN{
         TensorArrayRef MakeTensorArray(){ return make_shared<TensorArray>(); }
         TensorArrayRef MakeTensorArray(ArraySize size){ return make_shared<TensorArray>(size); }
         TensorArrayRef MakeTensorArray(TensorArray tensorArray){ return make_shared<TensorArray>(tensorArray); }
+
+        //static array
+        ScalarArrayRef MakeScalarArray(){ return make_shared<ScalarArray>(); }
+        ScalarArrayRef MakeScalarArray(ArraySize size){ return make_shared<ScalarArray>(size); }
+        ScalarArrayRef MakeScalarArray(ScalarArray scalarArray){ return make_shared<ScalarArray>(scalarArray); }
 
         //
         DenseRef MakeDense(int in, int out) { return make_shared<Dense>(in, out); }

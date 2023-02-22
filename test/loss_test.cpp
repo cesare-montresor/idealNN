@@ -7,6 +7,8 @@
 
 namespace IdealNN {
     TEST_CASE("Loss: MSELoss") {
+        srand(0);
+
         auto batch_size = 3;
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
@@ -15,11 +17,10 @@ namespace IdealNN {
 
         auto xs = Utils::MakeTensorArray(bs);
         auto ys = Utils::MakeTensorArray(bs);
-        auto errors = ScalarArray(bs);
 
         for(int i =0 ; i<bs ; i++){
-            (*xs)[i] = (*batch)[i]->view(0,0,4,1);
-            (*ys)[i] = (*batch)[i]->view(4,0,1,1);
+            xs->at(i) = batch->at(i)->view(0,0,4,1);
+            ys->at(i) = batch->at(i)->view(4,0,1,1);
         }
 
         auto fc1 = Utils::MakeDense(4, 1);
@@ -28,7 +29,7 @@ namespace IdealNN {
         auto criterion = new MSELoss();
         auto loss = criterion->loss(ys,ys_hat);
 
-        REQUIRE( Utils::Equal(loss,19.087584f) );
+        REQUIRE( Utils::Equal(loss,19.0876f) );
     }
 }
 

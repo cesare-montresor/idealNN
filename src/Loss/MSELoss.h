@@ -11,7 +11,11 @@
 
 namespace IdealNN {
     struct MSELoss:Loss {
-        Scalar loss(TensorArrayRef y, TensorArrayRef y_hat ) override;
+        TensorArrayRef ys;
+        ScalarArrayRef deltas;
+
+        ScalarValue loss(TensorArrayRef y, TensorArrayRef y_hat ) override;
+        void backward();
     };
 }
 

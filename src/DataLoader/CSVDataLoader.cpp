@@ -19,9 +19,9 @@ namespace IdealNN {
         // determine number of columns in file
         getline(file, line, '\n');
         stringstream ss(line);
-        ScalarArray parsed_vec;
+        ScalarValueArray parsed_vec;
         while (getline(ss, word, ',')) {
-            parsed_vec.push_back(Scalar(stof(&word[0])));
+            parsed_vec.push_back(ScalarValue(stof(&word[0])));
         }
         col_nums = parsed_vec.size();
 
@@ -34,7 +34,7 @@ namespace IdealNN {
                 auto row = Tensor::MakeTensor(col_nums, 1);
                 uint i = 0;
                 while (getline(ss, word, ',')) {
-                    row->data->col(0).coeffRef(i) = Scalar(stof(&word[0]));
+                    row->data->col(0).coeffRef(i) = ScalarValue(stof(&word[0]));
                     i++;
                 }
                 rows.push_back( row );

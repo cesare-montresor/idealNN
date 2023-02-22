@@ -10,7 +10,8 @@
 
 namespace IdealNN {
     struct Loss {
-        virtual Scalar loss(TensorArrayRef y, TensorArrayRef y_hat )=0;
+        virtual ScalarValue loss(TensorArrayRef y, TensorArrayRef y_hat )=0;
+        virtual void backward()=0;
     };
 }
 

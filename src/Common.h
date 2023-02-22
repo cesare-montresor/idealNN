@@ -14,34 +14,30 @@
 using namespace std;
 
 namespace IdealNN{
-
-    typedef float Scalar;
-    const Scalar ScalarDelta = 0.00001;
-
-    //typedef Eigen::RowVectorXf VectorRow;
-    //typedef Eigen::VectorXf VectorCol;
-    typedef Eigen::MatrixXf Matrix;
-
-    //using VectorRowRef = shared_ptr<VectorRow>;
-    //using VectorColRef = shared_ptr<VectorCol>;
-    using MatrixRef = shared_ptr<Matrix>;
-
-    typedef vector<Scalar> ScalarArray;
-    //typedef vector<VectorRowRef> VectorRowArray;
-    //typedef vector<VectorColRef> VectorColArray;
-    typedef vector<MatrixRef> MatrixArray;
-
     typedef unsigned long int ArrayIndex;
     typedef unsigned long int ArraySize;
-    using DimList = vector<ArraySize>;
 
+    typedef Eigen::MatrixXf Matrix;
+    using MatrixRef = shared_ptr<Matrix>;
+    typedef vector<MatrixRef> MatrixArray;
+    typedef shared_ptr<MatrixArray> MatrixArrayRef;
+    typedef Eigen::internal::traits<Matrix>::Scalar CoeffRef;
 
-    // resolve circular deps Tensor <-> Layer
+    typedef float ScalarValue;
+    typedef vector<ScalarValue> ScalarValueArray;
+    typedef shared_ptr<ScalarValueArray> ScalarValueArrayRef;
+    const ScalarValue ScalarDelta = 0.00001;
+
+    // resolve/avoid circular deps:
     struct Tensor;
     using TensorRef = shared_ptr<Tensor>;
     typedef vector<TensorRef> TensorArray;
     typedef shared_ptr<TensorArray> TensorArrayRef;
 
+    struct Scalar;
+    using ScalarRef = shared_ptr<Scalar>;
+    typedef vector<ScalarRef> ScalarArray;
+    typedef shared_ptr<ScalarArray> ScalarArrayRef;
 
     struct Layer;
     using LayerRef = shared_ptr<Layer>;
@@ -50,6 +46,9 @@ namespace IdealNN{
 
     struct Dense;
     using DenseRef = shared_ptr<Dense>;
+
+    struct Loss;
+    using LossRef = shared_ptr<Loss>;
 }
 
 

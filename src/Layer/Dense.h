@@ -20,6 +20,7 @@ namespace IdealNN {
 
 
         int in, out;
+        TensorArrayRef xs;
         TensorRef weights;
         TensorRef bias;
         TensorRef gradients;
@@ -29,7 +30,7 @@ namespace IdealNN {
 
         TensorArrayRef forward(TensorArrayRef batch) override;
 
-        void backward() override;
+        void backward(TensorArrayRef deltas) override;
 
     };
 }

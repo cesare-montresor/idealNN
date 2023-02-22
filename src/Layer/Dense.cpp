@@ -23,21 +23,25 @@ namespace IdealNN {
     }
 
 //Static
-    TensorArrayRef Dense::forward(TensorArrayRef batch) {
+    TensorArrayRef Dense::forward(TensorArrayRef xs) {
+        auto bs = xs->size();
+        this->xs = xs;
         activations->clear();
-        for(int i=0; i<batch->size(); i++){
-            auto input = (*batch)[i];
+        for(int i=0; i<bs; i++){
+            auto input = xs->at(i);
             auto result = ( (*weights->data) * (*input->data) + (*bias->data));
             auto output = Tensor::MakeTensor(result);
-            output->extendOperations(input, shared_ptr<Dense>(this)) ;
+            if(input->use_grads) {
+                output->operation = shared_from_this();
+                output->extendOperations(input, shared_from_this());
+            }
             activations->push_back(output);
         }
         return activations;
     }
 
 
-
-    void Dense::backward() {
+    void Dense::backward(TensorArrayRef deltas) {
 
     }
 

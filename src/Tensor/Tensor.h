@@ -14,7 +14,7 @@
 namespace IdealNN {
 
     struct Tensor {
-        
+
         //static
         static TensorRef MakeTensor();
         static TensorRef MakeTensor(ArraySize in, ArraySize out);
@@ -26,27 +26,54 @@ namespace IdealNN {
 
         //constructors
         Tensor();
-        Tensor(ArraySize rows, ArraySize cols );
+        Tensor(ArraySize rows, ArraySize cols);
         Tensor(Tensor const &tensor);
-        Tensor(TensorRef tensor);
-        Tensor(MatrixRef matrix);
-        Tensor(Matrix const &matrix);
+        explicit Tensor(TensorRef tensor);
+        explicit Tensor(MatrixRef matrix);
+        explicit Tensor(Matrix const &matrix);
 
 
         //Properties
         MatrixRef data;
+        bool use_grads = true;
+        LayerArrayRef operations;
+        LayerRef operation;
 
         //Methods
         TensorRef view(ArraySize row_min, ArraySize col_min, ArraySize row_count, ArraySize col_count);
-
-        bool use_grads = true;
-        LayerArrayRef operations;
-
         void inheritOperations(TensorRef tensor);
         void addOperation(LayerRef layer);
         void extendOperations(TensorRef tensor, LayerRef layer);
+    };
+}
 
 
+namespace IdealNN {
+    struct Scalar: Tensor {
+        typedef Tensor super;
+        //static
+        static ScalarRef MakeScalar();
+        static ScalarRef MakeScalar(ScalarValue value);
+        static ScalarRef MakeScalar(Scalar const &scalar);
+        static ScalarRef MakeScalar(ScalarRef scalar);
+        static ScalarRef MakeScalar(Tensor const &tensor);
+        static ScalarRef MakeScalar(TensorRef tensor);
+        static ScalarRef MakeScalar(Matrix const &matrix);
+        static ScalarRef MakeScalar(MatrixRef matrix);
+
+        //constructors
+        Scalar();
+        explicit Scalar(ScalarValue value);
+        Scalar(Scalar const &scalar);
+        explicit Scalar(ScalarRef scalar);
+        explicit Scalar(Tensor const &tensor);
+        explicit Scalar(TensorRef tensor);
+        explicit Scalar(Matrix const &matrix);
+        explicit Scalar(MatrixRef matrix);
+
+        ScalarValue value();
+        void value(ScalarValue value);
+        CoeffRef val();
     };
 }
 
