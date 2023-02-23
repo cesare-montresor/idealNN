@@ -18,8 +18,12 @@ namespace IdealNN {
     struct Layer: public std::enable_shared_from_this<Layer> {
         //static array
 
-        virtual TensorArrayRef forward(TensorArrayRef batch) = 0 ;
-        virtual void backward(TensorArrayRef deltas) = 0;
+        virtual TensorArrayRef forwardBatch(TensorArrayRef xs) = 0 ;
+        virtual TensorRef forward(TensorRef x, ArrayIndex i) = 0 ;
+        virtual void backward(TensorRef dx, ArrayIndex i) = 0;
+        virtual TensorArrayRef parameters() = 0;
+
+
     };
 }
 

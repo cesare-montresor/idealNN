@@ -4,6 +4,7 @@
 
 #include "MSELoss.h"
 #include "../Utils.h"
+#include "../Layer/Dense.h"
 
 namespace IdealNN {
 
@@ -32,11 +33,11 @@ namespace IdealNN {
         for(int i = 0; i<bs; i++) {
             auto delta = deltas->at(i);
             auto ops_num = delta->operations->size();
-            if(ops_num>0) {
-                auto prevLayer = delta->operations->back();
-                delta->operations->pop_back();
+            if(ops_num==0) continue;
 
-            }
+            auto prevLayer = delta->operations->back();
+            delta->operations->pop_back();
+            prevLayer->backward(delta,i);
         }
     }
 }

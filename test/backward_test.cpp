@@ -21,8 +21,11 @@ namespace IdealNN {
             ys->at(i) = batch->at(i)->view(4,0,1,1);
         }
 
-        auto fc1 = Utils::MakeDense(4, 1);
-        auto ys_hat = fc1->forward(xs);
+        auto fc1 = Utils::MakeDense(4, 10);
+        auto fc2 = Utils::MakeDense(10, 1);
+
+        auto x = fc1->forwardBatch(xs);
+        auto ys_hat = fc2->forwardBatch(x);
 
         auto criterion = new MSELoss();
         auto loss = criterion->loss(ys,ys_hat);

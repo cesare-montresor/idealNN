@@ -22,26 +22,31 @@ namespace IdealNN {
     Tensor::Tensor(ArraySize rows, ArraySize cols) {
         this->data = Utils::MakeMatrix(rows, cols);
         this->operations = Utils::MakeLayerArray();
+        this->gradients = Utils::MakeMatrix(data->rows(), data->cols());
     }
 
     Tensor::Tensor(Tensor const &tensor) {
         this->data = tensor.data;
         this->operations = Utils::MakeLayerArray();
+        this->gradients = Utils::MakeMatrix(data->rows(), data->cols());
     }
 
     Tensor::Tensor(TensorRef tensor) {
         this->data = tensor->data;
         this->operations = Utils::MakeLayerArray();
+        this->gradients = Utils::MakeMatrix(data->rows(), data->cols());
     }
 
     Tensor::Tensor(MatrixRef matrix) {
         this->data = matrix;
         this->operations = Utils::MakeLayerArray();
+        this->gradients = Utils::MakeMatrix(data->rows(), data->cols());
     }
 
     Tensor::Tensor(Matrix const &matrix) {
         this->data = make_shared<Matrix>(matrix);
         this->operations = Utils::MakeLayerArray();
+        this->gradients = Utils::MakeMatrix(data->rows(), data->cols());
     }
 
 
@@ -62,6 +67,10 @@ namespace IdealNN {
         this->inheritOperations(tensor);
         this->addOperation(layer);
     }
+
+    void Tensor::zero_grad() {
+        gradients->setZero();
+    }
 }
 
 
@@ -80,43 +89,51 @@ namespace IdealNN
     Scalar::Scalar(){
         this->data = Utils::MakeMatrix(1,1);
         this->operations = Utils::MakeLayerArray();
+        this->gradients = Utils::MakeMatrix(1,1);
     }
 
     Scalar::Scalar(Scalar const &scalar){
         this->data = scalar.data;
         this->operations = Utils::MakeLayerArray();
+        this->gradients = Utils::MakeMatrix(1,1);
     }
 
     Scalar::Scalar(ScalarRef scalar){
         this->data = scalar->data;
         this->operations = Utils::MakeLayerArray();
+        this->gradients = Utils::MakeMatrix(1,1);
     }
 
     Scalar::Scalar(ScalarValue value){
         this->data = Utils::MakeMatrix(1,1);
         this->data->coeffRef(0) = value;
         this->operations = Utils::MakeLayerArray();
+        this->gradients = Utils::MakeMatrix(1,1);
     }
 
     Scalar::Scalar(Tensor const &tensor){
         assert(tensor.data->rows() == 1 && tensor.data->cols() == 1 );
         this->data = tensor.data;
         this->operations = Utils::MakeLayerArray();
+        this->gradients = Utils::MakeMatrix(1,1);
     }
 
     Scalar::Scalar(TensorRef tensor){
         assert(tensor->data->rows() == 1 && tensor->data->cols() == 1 );
         this->data = tensor->data;
         this->operations = Utils::MakeLayerArray();
+        this->gradients = Utils::MakeMatrix(1,1);
     }
     Scalar::Scalar(MatrixRef matrix){
         assert(matrix->rows() == 1 && matrix->cols() == 1 );
         this->data = matrix;
         this->operations = Utils::MakeLayerArray();
+        this->gradients = Utils::MakeMatrix(1,1);
     }
     Scalar::Scalar(Matrix const &matrix){
         this->data = make_shared<Matrix>(matrix);
         this->operations = Utils::MakeLayerArray();
+        this->gradients = Utils::MakeMatrix(1,1);
     }
 
     ScalarValue Scalar::value(){

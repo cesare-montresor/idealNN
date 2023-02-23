@@ -38,6 +38,9 @@ namespace IdealNN {
         bool use_grads = true;
         LayerArrayRef operations;
         LayerRef operation;
+        MatrixRef gradients;
+
+        void zero_grad();
 
         //Methods
         TensorRef view(ArraySize row_min, ArraySize col_min, ArraySize row_count, ArraySize col_count);
@@ -49,7 +52,7 @@ namespace IdealNN {
 
 
 namespace IdealNN {
-    struct Scalar: Tensor {
+    struct Scalar: public Tensor {
         typedef Tensor super;
         //static
         static ScalarRef MakeScalar();

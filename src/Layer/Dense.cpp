@@ -15,34 +15,47 @@ namespace IdealNN {
         weights = Tensor::MakeTensor(out, in);
         bias = Tensor::MakeTensor(out, 1);
         activations = Utils::MakeTensorArray();
-        gradients = Tensor::MakeTensor(in, out);
 
         weights->data->setRandom();
-        bias->data->setRandom();
-        gradients->data->setZero();
+        bias->data->setRandom();ù
+
+        addParam(weight)
+        addParam(bias)
     }
 
 //Static
-    TensorArrayRef Dense::forward(TensorArrayRef xs) {
+    TensorArrayRef Dense::forwardBatch(TensorArrayRef xs) {
         auto bs = xs->size();
         this->xs = xs;
         activations->clear();
         for(int i=0; i<bs; i++){
-            auto input = xs->at(i);
-            auto result = ( (*weights->data) * (*input->data) + (*bias->data));
-            auto output = Tensor::MakeTensor(result);
-            if(input->use_grads) {
-                output->operation = shared_from_this();
-                output->extendOperations(input, shared_from_this());
-            }
+            auto x = xs->at(i);
+            auto output = this->forward(x,i);
             activations->push_back(output);
         }
         return activations;
     }
 
-
-    void Dense::backward(TensorArrayRef deltas) {
-
+    TensorRef Dense::forward(TensorRef x, ArrayIndex i) {
+        auto result = ( (*weights->data) * (*x->data) + (*bias->data));
+        auto output = Tensor::MakeTensor(result);
+        if(x->use_grads) {
+            output->operation = shared_from_this();
+            output->extendOperations(x, shared_from_this());
+        }
+        return output;
     }
 
+
+    void Dense::backward(TensorRef deltas, ArrayIndex i) {
+        (*bias->gradients) = (*bias->gradients) + (*deltas->data);
+        (*weights->gradients) = (*weights->gradients) + ( (*xs->at(i)->data ) * (*deltas->data) );
+    }
+
+    TensorArrayRef Dense::parameters() {
+        auto params = Utils::MakeTensorArray();
+        params->push_back(weights);
+        params->push_back(bias);
+        return params;
+    }
 }

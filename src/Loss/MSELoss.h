@@ -10,7 +10,7 @@
 #include "Loss.h"
 
 namespace IdealNN {
-    struct MSELoss:Loss {
+    struct MSELoss: public Loss {
         TensorArrayRef ys;
         ScalarArrayRef deltas;
 

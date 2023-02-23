@@ -27,8 +27,8 @@ namespace IdealNN {
         auto fc1 = Utils::MakeDense(4, 10);
         auto fc2 = Utils::MakeDense(10, 1);
 
-        auto a1s = fc1->forward(xs);
-        auto ys_hat = fc2->forward(a1s);
+        auto a1s = fc1->forwardBatch(xs);
+        auto ys_hat = fc2->forwardBatch(a1s);
 
         for(int i =0 ; i< bs; i++){
             auto y = (*ys)[i];
@@ -60,7 +60,7 @@ namespace IdealNN {
         }
 
         auto fc1 = Utils::MakeDense(4, 1);
-        auto ys_hat = fc1->forward(xs);
+        auto ys_hat = fc1->forwardBatch(xs);
 
         for(int i =0 ; i< batch->size(); i++){
             auto y = (*ys)[i];

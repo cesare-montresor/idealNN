@@ -24,7 +24,7 @@ namespace IdealNN {
         }
 
         auto fc1 = Utils::MakeDense(4, 1);
-        auto ys_hat = fc1->forward(xs);
+        auto ys_hat = fc1->forwardBatch(xs);
 
         auto criterion = new MSELoss();
         auto loss = criterion->loss(ys,ys_hat);
