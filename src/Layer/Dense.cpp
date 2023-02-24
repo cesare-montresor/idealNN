@@ -17,10 +17,9 @@ namespace IdealNN {
         activations = Utils::MakeTensorArray();
 
         weights->data->setRandom();
-        bias->data->setRandom();ù
-
-        addParam(weight)
-        addParam(bias)
+        bias->data->setRandom();
+        weights->zero_grad();
+        bias->zero_grad();
     }
 
 //Static
@@ -47,9 +46,21 @@ namespace IdealNN {
     }
 
 
-    void Dense::backward(TensorRef deltas, ArrayIndex i) {
-        (*bias->gradients) = (*bias->gradients) + (*deltas->data);
-        (*weights->gradients) = (*weights->gradients) + ( (*xs->at(i)->data ) * (*deltas->data) );
+    void Dense::backward(TensorRef dx, ArrayIndex i) {
+        auto x = xs->at(i);
+        auto bias_dx = (*dx->data);
+        auto weights_dx = bias_dx * (x->data->transpose()) ;
+        (*bias->gradients) += bias_dx;
+        (*weights->gradients) += weights_dx;
+
+        auto ops_num = x->operations->size();
+        if(ops_num==0) return;
+
+        auto prevLayer = x->operations->back();
+        x->operations->pop_back();
+        auto next_dx = Tensor::MakeTensor( weights_dx.transpose() );
+
+        prevLayer->backward( next_dx, i );
     }
 
     TensorArrayRef Dense::parameters() {

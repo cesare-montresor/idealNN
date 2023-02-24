@@ -63,6 +63,8 @@ namespace IdealNN {
         operations->push_back(layer);
     }
 
+
+
     void Tensor::extendOperations(TensorRef tensor, LayerRef layer) {
         this->inheritOperations(tensor);
         this->addOperation(layer);
