@@ -11,7 +11,9 @@
 namespace IdealNN{
     struct Optimizer {
         ScalarValue learning_rate;
-        virtual void step(Tensor tensor)=0;
+        TensorArrayRef parameters;
+        virtual void step()=0;
+        virtual void zero_grad()=0;
     };
 }
 

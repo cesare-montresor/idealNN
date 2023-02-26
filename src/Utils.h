@@ -13,10 +13,7 @@ namespace IdealNN{
         //TODO: template vector<T>
         MatrixArray slice(MatrixArray array, ArrayIndex start, ArraySize count);
         TensorArray slice(TensorArray array, ArrayIndex start, ArraySize count);
-        /*
-        VectorRowRef MakeVectorRow(ArraySize size) { return make_shared<VectorRow>(size); }
-        VectorColRef MakeVectorCol(ArraySize size) { return make_shared<VectorCol>(size); }
-        */
+
         MatrixRef MakeMatrix(ArraySize in, ArraySize out);
 
         LayerArrayRef MakeLayerArray();
@@ -32,6 +29,8 @@ namespace IdealNN{
         ScalarArrayRef MakeScalarArray(ScalarArray scalarArray);
 
         DenseRef MakeDense(int in, int out);
+        SigmoidActivationRef MakeSigmoidActivation();
+        RELUActivationRef MakeRELUActivation();
 
         bool Equal(ScalarValue a, ScalarValue b);
     };

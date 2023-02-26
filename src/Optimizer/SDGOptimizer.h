@@ -9,10 +9,11 @@
 #include "../Common.h"
 
 namespace IdealNN{
-    struct SDGOptimizer: Optimizer {
-
-        SDGOptimizer(ScalarValue learning_rate);
-        void step(Tensor tensor);
+    struct SDGOptimizer: public Optimizer {
+        SDGOptimizer(const LayerArrayRef& layers, ScalarValue learning_rate);
+        SDGOptimizer(const TensorArrayRef& params, ScalarValue learning_rate);
+        void step() override;
+        void zero_grad() override;
     };
 }
 

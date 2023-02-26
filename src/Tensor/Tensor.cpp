@@ -133,6 +133,7 @@ namespace IdealNN
         this->gradients = Utils::MakeMatrix(1,1);
     }
     Scalar::Scalar(Matrix const &matrix){
+        assert(matrix.rows() == 1 && matrix.cols() == 1 );
         this->data = make_shared<Matrix>(matrix);
         this->operations = Utils::MakeLayerArray();
         this->gradients = Utils::MakeMatrix(1,1);

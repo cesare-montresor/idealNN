@@ -22,8 +22,6 @@ namespace IdealNN {
         virtual TensorRef forward(TensorRef x, ArrayIndex i) = 0 ;
         virtual void backward(TensorRef dx, ArrayIndex i) = 0;
         virtual TensorArrayRef parameters() = 0;
-
-
     };
 }
 

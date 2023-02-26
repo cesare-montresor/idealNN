@@ -48,7 +48,16 @@ add_library(
         src/Utils.cpp
         src/Loss/MSELoss.cpp
         src/Loss/MSELoss.h
-        src/Loss/Loss.h src/Optimizer/Optimizer.h src/Optimizer/SDGOptimizer.cpp src/Optimizer/SDGOptimizer.h src/Activation/Activation.h src/Activation/SigmoidActivation.cpp src/Activation/SigmoidActivation.h src/Activation/RELUActivation.cpp src/Activation/RELUActivation.h)
+        src/Loss/Loss.h
+        src/Optimizer/Optimizer.h
+        src/Optimizer/SDGOptimizer.cpp
+        src/Optimizer/SDGOptimizer.h
+        src/Activation/Activation.h
+        src/Activation/SigmoidActivation.cpp
+        src/Activation/SigmoidActivation.h
+        src/Activation/RELUActivation.cpp
+        src/Activation/RELUActivation.h
+        src/Loss/CrossEntropyLoss.cpp src/Activation/SoftmaxActivation.cpp)
 
 
 find_package (Eigen3 REQUIRED)
@@ -61,7 +70,11 @@ add_executable(
     idealNN_test
         EXCLUDE_FROM_ALL
         third_party/catch2/catch.hpp
-        ${SOURCES_TEST}
+        test/main_test.cpp
+        test/csvloader_test.cpp
+        test/forward_test.cpp
+        test/loss_test.cpp
+        test/optimizer_test.cpp
 )
 target_link_libraries(idealNN_test idealNN)
 

@@ -8,6 +8,9 @@
 #include "Common.h"
 #include "Tensor/Tensor.h"
 #include "Layer/Dense.h"
+#include "Activation/SigmoidActivation.h"
+#include "Activation/RELUActivation.h"
+#include "Activation/SoftmaxActivation.h"
 
 namespace IdealNN{
     namespace Utils{
@@ -19,7 +22,7 @@ namespace IdealNN{
             auto first = array.begin() + start;
             auto last = array.begin() + start + items_count;
 
-            return MatrixArray(first, last);
+            return MatrixArray{first, last};
         }
 
         TensorArray slice(TensorArray array, ArrayIndex start, ArraySize count){
@@ -29,7 +32,7 @@ namespace IdealNN{
             auto first = array.begin() + start;
             auto last = array.begin() + start + items_count;
 
-            return TensorArray(first, last);
+            return TensorArray{first, last};
         }
 
 
@@ -57,6 +60,9 @@ namespace IdealNN{
 
         //
         DenseRef MakeDense(int in, int out) { return make_shared<Dense>(in, out); }
+        SigmoidActivationRef MakeSigmoidActivation() { return make_shared<SigmoidActivation>(); }
+        RELUActivationRef MakeRELUActivation() { return make_shared<RELUActivation>(); }
+        SoftmaxActivationRef MakeSoftmaxActivation() { return make_shared<SoftmaxActivation>(); }
     };
 }
 

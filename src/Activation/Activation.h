@@ -7,9 +7,10 @@
 
 #include "../Layer/Layer.h"
 
+
 namespace IdealNN {
 //Constructors
-    class Activation:Layer {};
+    struct Activation: public Layer {};
 }
 
 #endif //IDEALNN_ACTIVATION_H

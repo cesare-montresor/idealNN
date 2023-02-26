@@ -10,7 +10,7 @@ namespace IdealNN {
 /**
  * Sequential thing
  */
-    struct Sequential : Layer {
+    struct Sequential :  public  Layer {
 
         Sequential();
 

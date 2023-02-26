@@ -8,16 +8,22 @@
 #include <vector>
 #include <memory>
 #include <Eigen/Eigen>
+#include <iostream>
 
+//NOTE: unsupported => provided "as is" (https://eigen.tuxfamily.org/dox/unsupported/index.html)
+//#include <unsupported/Eigen/MatrixFunctions>
 
 
 using namespace std;
 
 namespace IdealNN{
+
+    // Wrappers for standard types, to IdealNN types
     typedef unsigned long int ArrayIndex;
     typedef unsigned long int ArraySize;
 
-    typedef Eigen::MatrixXf Matrix;
+    using Eigen::MatrixXf;
+    typedef MatrixXf Matrix;
     using MatrixRef = shared_ptr<Matrix>;
     typedef vector<MatrixRef> MatrixArray;
     typedef shared_ptr<MatrixArray> MatrixArrayRef;
@@ -28,7 +34,7 @@ namespace IdealNN{
     typedef shared_ptr<ScalarValueArray> ScalarValueArrayRef;
     const ScalarValue ScalarDelta = 0.00001;
 
-    // resolve/avoid circular deps:
+    // forward declarations to avoid circular deps:
     struct Tensor;
     using TensorRef = shared_ptr<Tensor>;
     typedef vector<TensorRef> TensorArray;
@@ -43,6 +49,18 @@ namespace IdealNN{
     using LayerRef = shared_ptr<Layer>;
     typedef vector<LayerRef> LayerArray;
     typedef shared_ptr<LayerArray> LayerArrayRef;
+
+    struct Dense;
+    using DenseRef = shared_ptr<Dense>;
+
+    struct SigmoidActivation;
+    using SigmoidActivationRef = shared_ptr<SigmoidActivation>;
+
+    struct RELUActivation;
+    using RELUActivationRef = shared_ptr<RELUActivation>;
+
+    struct SoftmaxActivation;
+    using SoftmaxActivationRef = shared_ptr<SoftmaxActivation>;
 
     struct Dense;
     using DenseRef = shared_ptr<Dense>;

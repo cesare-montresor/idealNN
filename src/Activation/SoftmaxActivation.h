@@ -2,18 +2,17 @@
 // Created by cesare on 22/02/23.
 //
 
-#ifndef IDEALNN_RELUACTIVATION_H
-#define IDEALNN_RELUACTIVATION_H
+#ifndef IDEALNN_SOFTMAXACTIVATION_H
+#define IDEALNN_SOFTMAXACTIVATION_H
 
 #include "Activation.h"
 
 namespace IdealNN {
-
-    struct RELUActivation:  public Activation {
+    struct SoftmaxActivation:  public Activation {
         TensorArrayRef xs;
         TensorArrayRef activations;
 
-        RELUActivation();
+        SoftmaxActivation();
         TensorArrayRef forwardBatch(TensorArrayRef xs) override;
         TensorRef forward(TensorRef x, ArrayIndex i) override;
         void backward(TensorRef dx, ArrayIndex i) override;
@@ -22,4 +21,4 @@ namespace IdealNN {
 
 } // IdealNN
 
-#endif //IDEALNN_RELUACTIVATION_H
+#endif //IDEALNN_SOFTMAXACTIVATION_H

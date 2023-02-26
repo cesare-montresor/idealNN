@@ -2,17 +2,19 @@
 // Created by cesare on 22/02/23.
 //
 
-#include "RELUActivation.h"
+
+#include "SoftmaxActivation.h"
 #include "../Utils.h"
 #include "../Tensor/Tensor.h"
 
 
 namespace IdealNN {
-    RELUActivation::RELUActivation(){
+
+    SoftmaxActivation::SoftmaxActivation(){
         activations = Utils::MakeTensorArray();
     }
 
-    TensorArrayRef RELUActivation::forwardBatch(TensorArrayRef xs) {
+    TensorArrayRef SoftmaxActivation::forwardBatch(TensorArrayRef xs) {
         auto bs = xs->size();
         this->xs = xs;
         activations->clear();
@@ -24,8 +26,9 @@ namespace IdealNN {
         return activations;
     }
 
-    TensorRef RELUActivation::forward(TensorRef x, ArrayIndex i) {
-        auto result = x->data->array().max(0).matrix();
+    TensorRef SoftmaxActivation::forward(TensorRef x, ArrayIndex i) {
+        auto sigma_exp = ((*x->data) * -1).array().exp();
+        auto result = ( 1 / ( 1 + sigma_exp)).matrix();
         auto output = Tensor::MakeTensor(result);
         if(x->use_grads) {
             output->operation = shared_from_this();
@@ -34,26 +37,21 @@ namespace IdealNN {
         return output;
     }
 
-    void RELUActivation::backward(TensorRef dx, ArrayIndex i) {
+    void SoftmaxActivation::backward(TensorRef dx, ArrayIndex i) {
         auto x = xs->at(i);
-        auto zeros = Utils::MakeMatrix(x->data->rows(), x->data->cols())->setZero();
-        auto relu_dx_op  = ( x->data->array() <= 0 ).select(zeros.array(), dx->data->array());
-        auto relu_dx = Matrix(relu_dx_op.matrix() );
-
+        auto sigma_x = activations->at(i)->data->array();
+        auto sigma_dx = Matrix( (( 1 - sigma_x ) * sigma_x).matrix() );
         auto ops_num = x->operations->size();
         if(ops_num==0) return;
 
         auto prevLayer = x->operations->back();
         x->operations->pop_back();
-        auto next_dx = Tensor::MakeTensor( relu_dx );
+        auto next_dx = Tensor::MakeTensor( sigma_dx );
 
         prevLayer->backward( next_dx, i );
     }
 
-    TensorArrayRef RELUActivation::parameters() {
+    TensorArrayRef SoftmaxActivation::parameters() {
         return Utils::MakeTensorArray();
     }
-
-
-
 } // IdealNN
