@@ -10,8 +10,6 @@
 namespace IdealNN {
     struct SoftmaxActivation:  public Activation {
         TensorArrayRef xs;
-        MatrixArrayRef xs_exp;
-        ScalarValueArrayRef xs_exp_sum;
         TensorArrayRef activations;
 
         SoftmaxActivation();
