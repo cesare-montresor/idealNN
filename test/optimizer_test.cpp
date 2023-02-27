@@ -114,7 +114,7 @@ namespace IdealNN {
         cout<< "Loss1: " << loss << endl;
         cout<< "Loss2: " << loss2 << endl;
 
-        REQUIRE( Utils::Equal(loss,2.82019f) );
+        REQUIRE(Utils::ScalarValueEqual(loss, 2.82019f) );
     }
 }
 

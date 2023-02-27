@@ -27,11 +27,8 @@ namespace IdealNN {
     }
 
     TensorRef SigmoidActivation::forward(TensorRef x, ArrayIndex i) {
-        // Better numerical stability (?)
-        //auto x_stable = x->data->array() - x->data->array().max(x->data->array());
-        auto x_exp = x->data->array().exp();
-        auto x_exp_sum = x_exp.sum();
-        auto result = Matrix((x_exp / x_exp_sum).matrix());
+        auto sigma_exp = ((*x->data) * -1).array().exp();
+        auto result = ( 1 / ( 1 + sigma_exp)).matrix();
         auto output = Tensor::MakeTensor(result);
         if(x->use_grads) {
             output->operation = shared_from_this();

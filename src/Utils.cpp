@@ -36,12 +36,17 @@ namespace IdealNN{
         }
 
 
+        bool ScalarValueEqual(ScalarValue a, ScalarValue b){ return a - b < ScalarDelta; }
+
+        ScalarValueArrayRef MakeScalarValueArray() { return make_shared<ScalarValueArray>(); }
+        ScalarValueArrayRef MakeScalarValueArray(ArraySize size) { return make_shared<ScalarValueArray>(size); }
+        ScalarValueArrayRef MakeScalarValueArray(ScalarValueArray scalarValueArray) { return make_shared<ScalarValueArray>(scalarValueArray); }
+
         MatrixRef MakeMatrix(ArraySize in, ArraySize out) { return make_shared<Matrix>(in, out); }
 
-        bool Equal(ScalarValue a, ScalarValue b){
-            return a - b < ScalarDelta;
-        }
-
+        MatrixArrayRef MakeMatrixArray() { return make_shared<MatrixArray>(); }
+        MatrixArrayRef MakeMatrixArray(ArraySize size) { return make_shared<MatrixArray>(size); }
+        MatrixArrayRef MakeMatrixArray(MatrixArray matrixArray) { return make_shared<MatrixArray>(matrixArray); }
 
         LayerArrayRef MakeLayerArray(){ return make_shared<LayerArray>(); }
         LayerArrayRef MakeLayerArray(ArraySize size){ return make_shared<LayerArray>(size); }

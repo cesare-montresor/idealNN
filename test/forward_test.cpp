@@ -38,7 +38,7 @@ namespace IdealNN {
             errors->at(i) = Scalar::MakeScalar(error);
         }
 
-        REQUIRE( Utils::Equal( errors->at(0)->value(),-1.76887f) );
+        REQUIRE(Utils::ScalarValueEqual(errors->at(0)->value(), -1.76887f) );
     }
 
 
@@ -70,7 +70,7 @@ namespace IdealNN {
             errors->at(i) = Scalar::MakeScalar(error);
         }
 
-        REQUIRE( Utils::Equal( errors->at(0)->value(), -4.46594f) );
+        REQUIRE(Utils::ScalarValueEqual(errors->at(0)->value(), -4.46594f) );
     }
 }
 

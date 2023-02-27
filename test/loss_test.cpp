@@ -29,7 +29,7 @@ namespace IdealNN {
         auto criterion = new MSELoss();
         auto loss = criterion->loss(ys,ys_hat);
 
-        REQUIRE( Utils::Equal(loss,19.0876f) );
+        REQUIRE(Utils::ScalarValueEqual(loss, 19.0876f) );
     }
 }
 

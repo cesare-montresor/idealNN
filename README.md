@@ -17,4 +17,6 @@ IdealNN is simple Neural Network library written in C++
 - https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html
 - https://www.youtube.com/watch?v=i94OvYb6noo
 - https://www.youtube.com/watch?v=tIeHLnjs5U8
+- https://www.youtube.com/watch?v=09c7bkxpv9I
+- https://www.youtube.com/watch?v=MswxJw-8PvE
 

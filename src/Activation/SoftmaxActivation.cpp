@@ -12,11 +12,14 @@ namespace IdealNN {
 
     SoftmaxActivation::SoftmaxActivation(){
         activations = Utils::MakeTensorArray();
+
     }
 
     TensorArrayRef SoftmaxActivation::forwardBatch(TensorArrayRef xs) {
         auto bs = xs->size();
         this->xs = xs;
+        this->xs_exp = Utils::MakeMatrixArray(bs);
+        this->xs_exp_sum = Utils::MakeScalarValueArray(bs);
         activations->clear();
         for(int i=0; i<bs; i++){
             auto x = xs->at(i);
@@ -27,8 +30,10 @@ namespace IdealNN {
     }
 
     TensorRef SoftmaxActivation::forward(TensorRef x, ArrayIndex i) {
-        auto sigma_exp = ((*x->data) * -1).array().exp();
-        auto result = ( 1 / ( 1 + sigma_exp)).matrix();
+        auto x_exp = x->data->array().exp();
+        auto x_exp_sum = x_exp.sum();
+        auto result = Matrix((x_exp / x_exp_sum).matrix());
+
         auto output = Tensor::MakeTensor(result);
         if(x->use_grads) {
             output->operation = shared_from_this();

@@ -38,7 +38,7 @@ namespace IdealNN {
         cout << "Grads: FC1 " << fc1->weights->gradients->array() << endl;
         cout << "Grads: FC2 " << fc2->weights->gradients->array() << endl;
 
-        REQUIRE( Utils::Equal(loss,2.82019f) );
+        REQUIRE(Utils::ScalarValueEqual(loss, 2.82019f) );
     }
 }
 
