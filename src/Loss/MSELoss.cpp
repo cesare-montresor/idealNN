@@ -2,9 +2,9 @@
 // Created by cesare on 15/02/23.
 //
 
-#include "MSELoss.h"
-#include "../Utils.h"
-#include "../Layer/Dense.h"
+#include <Loss/MSELoss.h>
+#include <Utils.h>
+#include <Layer/Dense.h>
 
 namespace IdealNN {
 

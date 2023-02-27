@@ -5,7 +5,7 @@
 #ifndef IDEALNN_ACTIVATION_H
 #define IDEALNN_ACTIVATION_H
 
-#include "../Layer/Layer.h"
+#include <Layer/Layer.h>
 
 
 namespace IdealNN {

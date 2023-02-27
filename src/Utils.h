@@ -5,7 +5,7 @@
 #ifndef IDEALNN_UTILS_H
 #define IDEALNN_UTILS_H
 
-#include "Common.h"
+#include <Common.h>
 
 namespace IdealNN{
 
@@ -38,6 +38,7 @@ namespace IdealNN{
         ScalarValueArrayRef MakeScalarValueArray(ScalarValueArray scalarValueArray);
 
         MatrixRef MakeMatrix(ArraySize in, ArraySize out);
+        MatrixRef MakeMatrix(Matrix matrix);
 
         MatrixArrayRef MakeMatrixArray();
         MatrixArrayRef MakeMatrixArray(ArraySize size);

@@ -2,9 +2,9 @@
 // Created by cesare on 08/02/23.
 //
 
-#include "Dense.h"
-#include "../Tensor/Tensor.h"
-#include "../Utils.h"
+#include <Layer/Dense.h>
+#include <Tensor/Tensor.h>
+#include <Utils.h>
 
 namespace IdealNN {
 //Constructors

@@ -1,8 +1,8 @@
-#include "catch2/catch.hpp"
-#include "Layer/Dense.h"
-#include "DataLoader/CSVDataLoader.h"
+#include <catch2/catch.hpp>
+#include <Layer/Dense.h>
+#include <DataLoader/CSVDataLoader.h>
 #include <iostream>
-#include "Utils.h"
+#include <Utils.h>
 
 namespace IdealNN {
     TEST_CASE("Forward: 2 layers") {

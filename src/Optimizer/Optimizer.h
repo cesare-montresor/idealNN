@@ -5,8 +5,8 @@
 #ifndef IDEALNN_OPTIMIZER_H
 #define IDEALNN_OPTIMIZER_H
 
-#include "../Common.h"
-#include "../Loss/Loss.h"
+#include <Common.h>
+#include <Loss/Loss.h>
 
 namespace IdealNN{
     struct Optimizer {

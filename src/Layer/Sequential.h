@@ -4,7 +4,7 @@
 #ifndef IDEALNN_SEQUENTIAL_H
 #define IDEALNN_SEQUENTIAL_H
 
-#include "Layer.h"
+#include <Layer/Layer.h>
 
 namespace IdealNN {
 /**

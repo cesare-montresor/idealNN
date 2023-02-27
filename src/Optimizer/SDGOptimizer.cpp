@@ -2,9 +2,9 @@
 // Created by cesare on 20/02/23.
 //
 
-#include "SDGOptimizer.h"
-#include "../Utils.h"
-#include "../Layer/Layer.h"
+#include <Optimizer/SDGOptimizer.h>
+#include <Utils.h>
+#include <Layer/Layer.h>
 
 namespace IdealNN{
 

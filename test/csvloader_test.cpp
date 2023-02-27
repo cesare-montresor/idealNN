@@ -1,7 +1,7 @@
-#include "Common.h"
-#include "DataLoader/CSVDataLoader.h"
+#include <Common.h>
+#include <DataLoader/CSVDataLoader.h>
 
-#include "catch2/catch.hpp"
+#include <catch2/catch.hpp>
 #include <iostream>
 
 namespace IdealNN {

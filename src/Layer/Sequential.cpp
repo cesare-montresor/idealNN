@@ -2,7 +2,7 @@
 // Created by Cesare on 25/10/2022.
 //
 
-#include "Sequential.h"
+#include <Layer/Sequential.h>
 
 namespace IdealNN {
 

@@ -2,15 +2,14 @@
 // Created by cesare on 09/02/23.
 //
 
-#ifndef IDEALNN_DATALOADER_H
-#define IDEALNN_DATALOADER_H
+#ifndef IDEALNN_CSVDATALOADER_H
+#define IDEALNN_CSVDATALOADER_H
 
-#include "../Tensor/Tensor.h"
-#include <random>
+#include <DataLoader/DataLoader.h>
 
 
 namespace IdealNN {
-    struct CSVDataLoader {
+    struct CSVDataLoader: public DataLoader {
         TensorArray rows;
 
         ArrayIndex current = 0;
@@ -24,14 +23,13 @@ namespace IdealNN {
 
         void shuffle();
 
-        ArraySize numRows();
+        ArraySize numRows() const;
 
-        //std::optional<TensorArrayRef> getData();
-        TensorArrayRef getData();
+        TensorArrayRef getData() override;
 
     private:
-        default_random_engine rndEngine;
+        std::default_random_engine rndEngine{};
     };
 }
 
-#endif //IDEALNN_DATALOADER_H
+#endif //IDEALNN_CSVDATALOADER_H

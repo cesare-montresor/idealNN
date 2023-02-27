@@ -10,6 +10,7 @@
 #include <cstdint>
 #include <Eigen/Eigen>
 #include <iostream>
+#include <random>
 //#include <optional>
 
 //NOTE: unsupported => provided "as is" (https://eigen.tuxfamily.org/dox/unsupported/index.html)

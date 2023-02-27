@@ -5,8 +5,8 @@
 #ifndef IDEALNN_SDGOPTIMIZER_H
 #define IDEALNN_SDGOPTIMIZER_H
 
-#include "Optimizer.h"
-#include "../Common.h"
+#include <Optimizer/Optimizer.h>
+#include <Common.h>
 
 namespace IdealNN{
     struct SDGOptimizer: public Optimizer {

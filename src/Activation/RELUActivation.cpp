@@ -2,9 +2,9 @@
 // Created by cesare on 22/02/23.
 //
 
-#include "RELUActivation.h"
-#include "../Utils.h"
-#include "../Tensor/Tensor.h"
+#include <Activation/RELUActivation.h>
+#include <Utils.h>
+#include <Tensor/Tensor.h>
 
 
 namespace IdealNN {

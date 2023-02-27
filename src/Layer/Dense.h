@@ -2,8 +2,8 @@
 // Created by cesare on 08/02/23.
 //
 
-#include "Layer.h"
-#include "../Tensor/Tensor.h"
+#include <Layer/Layer.h>
+#include <Tensor/Tensor.h>
 
 #ifndef IDEALNN_DENSE_H
 #define IDEALNN_DENSE_H

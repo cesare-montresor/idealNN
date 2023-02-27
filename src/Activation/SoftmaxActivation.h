@@ -5,7 +5,7 @@
 #ifndef IDEALNN_SOFTMAXACTIVATION_H
 #define IDEALNN_SOFTMAXACTIVATION_H
 
-#include "Activation.h"
+#include <Activation/Activation.h>
 
 namespace IdealNN {
     struct SoftmaxActivation:  public Activation {

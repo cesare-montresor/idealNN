@@ -5,7 +5,7 @@
 #ifndef IDEALNN_SIGMOIDACTIVATION_H
 #define IDEALNN_SIGMOIDACTIVATION_H
 
-#include "Activation.h"
+#include <Activation/Activation.h>
 
 namespace IdealNN {
     struct SigmoidActivation:  public Activation {

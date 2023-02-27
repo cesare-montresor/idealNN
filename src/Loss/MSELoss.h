@@ -5,9 +5,9 @@
 #ifndef IDEALNN_MSELOSS_H
 #define IDEALNN_MSELOSS_H
 
-#include "../Common.h"
-#include "../Tensor/Tensor.h"
-#include "Loss.h"
+#include <Common.h>
+#include <Tensor/Tensor.h>
+#include <Loss/Loss.h>
 
 namespace IdealNN {
     struct MSELoss: public Loss {

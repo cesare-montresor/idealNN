@@ -5,7 +5,7 @@
 #ifndef IDEALNN_RELUACTIVATION_H
 #define IDEALNN_RELUACTIVATION_H
 
-#include "Activation.h"
+#include <Activation/Activation.h>
 
 namespace IdealNN {
 

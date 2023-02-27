@@ -2,8 +2,9 @@
 // Created by cesare on 08/02/23.
 //
 
-#include "Tensor.h"
-#include "../Utils.h"
+#include <Tensor/Tensor.h>
+#include <Utils.h>
+#include <Common.h>
 
 
 //Tensor
@@ -11,12 +12,12 @@
 namespace IdealNN {
 
     //Template args
-    TensorRef Tensor::MakeTensor() { return make_shared<Tensor>(); }
-    TensorRef Tensor::MakeTensor(ArraySize rows, ArraySize cols) { return make_shared<Tensor>(rows, cols); }
-    TensorRef Tensor::MakeTensor(Tensor const &tensor) { return make_shared<Tensor>(tensor); }
-    TensorRef Tensor::MakeTensor(TensorRef tensor) { return make_shared<Tensor>(tensor); }
-    TensorRef Tensor::MakeTensor(Matrix const &matrix) { return make_shared<Tensor>(matrix); }
-    TensorRef Tensor::MakeTensor(MatrixRef matrix) { return make_shared<Tensor>(matrix); }
+    TensorRef Tensor::MakeTensor() { return std::make_shared<Tensor>(); }
+    TensorRef Tensor::MakeTensor(ArraySize rows, ArraySize cols) { return std::make_shared<Tensor>(rows, cols); }
+    TensorRef Tensor::MakeTensor(Tensor const &tensor) { return std::make_shared<Tensor>(tensor); }
+    TensorRef Tensor::MakeTensor(TensorRef tensor) { return std::make_shared<Tensor>(tensor); }
+    TensorRef Tensor::MakeTensor(Matrix const &matrix) { return std::make_shared<Tensor>(matrix); }
+    TensorRef Tensor::MakeTensor(MatrixRef matrix) { return std::make_shared<Tensor>(matrix); }
 
     Tensor::Tensor():Tensor(0,0) {}
 
@@ -45,7 +46,7 @@ namespace IdealNN {
     }
 
     Tensor::Tensor(Matrix const &matrix) {
-        this->data = make_shared<Matrix>(matrix);
+        this->data = Utils::MakeMatrix(matrix);
         this->operations = Utils::MakeLayerArray();
         this->gradients = Utils::MakeMatrix(data->rows(), data->cols());
     }
@@ -80,14 +81,14 @@ namespace IdealNN {
 //Scalar
 namespace IdealNN
 {
-    ScalarRef Scalar::MakeScalar(){return make_shared<Scalar>(); }
-    ScalarRef Scalar::MakeScalar(ScalarValue value){ return make_shared<Scalar>(value);}
-    ScalarRef Scalar::MakeScalar(Scalar const &scalar){ return make_shared<Scalar>(scalar); }
-    ScalarRef Scalar::MakeScalar(ScalarRef scalar){ return make_shared<Scalar>(scalar); }
-    ScalarRef Scalar::MakeScalar(Tensor const &tensor){ return make_shared<Scalar>(tensor); }
-    ScalarRef Scalar::MakeScalar(TensorRef tensor){ return make_shared<Scalar>(tensor);}
-    ScalarRef Scalar::MakeScalar(Matrix const &matrix){ return make_shared<Scalar>(matrix);}
-    ScalarRef Scalar::MakeScalar(MatrixRef matrix){ return make_shared<Scalar>(matrix);}
+    ScalarRef Scalar::MakeScalar(){return std::make_shared<Scalar>(); }
+    ScalarRef Scalar::MakeScalar(ScalarValue value){ return std::make_shared<Scalar>(value);}
+    ScalarRef Scalar::MakeScalar(Scalar const &scalar){ return std::make_shared<Scalar>(scalar); }
+    ScalarRef Scalar::MakeScalar(ScalarRef scalar){ return std::make_shared<Scalar>(scalar); }
+    ScalarRef Scalar::MakeScalar(Tensor const &tensor){ return std::make_shared<Scalar>(tensor); }
+    ScalarRef Scalar::MakeScalar(TensorRef tensor){ return std::make_shared<Scalar>(tensor);}
+    ScalarRef Scalar::MakeScalar(Matrix const &matrix){ return std::make_shared<Scalar>(matrix);}
+    ScalarRef Scalar::MakeScalar(MatrixRef matrix){ return std::make_shared<Scalar>(matrix);}
 
     Scalar::Scalar(){
         this->data = Utils::MakeMatrix(1,1);
@@ -135,7 +136,7 @@ namespace IdealNN
     }
     Scalar::Scalar(Matrix const &matrix){
         assert(matrix.rows() == 1 && matrix.cols() == 1 );
-        this->data = make_shared<Matrix>(matrix);
+        this->data = Utils::MakeMatrix(matrix);
         this->operations = Utils::MakeLayerArray();
         this->gradients = Utils::MakeMatrix(1,1);
     }

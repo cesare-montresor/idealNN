@@ -1,13 +1,13 @@
 #include "catch2/catch.hpp"
-#include "Layer/Dense.h"
-#include "DataLoader/CSVDataLoader.h"
+#include <Layer/Dense.h>
+#include <DataLoader/CSVDataLoader.h>
 #include <iostream>
-#include "Utils.h"
-#include "Loss/MSELoss.h"
-#include "Loss/CrossEntropyLoss.h"
-#include "Optimizer/SDGOptimizer.h"
-#include "Activation/SigmoidActivation.h"
-#include "Activation/RELUActivation.h"
+#include <Utils.h>
+#include <Loss/MSELoss.h>
+#include <Loss/CrossEntropyLoss.h>
+#include <Optimizer/SDGOptimizer.h>
+#include <Activation/SigmoidActivation.h>
+#include <Activation/RELUActivation.h>
 
 namespace IdealNN {
 
@@ -64,7 +64,7 @@ namespace IdealNN {
 
             loss = criterion->loss(ys, ys_hat);
 
-            cout << "Loss: " << loss << endl;
+            std::cout << "Loss: " << loss << std::endl;
             criterion->backward();
             optimizer->step();
             optimizer->zero_grad();
@@ -113,8 +113,8 @@ namespace IdealNN {
         auto x2 = fc1->forwardBatch(xs);
         auto ys_hat2 = fc2->forwardBatch(x);
         auto loss2 = criterion->loss(ys,ys_hat2);
-        cout<< "Loss1: " << loss << endl;
-        cout<< "Loss2: " << loss2 << endl;
+        std::cout<< "Loss1: " << loss << std::endl;
+        std::cout<< "Loss2: " << loss2 << std::endl;
 
         REQUIRE(Utils::ScalarValueEqual(loss, 2.82019f) );
     }

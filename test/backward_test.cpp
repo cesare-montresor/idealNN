@@ -1,9 +1,9 @@
-#include "catch2/catch.hpp"
-#include "Layer/Dense.h"
-#include "DataLoader/CSVDataLoader.h"
+#include <catch2/catch.hpp>
+#include <Layer/Dense.h>
+#include <DataLoader/CSVDataLoader.h>
 #include <iostream>
-#include "Utils.h"
-#include "Loss/MSELoss.h"
+#include <Utils.h>
+#include <Loss/MSELoss.h>
 
 namespace IdealNN {
     TEST_CASE("Backward: test dense-linear") {

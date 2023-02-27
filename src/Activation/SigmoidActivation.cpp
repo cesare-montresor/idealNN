@@ -3,9 +3,9 @@
 //
 
 
-#include "SigmoidActivation.h"
-#include "../Utils.h"
-#include "../Tensor/Tensor.h"
+#include <Activation/SigmoidActivation.h>
+#include <Utils.h>
+#include <Tensor/Tensor.h>
 
 
 namespace IdealNN {

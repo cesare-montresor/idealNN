@@ -5,9 +5,9 @@
 #ifndef IDEALNN_CROSSENTROPYLOSS_H
 #define IDEALNN_CROSSENTROPYLOSS_H
 
-#include "../Common.h"
-#include "../Tensor/Tensor.h"
-#include "Loss.h"
+#include <Common.h>
+#include <Tensor/Tensor.h>
+#include <Loss/Loss.h>
 
 namespace IdealNN {
     struct CrossEntropyLoss: public Loss {
