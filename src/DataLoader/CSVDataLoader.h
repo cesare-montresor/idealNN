@@ -8,6 +8,7 @@
 #include "../Tensor/Tensor.h"
 #include <random>
 
+
 namespace IdealNN {
     struct CSVDataLoader {
         TensorArray rows;
@@ -25,6 +26,7 @@ namespace IdealNN {
 
         ArraySize numRows();
 
+        //std::optional<TensorArrayRef> getData();
         TensorArrayRef getData();
 
     private:

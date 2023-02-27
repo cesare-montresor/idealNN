@@ -12,6 +12,8 @@
 namespace IdealNN {
 
     TEST_CASE("Optimizer: test SDG 10 epoch") {
+        srand(0);
+
         auto learning_rate = 0.00000001f;
         auto batch_size = 10;
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.norm.csv";

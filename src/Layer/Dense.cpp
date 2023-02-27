@@ -8,7 +8,7 @@
 
 namespace IdealNN {
 //Constructors
-    Dense::Dense(int in, int out) {
+    Dense::Dense(int in, int out):Layer() {
         this->in = in;
         this->out = out;
 

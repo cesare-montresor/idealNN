@@ -10,6 +10,7 @@
 
 namespace IdealNN {
 
+    //Template args
     TensorRef Tensor::MakeTensor() { return make_shared<Tensor>(); }
     TensorRef Tensor::MakeTensor(ArraySize rows, ArraySize cols) { return make_shared<Tensor>(rows, cols); }
     TensorRef Tensor::MakeTensor(Tensor const &tensor) { return make_shared<Tensor>(tensor); }
@@ -25,7 +26,7 @@ namespace IdealNN {
         this->gradients = Utils::MakeMatrix(data->rows(), data->cols());
     }
 
-    Tensor::Tensor(Tensor const &tensor) {
+    Tensor::Tensor(Tensor const &tensor){
         this->data = tensor.data;
         this->operations = Utils::MakeLayerArray();
         this->gradients = Utils::MakeMatrix(data->rows(), data->cols());

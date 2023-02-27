@@ -13,6 +13,13 @@
 
 namespace IdealNN {
 
+    /*
+    template<typename ... Args>
+    inline TensorRef make_tensor(Args&& ... args) {
+        return std::make_shared<Tensor>(args...);
+    }
+    */
+
     struct Tensor {
 
         //static
@@ -22,6 +29,13 @@ namespace IdealNN {
         static TensorRef MakeTensor(TensorRef tensor);
         static TensorRef MakeTensor(MatrixRef matrix);
         static TensorRef MakeTensor(Matrix const &matrix);
+
+        /*
+        template<typename ... Args>
+        static TensorRef make_tensor(Args&& ... args) {
+            return std::make_shared<Tensor>(args...);
+        }
+        */
 
 
         //constructors
@@ -48,12 +62,13 @@ namespace IdealNN {
         void addOperation(LayerRef layer);
         void extendOperations(TensorRef tensor, LayerRef layer);
     };
+
+
 }
 
 
 namespace IdealNN {
     struct Scalar: public Tensor {
-        typedef Tensor super;
         //static
         static ScalarRef MakeScalar();
         static ScalarRef MakeScalar(ScalarValue value);

@@ -9,6 +9,7 @@ project(
 set(CMAKE_CXX_STANDARD_REQUIRED     ON)
 set(CMAKE_CXX_EXTENSIONS            OFF)
 
+file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*)
 file(GLOB SOURCES_TEST ${PROJECT_SOURCE_DIR}/test/*.cpp)
 
 # Compile with coverage support
@@ -30,34 +31,9 @@ set(INCLUDES
 
 
 
-add_library(
-    idealNN
-        src/Layer/Layer.h
-        src/Layer/Sequential.cpp
-        src/Layer/Sequential.h
-        src/Layer/Dense.cpp
-        src/Layer/Dense.h
-        src/Tensor/Tensor.cpp
-        src/Tensor/Tensor.h
-        src/DataLoader/DataLoader.cpp
-        src/DataLoader/DataLoader.h
-        src/Common.h
-        src/DataLoader/CSVDataLoader.h
-        src/DataLoader/CSVDataLoader.cpp
-        src/Utils.h
-        src/Utils.cpp
-        src/Loss/MSELoss.cpp
-        src/Loss/MSELoss.h
-        src/Loss/Loss.h
-        src/Optimizer/Optimizer.h
-        src/Optimizer/SDGOptimizer.cpp
-        src/Optimizer/SDGOptimizer.h
-        src/Activation/Activation.h
-        src/Activation/SigmoidActivation.cpp
-        src/Activation/SigmoidActivation.h
-        src/Activation/RELUActivation.cpp
-        src/Activation/RELUActivation.h
-        src/Loss/CrossEntropyLoss.cpp src/Activation/SoftmaxActivation.cpp)
+add_library(idealNN ${SOURCES})
+target_include_directories(idealNN
+        PUBLIC ${PROJECT_SOURCE_DIR}/src)
 
 
 find_package (Eigen3 REQUIRED)
@@ -66,19 +42,12 @@ target_link_libraries(idealNN Eigen3::Eigen)
 
 # ==== Testing ====
 
-add_executable(
-    idealNN_test
-        EXCLUDE_FROM_ALL
-        third_party/catch2/catch.hpp
-        test/main_test.cpp
-        test/csvloader_test.cpp
-        test/forward_test.cpp
-        test/loss_test.cpp
-        test/optimizer_test.cpp
-)
+add_executable(idealNN_test EXCLUDE_FROM_ALL
+        ${SOURCES_TEST}
+        third_party/catch2/catch.hpp)
 target_link_libraries(idealNN_test idealNN)
 
-target_sources(idealNN_test PRIVATE ${SOURCES_TEST})
+#target_sources(idealNN_test PRIVATE ${SOURCES_TEST})
 target_include_directories(
     idealNN_test
         PRIVATE src/

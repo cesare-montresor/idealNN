@@ -8,7 +8,24 @@
 #include "Common.h"
 
 namespace IdealNN{
+
+    /*
+    template<typename T>
+    using Ref = std::shared_ptr<T>;
+    */
+
     namespace Utils{
+
+        template<typename T>
+        inline std::vector<T> slice(std::shared_ptr<vector<T>> value, ArrayIndex start, ArraySize count) {
+            if(start + 1 >= value.size() ) {return T();}
+            auto items_count = start + count < value.size() ? count : (value.size() - start);
+
+            auto first = value.begin() + start;
+            auto last = value.begin() + start + items_count;
+
+            return std::vector<T>{first, last};
+        }
 
         //TODO: template vector<T>
         MatrixArray slice(MatrixArray array, ArrayIndex start, ArraySize count);
@@ -16,9 +33,9 @@ namespace IdealNN{
 
         bool ScalarValueEqual(ScalarValue a, ScalarValue b);
 
-        ScalarValueArrayRef MakeScalarValueArray() { return make_shared<ScalarValueArray>(); }
-        ScalarValueArrayRef MakeScalarValueArray(ArraySize size) { return make_shared<ScalarValueArray>(size); }
-        ScalarValueArrayRef MakeScalarValueArray(ScalarValueArray scalarValueArray) { return make_shared<ScalarValueArray>(scalarValueArray); }
+        ScalarValueArrayRef MakeScalarValueArray();
+        ScalarValueArrayRef MakeScalarValueArray(ArraySize size);
+        ScalarValueArrayRef MakeScalarValueArray(ScalarValueArray scalarValueArray);
 
         MatrixRef MakeMatrix(ArraySize in, ArraySize out);
 

@@ -7,24 +7,37 @@
 
 #include <vector>
 #include <memory>
+#include <cstdint>
 #include <Eigen/Eigen>
 #include <iostream>
+//#include <optional>
 
 //NOTE: unsupported => provided "as is" (https://eigen.tuxfamily.org/dox/unsupported/index.html)
 //#include <unsupported/Eigen/MatrixFunctions>
 
-
-using namespace std;
-
 namespace IdealNN{
 
     // Wrappers for standard types, to IdealNN types
-    typedef unsigned long int ArrayIndex;
-    typedef unsigned long int ArraySize;
+    using ArrayIndex = std::int64_t;
+    using ArraySize = std::int64_t;
+
+    template<typename T>
+    using shared_ptr = std::shared_ptr<T>;
+
+    template<typename T>
+    using vector = std::vector<T>;
+
+    /*
+    template<typename T>
+    using optional = std::optional<T>;
+    */
+
+    using default_random_engine = std::default_random_engine;
+    using string = std::string;
 
     using Eigen::MatrixXf;
     typedef MatrixXf Matrix;
-    using MatrixRef = shared_ptr<Matrix>;
+    using MatrixRef = std::shared_ptr<Matrix>;
     typedef vector<MatrixRef> MatrixArray;
     typedef shared_ptr<MatrixArray> MatrixArrayRef;
     typedef Eigen::internal::traits<Matrix>::Scalar CoeffRef;
