@@ -59,7 +59,7 @@ namespace IdealNN{
         DenseRef MakeDense(int in, int out);
         SigmoidActivationRef MakeSigmoidActivation();
         RELUActivationRef MakeRELUActivation();
-
+        SoftmaxActivationRef MakeSoftmaxActivation();
 
     };
 }

@@ -18,8 +18,8 @@ namespace IdealNN {
             auto y = ys->at(i);
             auto y_hat = ys_hat->at(i);
             auto log_y_hat = (y_hat->data->array() ).log();
-            std::cout << "log_y: " << y_hat->data->array() << std::endl << std::flush;
-            std::cout << "log_y_hat: " << log_y_hat.array() << std::endl << std::flush;
+            //std::cout << "log_y: " << y_hat->data->array() << std::endl << std::flush;
+            //std::cout << "log_y_hat: " << log_y_hat.array() << std::endl << std::flush;
             auto y_error = Matrix( (y->data->array() * log_y_hat ).matrix() );
             deltas->at(i) = Tensor::MakeTensor(y_error);
             if(deltas->at(i)->use_grads){

@@ -1,41 +1,47 @@
-#include "catch2/catch.hpp"
+
 #include <Layer/Dense.h>
 #include <DataLoader/CSVDataLoader.h>
-#include <iostream>
 #include <Utils.h>
 #include <Loss/MSELoss.h>
 #include <Loss/CrossEntropyLoss.h>
 #include <Optimizer/SDGOptimizer.h>
 #include <Activation/SigmoidActivation.h>
+#include <Activation/SoftmaxActivation.h>
 #include <Activation/RELUActivation.h>
+
+#include <catch2/catch.hpp>
+#include <iostream>
 
 namespace IdealNN {
 
     TEST_CASE("Optimizer: test SDG 10 epoch") {
         srand(0);
 
-        auto learning_rate = 0.00000001f;
-        auto batch_size = 10;
+        auto learning_rate = 0.000001f;
+        auto batch_size = 20;
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.norm.csv";
         auto dl = new CSVDataLoader(batch_size, path);
-        dl->shuffle();
-        auto criterion = new CrossEntropyLoss();
+
+
 
         auto fc1 = Utils::MakeDense(4, 10);
         auto sig1 = Utils::MakeSigmoidActivation();
         auto fc2 = Utils::MakeDense(10, 3);
-        auto softmax = Utils::MakeSigmoidActivation();
+        auto softmax = Utils::MakeSoftmaxActivation();
 
-        auto layers = Utils::MakeLayerArray();
-        layers->push_back(fc1);
-        layers->push_back(fc2);
+        auto criterion = new CrossEntropyLoss();
+
+        auto trainLayers = Utils::MakeLayerArray();
+        trainLayers->push_back(fc1);
+        trainLayers->push_back(fc2);
 
 
-        auto optimizer = new SDGOptimizer(layers, learning_rate);
+        auto optimizer = new SDGOptimizer(trainLayers, learning_rate);
 
         auto epoch = 0;
         auto epoch_max = 10;
         ScalarValue loss;
+        dl->shuffle();
         while(true) {
             auto batch = dl->getData();
             auto bs = batch->size();

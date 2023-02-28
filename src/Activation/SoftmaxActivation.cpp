@@ -27,7 +27,7 @@ namespace IdealNN {
         auto x = xs->at(i);
         auto x_num_row = x->data->rows();
         auto x_num_col = x->data->cols();
-        auto x_cnt = x_num_col;
+        auto x_cnt = x_num_row;
         auto x_exp = x->data->array().exp();
         auto x_exp_sum = x_exp.sum();
         auto softmax = Matrix((x_exp / x_exp_sum).matrix());
@@ -49,7 +49,7 @@ namespace IdealNN {
 
         auto prevLayer = x->operations->back();
         x->operations->pop_back();
-        auto next_dx = Tensor::MakeTensor( Matrix((*softmax_dx) * (*dx->data)) );
+        auto next_dx = Tensor::MakeTensor( Matrix((softmax_dx->array()) * (dx->data->array())) );
 
         prevLayer->backward( next_dx, i );
     }
