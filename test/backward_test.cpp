@@ -32,13 +32,13 @@ namespace IdealNN {
         auto criterion = new MSELoss();
         auto loss = criterion->loss(ys,ys_hat);
 
-        cout << "Grads: FC1 " << fc1->weights->gradients->array() << endl;
-        cout << "Grads: FC2 " << fc2->weights->gradients->array() << endl;
+        std::cout << "Grads: FC1 " << fc1->weights->gradients->array() << std::endl;
+        std::cout << "Grads: FC2 " << fc2->weights->gradients->array() << std::endl;
 
         criterion->backward();
-        cout << "Loss: " << loss << endl;
-        cout << "Grads: FC1 " << fc1->weights->gradients->array() << endl;
-        cout << "Grads: FC2 " << fc2->weights->gradients->array() << endl;
+        std::cout << "Loss: " << loss << std::endl;
+        std::cout << "Grads: FC1 " << fc1->weights->gradients->array() << std::endl;
+        std::cout << "Grads: FC2 " << fc2->weights->gradients->array() << std::endl;
 
         REQUIRE(Utils::ScalarValueEqual(loss, 2.82019f) );
     }

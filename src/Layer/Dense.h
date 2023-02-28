@@ -17,17 +17,14 @@ namespace IdealNN {
 
 
     struct Dense : public Layer {
-
-
+    protected:
         int in, out;
-        TensorArrayRef xs;
+
+    public:
         TensorRef weights;
         TensorRef bias;
-        TensorArrayRef activations;
 
         Dense(int in, int out);
-
-        TensorArrayRef forwardBatch(TensorArrayRef xs) override;
         TensorRef forward(TensorRef x, ArrayIndex i) override;
         void backward(TensorRef dx, ArrayIndex i) override;
         TensorArrayRef parameters() override;

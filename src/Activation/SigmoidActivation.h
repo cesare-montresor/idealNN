@@ -9,14 +9,8 @@
 
 namespace IdealNN {
     struct SigmoidActivation:  public Activation {
-        TensorArrayRef xs;
-        TensorArrayRef activations;
-
-        SigmoidActivation();
-        TensorArrayRef forwardBatch(TensorArrayRef xs) override;
         TensorRef forward(TensorRef x, ArrayIndex i) override;
         void backward(TensorRef dx, ArrayIndex i) override;
-        TensorArrayRef parameters() override;
     };
 
 } // IdealNN

@@ -10,14 +10,8 @@
 namespace IdealNN {
 
     struct RELUActivation:  public Activation {
-        TensorArrayRef xs;
-        TensorArrayRef activations;
-
-        RELUActivation();
-        TensorArrayRef forwardBatch(TensorArrayRef xs) override;
         TensorRef forward(TensorRef x, ArrayIndex i) override;
         void backward(TensorRef dx, ArrayIndex i) override;
-        TensorArrayRef parameters() override;
     };
 
 } // IdealNN

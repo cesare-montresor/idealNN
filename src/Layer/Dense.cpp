@@ -14,7 +14,6 @@ namespace IdealNN {
 
         weights = Tensor::MakeTensor(out, in);
         bias = Tensor::MakeTensor(out, 1);
-        activations = Utils::MakeTensorArray();
 
         weights->data->setRandom();
         bias->data->setRandom();
@@ -23,17 +22,7 @@ namespace IdealNN {
     }
 
 //Static
-    TensorArrayRef Dense::forwardBatch(TensorArrayRef xs) {
-        auto bs = xs->size();
-        this->xs = xs;
-        activations->clear();
-        for(int i=0; i<bs; i++){
-            auto x = xs->at(i);
-            auto output = this->forward(x,i);
-            activations->push_back(output);
-        }
-        return activations;
-    }
+
 
     TensorRef Dense::forward(TensorRef x, ArrayIndex i) {
         auto result = ( (*weights->data) * (*x->data) + (*bias->data));

@@ -10,22 +10,6 @@
 
 namespace IdealNN {
 
-    SoftmaxActivation::SoftmaxActivation(){
-        activations = Utils::MakeTensorArray();
-    }
-
-    TensorArrayRef SoftmaxActivation::forwardBatch(TensorArrayRef xs) {
-        auto bs = xs->size();
-        this->xs = xs;
-        activations->clear();
-        for(int i=0; i<bs; i++){
-            auto x = xs->at(i);
-            auto output = this->forward(x,i);
-            activations->push_back(output);
-        }
-        return activations;
-    }
-
     TensorRef SoftmaxActivation::forward(TensorRef x, ArrayIndex i) {
         auto x_exp = x->data->array().exp();
         auto x_exp_sum = x_exp.sum();
@@ -60,7 +44,6 @@ namespace IdealNN {
             }
         }
 
-
         auto ops_num = x->operations->size();
         if(ops_num==0) return;
 
@@ -71,7 +54,5 @@ namespace IdealNN {
         prevLayer->backward( next_dx, i );
     }
 
-    TensorArrayRef SoftmaxActivation::parameters() {
-        return Utils::MakeTensorArray();
-    }
+
 } // IdealNN

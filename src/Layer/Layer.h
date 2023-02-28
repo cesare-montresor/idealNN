@@ -15,7 +15,7 @@
 
 namespace IdealNN {
 
-    struct Module: public std::enable_shared_from_this<Layer> {
+    struct ILayer: public std::enable_shared_from_this<Layer> {
 
         //static array
         virtual TensorArrayRef forwardBatch(TensorArrayRef xs) = 0 ;
@@ -24,17 +24,13 @@ namespace IdealNN {
         virtual TensorArrayRef parameters() = 0;
     };
 
-    struct Layer: public Module {
+    struct Layer: public ILayer {
+    protected:
+        TensorArrayRef xs;
 
-
-
+    public:
         //static array
-        TensorArrayRef forwardBatch(TensorArrayRef xs);
-
-
-        virtual TensorRef forward(TensorRef x, ArrayIndex i) = 0 ;
-        virtual void backward(TensorRef dx, ArrayIndex i) = 0;
-        virtual TensorArrayRef parameters() = 0;
+        TensorArrayRef forwardBatch(TensorArrayRef xs) override;
     };
 
 

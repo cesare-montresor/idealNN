@@ -27,13 +27,12 @@ set(LINKER_FLAGS
 set(INCLUDES
     ${PROJECT_SOURCE_DIR}/third_party
 )
-#    ${PROJECT_SOURCE_DIR}/test
 
 
 
-add_library(idealNN ${SOURCES})
-target_include_directories(idealNN
-        PUBLIC ${PROJECT_SOURCE_DIR}/src)
+
+add_library(idealNN ${SOURCES} )
+target_include_directories(idealNN PUBLIC ${PROJECT_SOURCE_DIR}/src)
 
 
 find_package (Eigen3 REQUIRED)
@@ -42,9 +41,7 @@ target_link_libraries(idealNN Eigen3::Eigen)
 
 # ==== Testing ====
 
-add_executable(idealNN_test EXCLUDE_FROM_ALL
-        ${SOURCES_TEST}
-        third_party/catch2/catch.hpp)
+add_executable(idealNN_test EXCLUDE_FROM_ALL ${SOURCES_TEST} third_party/catch2/catch.hpp)
 target_link_libraries(idealNN_test idealNN)
 
 #target_sources(idealNN_test PRIVATE ${SOURCES_TEST})

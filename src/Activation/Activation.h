@@ -9,8 +9,10 @@
 
 
 namespace IdealNN {
-//Constructors
-    struct Activation: public Layer {};
+
+    struct Activation: public Layer {
+        TensorArrayRef parameters() override;
+    };
 }
 
 #endif //IDEALNN_ACTIVATION_H

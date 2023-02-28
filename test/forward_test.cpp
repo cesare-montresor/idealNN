@@ -34,7 +34,7 @@ namespace IdealNN {
             auto y = (*ys)[i];
             auto y_hat = (*ys_hat)[i];
             auto error = y->data->coeff(0) - y_hat->data->coeff(0);
-            cout << "Error[" << i << "]: " << error << endl;
+            std::cout << "Error[" << i << "]: " << error << std::endl;
             errors->at(i) = Scalar::MakeScalar(error);
         }
 
@@ -66,7 +66,7 @@ namespace IdealNN {
             auto y = (*ys)[i];
             auto y_hat = (*ys_hat)[i];
             auto error = y->data->coeff(0) - y_hat->data->coeff(0);
-            cout << "Error[" << i << "]: " << error << endl;
+            std::cout << "Error[" << i << "]: " << error << std::endl;
             errors->at(i) = Scalar::MakeScalar(error);
         }
 

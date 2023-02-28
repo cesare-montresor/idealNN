@@ -8,21 +8,6 @@
 
 
 namespace IdealNN {
-    RELUActivation::RELUActivation(){
-        activations = Utils::MakeTensorArray();
-    }
-
-    TensorArrayRef RELUActivation::forwardBatch(TensorArrayRef xs) {
-        auto bs = xs->size();
-        this->xs = xs;
-        activations->clear();
-        for(int i=0; i<bs; i++){
-            auto x = xs->at(i);
-            auto output = this->forward(x,i);
-            activations->push_back(output);
-        }
-        return activations;
-    }
 
     TensorRef RELUActivation::forward(TensorRef x, ArrayIndex i) {
         auto result = x->data->array().max(0).matrix();
@@ -49,11 +34,6 @@ namespace IdealNN {
 
         prevLayer->backward( next_dx, i );
     }
-
-    TensorArrayRef RELUActivation::parameters() {
-        return Utils::MakeTensorArray();
-    }
-
 
 
 } // IdealNN

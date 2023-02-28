@@ -13,7 +13,7 @@ namespace IdealNN {
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto batch = dl->getData();
-        cout << "Batch size: " << batch->size() << endl;
+        std::cout << "Batch size: " << batch->size() << std::endl;
 
         for (ArrayIndex i = 0; i < batch->size(); i++) {
             //cout << "Item " << i << ": " << batch[i]->array() << endl;
@@ -36,7 +36,7 @@ namespace IdealNN {
         while (true) {
             auto batch = dl->getData();
             if (batch->size() == 0) {
-                cout << "Final batch size: " << batch->size() << endl;
+                std::cout << "Final batch size: " << batch->size() << std::endl;
                 break;
             }
             for (ArrayIndex i = 0; i < batch->size(); i++) {
@@ -61,19 +61,19 @@ namespace IdealNN {
         auto maxEpochs = 3;
         auto epochs = 0;
 
-        cout << "Epoch 0: " << endl;
+        std::cout << "Epoch 0: " << std::endl;
         while (true) {
             auto batch = dl->getData();
             if (batch->size() == 0) {
                 if (epochs < maxEpochs) {
-                    cout << cnt << endl;
+                    std::cout << cnt << std::endl;
                     cnt = 0;
                     dl->rewind();
                     epochs++;
-                    cout << "Epoch " << epochs << ": ";
+                    std::cout << "Epoch " << epochs << ": ";
                 } else {
-                    cout << cnt << endl;
-                    cout << "Done!" << endl;
+                    std::cout << cnt << std::endl;
+                    std::cout << "Done!" << std::endl;
                     break;
                 }
 
@@ -100,7 +100,7 @@ namespace IdealNN {
             auto row = (*batch)[i]->data->array();
             auto cls = int(row(class_idx));
             if (cls >= 1) {
-                cout << "Item " << i << ": " << row << endl;
+                std::cout << "Item " << i << ": " << row << std::endl;
                 found = true;
                 break;
             }

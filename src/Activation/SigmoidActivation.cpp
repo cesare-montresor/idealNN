@@ -10,22 +10,6 @@
 
 namespace IdealNN {
 
-    SigmoidActivation::SigmoidActivation(){
-        activations = Utils::MakeTensorArray();
-    }
-
-    TensorArrayRef SigmoidActivation::forwardBatch(TensorArrayRef xs) {
-        auto bs = xs->size();
-        this->xs = xs;
-        activations->clear();
-        for(int i=0; i<bs; i++){
-            auto x = xs->at(i);
-            auto output = this->forward(x,i);
-            activations->push_back(output);
-        }
-        return activations;
-    }
-
     TensorRef SigmoidActivation::forward(TensorRef x, ArrayIndex i) {
         auto sigma_exp = ((*x->data) * -1).array().exp();
         auto result = ( 1 / ( 1 + sigma_exp)).matrix();
@@ -39,7 +23,9 @@ namespace IdealNN {
 
     void SigmoidActivation::backward(TensorRef dx, ArrayIndex i) {
         auto x = xs->at(i);
-        auto sigma_x = activations->at(i)->data->array();
+        auto sigma_exp = ((*x->data) * -1).array().exp();
+        auto sigma_x = ( 1 / ( 1 + sigma_exp));
+
         auto sigma_dx = Matrix( (( 1 - sigma_x ) * sigma_x).matrix() );
         auto ops_num = x->operations->size();
         if(ops_num==0) return;
@@ -51,7 +37,4 @@ namespace IdealNN {
         prevLayer->backward( next_dx, i );
     }
 
-    TensorArrayRef SigmoidActivation::parameters() {
-        return Utils::MakeTensorArray();
-    }
 } // IdealNN
