@@ -149,9 +149,5 @@ namespace IdealNN
         this->data->coeffRef(0,0) = scalar;
     }
 
-    CoeffRef Scalar::val(){
-        return this->data->coeffRef(0);
-    }
-
 
 }

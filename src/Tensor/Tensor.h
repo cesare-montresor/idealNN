@@ -91,7 +91,6 @@ namespace IdealNN {
 
         ScalarValue value();
         void value(ScalarValue value);
-        CoeffRef val();
     };
 }
 

@@ -17,15 +17,15 @@ namespace IdealNN {
     TEST_CASE("Optimizer: test SDG 10 epoch") {
         srand(0);
 
-        auto learning_rate = 0.000001f;
-        auto batch_size = 20;
+        auto learning_rate = 0.00001f;
+        auto batch_size = 4;
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.norm.csv";
         auto dl = new CSVDataLoader(batch_size, path);
 
 
 
         auto fc1 = Utils::MakeDense(4, 10);
-        auto sig1 = Utils::MakeSigmoidActivation();
+        auto relu1 = Utils::MakeRELUActivation();
         auto fc2 = Utils::MakeDense(10, 3);
         auto softmax = Utils::MakeSoftmaxActivation();
 
@@ -64,7 +64,7 @@ namespace IdealNN {
             }
 
             auto x1 = fc1->forwardBatch(xs);
-            auto a1 = sig1->forwardBatch(x1);
+            auto a1 = relu1->forwardBatch(x1);
             auto x2 = fc2->forwardBatch(a1);
             auto ys_hat = softmax->forwardBatch(x2);
 

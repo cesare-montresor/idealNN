@@ -10,7 +10,9 @@
 
 
 namespace IdealNN {
+    /// Represent a general purpose interface for DataLoaders
     struct DataLoader {
+        /// Returns the next batch of data, if no more data is available, returns an empty vector.
         virtual TensorArrayRef getData() = 0;
     };
 

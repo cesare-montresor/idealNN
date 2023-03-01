@@ -11,75 +11,106 @@
 #include <Eigen/Eigen>
 #include <iostream>
 #include <random>
-//#include <optional>
 
-//NOTE: unsupported => provided "as is" (https://eigen.tuxfamily.org/dox/unsupported/index.html)
-//#include <unsupported/Eigen/MatrixFunctions>
+
+
+/// Common.h contains type definitions for the whole project
+/// serves also as forward declaration to avoid circular dependencies.
 
 namespace IdealNN{
 
-    // Wrappers for standard types, to IdealNN types
+    /// Default type for vector/array index
     using ArrayIndex = std::int64_t;
+    /// Default type for vector/array size
     using ArraySize = std::int64_t;
 
+    /// Default type for shared pointers
     template<typename T>
     using shared_ptr = std::shared_ptr<T>;
+    //is this hiding too much information about the type of pointer used?
+    //using Ref = std::shared_ptr<T>;
 
+
+    /// Default type for arrays
     template<typename T>
     using vector = std::vector<T>;
 
-    /*
-    template<typename T>
-    using optional = std::optional<T>;
-    */
-
-    using default_random_engine = std::default_random_engine;
+    /// Default type for random engine
+    using random_engine = std::default_random_engine;
+    /// Default type for strings
     using string = std::string;
 
-    using Eigen::MatrixXf;
-    typedef MatrixXf Matrix;
+    /// Default type for Matrices
+    using Matrix = Eigen::MatrixXf ;
+    /// Default type for Matrix pointers
     using MatrixRef = std::shared_ptr<Matrix>;
-    typedef vector<MatrixRef> MatrixArray;
-    typedef shared_ptr<MatrixArray> MatrixArrayRef;
-    typedef Eigen::internal::traits<Matrix>::Scalar CoeffRef;
+    /// Default type for Matrix arrays
+    using MatrixArray = vector<MatrixRef> ;
+    /// Default type for pointers to arrays of Matrices
+    using MatrixArrayRef = shared_ptr<MatrixArray> ;
 
-    typedef float ScalarValue;
-    typedef vector<ScalarValue> ScalarValueArray;
-    typedef shared_ptr<ScalarValueArray> ScalarValueArrayRef;
+    // Default type for Matrix coefficients (unused)
+    // using Coeff = Eigen::internal::traits<Matrix>::Scalar ;
+
+    /// Default type for Scalar Values
+    using ScalarValue = float ;
+    /// Default type for arrays of Scalar Values
+    using ScalarValueArray = vector<ScalarValue>;
+    /// Default type for pointers to arrays of Scalar Values
+    using ScalarValueArrayRef = shared_ptr<ScalarValueArray> ;
+    /// ScalarDelta defines the tolerance for real value comparison
     const ScalarValue ScalarDelta = 0.00001;
 
-    // forward declarations to avoid circular deps:
+    /// Forward declaration of Tensor class
     struct Tensor;
+    /// Default type for Tensor pointers
     using TensorRef = shared_ptr<Tensor>;
-    typedef vector<TensorRef> TensorArray;
-    typedef shared_ptr<TensorArray> TensorArrayRef;
+    /// Default type for array of Tensors
+    using TensorArray = vector<TensorRef>;
+    /// Default type for pointers to array of Tensors
+    using TensorArrayRef = shared_ptr<TensorArray>;
 
+    /// Forward declaration of Scalar
     struct Scalar;
+    /// Default type for Scalar pointers
     using ScalarRef = shared_ptr<Scalar>;
-    typedef vector<ScalarRef> ScalarArray;
-    typedef shared_ptr<ScalarArray> ScalarArrayRef;
+    /// Default type for array of Scalars
+    using ScalarArray = vector<ScalarRef>;
+    /// Default type for pointers to array of Scalars
+    using ScalarArrayRef = shared_ptr<ScalarArray>;
 
+    /// Forward declaration of Layer class
     struct Layer;
+    /// Default type for Layer pointers
     using LayerRef = shared_ptr<Layer>;
-    typedef vector<LayerRef> LayerArray;
-    typedef shared_ptr<LayerArray> LayerArrayRef;
+    /// Default type for array of Layers
+    using LayerArray = vector<LayerRef>;
+    /// Default type for pointers to array of Layers
+    using LayerArrayRef = shared_ptr<LayerArray>;
 
+    /// Forward declaration of Dense layer class
     struct Dense;
+    /// Default type for pointers to Dense layers
     using DenseRef = shared_ptr<Dense>;
 
+    /// Forward declaration of SigmoidActivation class
     struct SigmoidActivation;
+    /// Default type for pointers to Sigmoid Activation
     using SigmoidActivationRef = shared_ptr<SigmoidActivation>;
 
+    /// Forward declaration of RELUActivationRef layer class
     struct RELUActivation;
+    /// Default type for pointers to RELU Activation
     using RELUActivationRef = shared_ptr<RELUActivation>;
 
+    /// Forward declaration of SoftmaxActivation layer class
     struct SoftmaxActivation;
+    /// Default type for pointers to Softmax Activation
     using SoftmaxActivationRef = shared_ptr<SoftmaxActivation>;
 
-    struct Dense;
-    using DenseRef = shared_ptr<Dense>;
-
+    /// Forward declaration of Loss class
     struct Loss;
+    /// Default type for pointers to Loss error
     using LossRef = shared_ptr<Loss>;
 }
 

@@ -15,16 +15,6 @@
 namespace IdealNN{
     namespace Utils{
 
-        MatrixArray slice(MatrixArray array, ArrayIndex start, ArraySize count){
-            if(start + 1 >= array.size() ) {return MatrixArray{};}
-            auto items_count = start + count < array.size() ? count : (array.size() - start);
-
-            auto first = array.begin() + start;
-            auto last = array.begin() + start + (ArraySize)items_count;
-
-            return MatrixArray{first, last};
-        }
-
         TensorArray slice(TensorArray array, ArrayIndex start, ArraySize count){
             if(start + 1 >= array.size() ) {return TensorArray{};}
             auto items_count = start + count < array.size() ? count : (array.size() - start);
@@ -36,13 +26,14 @@ namespace IdealNN{
         }
 
 
+
         bool ScalarValueEqual(ScalarValue a, ScalarValue b){ return a - b < ScalarDelta; }
 
         ScalarValueArrayRef MakeScalarValueArray() { return std::make_shared<ScalarValueArray>(); }
         ScalarValueArrayRef MakeScalarValueArray(ArraySize size) { return std::make_shared<ScalarValueArray>(size); }
         ScalarValueArrayRef MakeScalarValueArray(ScalarValueArray scalarValueArray) { return std::make_shared<ScalarValueArray>(std::move(scalarValueArray)); }
 
-        MatrixRef MakeMatrix(ArraySize in, ArraySize out) { return std::make_shared<Matrix>(in, out); }
+        MatrixRef MakeMatrix(ArraySize rows, ArraySize cols) { return std::make_shared<Matrix>(rows, cols); }
         MatrixRef MakeMatrix(Matrix matrix) { return std::make_shared<Matrix>(std::move(matrix)); }
 
         MatrixArrayRef MakeMatrixArray() { return std::make_shared<MatrixArray>(); }

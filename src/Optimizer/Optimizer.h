@@ -9,10 +9,15 @@
 #include <Loss/Loss.h>
 
 namespace IdealNN{
+    /// General purpose interface for any Optimizer object
     struct Optimizer {
+        ///Default learning rate
         ScalarValue learning_rate;
+        ///Array of Tensors to be optimized
         TensorArrayRef parameters;
+        ///Apply the accumulated gradients corrections to the parameters.
         virtual void step()=0;
+        ///Reset the accumulated gradients.
         virtual void zero_grad()=0;
     };
 }

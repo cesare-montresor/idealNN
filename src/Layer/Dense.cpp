@@ -8,12 +8,13 @@
 
 namespace IdealNN {
 //Constructors
-    Dense::Dense(int in, int out):Layer() {
+    Dense::Dense(ArraySize  in, ArraySize  out):Layer() {
         this->in = in;
         this->out = out;
 
         weights = Tensor::MakeTensor(out, in);
         bias = Tensor::MakeTensor(out, 1);
+
 
         weights->data->setRandom();
         bias->data->setRandom();
@@ -34,9 +35,8 @@ namespace IdealNN {
         return output;
     }
 
-
     void Dense::backward(TensorRef dx, ArrayIndex i) {
-        auto x = xs->at(i);
+        auto x = xs->at(i); // xs is the batch, x is the single input
         auto bias_dx = (*dx->data);
         auto weights_dx = bias_dx * (x->data->transpose()) ;
         (*bias->gradients) += bias_dx;

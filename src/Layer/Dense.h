@@ -15,18 +15,36 @@
 
 namespace IdealNN {
 
-
+    /// Implements a standard Dense or Fully Connected Layer.
     struct Dense : public Layer {
     protected:
-        int in, out;
+        /// Number of input units
+        ArraySize in;
+        /// Number of output units
+        ArraySize out;
 
     public:
+        /// matrix of weights
         TensorRef weights;
+        /// vector of biases
         TensorRef bias;
 
-        Dense(int in, int out);
+        /// Construct a dense layer specifying the number of in/out units
+        /// @param in Number of input units
+        /// @param out Number of out units
+        Dense(ArraySize  in, ArraySize  out);
+
+        /// Accept single item from a batch data and execute a linear transformation for the forward pass.
+        /// @param x Tensor representing a single instance of data
+        /// @param i Index of the data inside the mini batch, useful for storing partial results to be reused my the backward pass
         TensorRef forward(TensorRef x, ArrayIndex i) override;
+
+        /// Accept single item from a batch data and execute the forward pass.
+        /// @param xd Tensor representing the gradiant flowing from the previous layers.
+        /// @param i Index of the data inside the mini batch, useful to connect the gradients dx with the original input data.
         void backward(TensorRef dx, ArrayIndex i) override;
+
+        /// Return weights and bias Tensors
         TensorArrayRef parameters() override;
     };
 }

@@ -10,11 +10,13 @@
 #include <Loss/Loss.h>
 
 namespace IdealNN {
+    /// Implements the Cross Entropy Loss function, useful for multi-class classification tasks.
     struct CrossEntropyLoss: public Loss {
-        TensorArrayRef ys;
-        TensorArrayRef deltas;
-
+        /// Compute the loss function using the formula: sum( y*-log(_hat)) / batch_size
+        /// @param ys Represent an array containing the ground-truth
+        /// @param ys_hat Represent an array containing the ground-truth
         ScalarValue loss(TensorArrayRef y, TensorArrayRef y_hat ) override;
+        /// Triggers the cascade of all backward pass
         void backward() override;
     };
 }
