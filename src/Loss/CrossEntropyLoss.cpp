@@ -9,12 +9,12 @@
 namespace IdealNN {
 
 
-    ScalarValue CrossEntropyLoss::loss(TensorArrayRef ys, TensorArrayRef ys_hat ){
-        auto bs = ys->size();
-        this->ys = ys;
+    ScalarValue CrossEntropyLoss::loss(TensorArrayRef ys_hat, TensorArrayRef ys ){
+        auto bs = Utils::toArraySize(ys_hat->size());
+        this->ys_hat = ys_hat;
         deltas = Utils::MakeTensorArray(bs);
         ScalarValue loss = 0;
-        for(int i = 0 ; i<bs; i++){
+        for(ArraySize i = 0 ; i<bs; i++){
             auto y = ys->at(i);
             auto y_hat = ys_hat->at(i);
             auto log_y_hat = (y_hat->data->array() ).log();
@@ -31,8 +31,8 @@ namespace IdealNN {
     }
 
     void CrossEntropyLoss::backward(){
-        auto bs = deltas->size();
-        for(int i = 0; i<bs; i++) {
+        auto bs = Utils::toArraySize( deltas->size() );
+        for(ArraySize i = 0; i<bs; i++) {
             auto delta = deltas->at(i);
             auto ops_num = delta->operations->size();
             if(ops_num==0) continue;

@@ -12,10 +12,12 @@
 namespace IdealNN {
     /// Implements the Mean Squared Error loss function, useful for regression tasks.
     struct MSELoss: public Loss {
+
         /// Compute the loss function using the formula: sum(1/2 * (y - y_hat)^2) / batch_size
-        /// @param ys Represent an array containing the ground-truth
         /// @param ys_hat Represent an array containing the ground-truth
-        ScalarValue loss(TensorArrayRef ys, TensorArrayRef ys_hat ) override;
+        /// @param ys Represent an array containing the ground-truth
+        ScalarValue loss(TensorArrayRef ys_hat, TensorArrayRef ys ) override;
+
         /// Triggers the cascade of all backward pass
         void backward() override;
     };

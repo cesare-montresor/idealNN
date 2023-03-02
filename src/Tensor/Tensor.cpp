@@ -6,20 +6,23 @@
 #include <Utils.h>
 #include <Common.h>
 
+#include <utility>
+
 
 //Tensor
 
 namespace IdealNN {
 
     //Template args
+    /*
     TensorRef Tensor::MakeTensor() { return std::make_shared<Tensor>(); }
     TensorRef Tensor::MakeTensor(ArraySize rows, ArraySize cols) { return std::make_shared<Tensor>(rows, cols); }
     TensorRef Tensor::MakeTensor(Tensor const &tensor) { return std::make_shared<Tensor>(tensor); }
     TensorRef Tensor::MakeTensor(TensorRef tensor) { return std::make_shared<Tensor>(tensor); }
     TensorRef Tensor::MakeTensor(Matrix const &matrix) { return std::make_shared<Tensor>(matrix); }
     TensorRef Tensor::MakeTensor(MatrixRef matrix) { return std::make_shared<Tensor>(matrix); }
+    */
 
-    Tensor::Tensor():Tensor(0,0) {}
 
     Tensor::Tensor(ArraySize rows, ArraySize cols) {
         this->data = Utils::MakeMatrix(rows, cols);
@@ -40,7 +43,7 @@ namespace IdealNN {
     }
 
     Tensor::Tensor(MatrixRef matrix) {
-        this->data = matrix;
+        this->data = std::move(matrix);
         this->operations = Utils::MakeLayerArray();
         this->gradients = Utils::MakeMatrix(data->rows(), data->cols());
     }
@@ -75,79 +78,4 @@ namespace IdealNN {
     void Tensor::zero_grad() {
         gradients->setZero();
     }
-}
-
-
-//Scalar
-namespace IdealNN
-{
-    ScalarRef Scalar::MakeScalar(){return std::make_shared<Scalar>(); }
-    ScalarRef Scalar::MakeScalar(ScalarValue value){ return std::make_shared<Scalar>(value);}
-    ScalarRef Scalar::MakeScalar(Scalar const &scalar){ return std::make_shared<Scalar>(scalar); }
-    ScalarRef Scalar::MakeScalar(ScalarRef scalar){ return std::make_shared<Scalar>(scalar); }
-    ScalarRef Scalar::MakeScalar(Tensor const &tensor){ return std::make_shared<Scalar>(tensor); }
-    ScalarRef Scalar::MakeScalar(TensorRef tensor){ return std::make_shared<Scalar>(tensor);}
-    ScalarRef Scalar::MakeScalar(Matrix const &matrix){ return std::make_shared<Scalar>(matrix);}
-    ScalarRef Scalar::MakeScalar(MatrixRef matrix){ return std::make_shared<Scalar>(matrix);}
-
-    Scalar::Scalar(){
-        this->data = Utils::MakeMatrix(1,1);
-        this->operations = Utils::MakeLayerArray();
-        this->gradients = Utils::MakeMatrix(1,1);
-    }
-
-    Scalar::Scalar(Scalar const &scalar){
-        this->data = scalar.data;
-        this->operations = Utils::MakeLayerArray();
-        this->gradients = Utils::MakeMatrix(1,1);
-    }
-
-    Scalar::Scalar(ScalarRef scalar){
-        this->data = scalar->data;
-        this->operations = Utils::MakeLayerArray();
-        this->gradients = Utils::MakeMatrix(1,1);
-    }
-
-    Scalar::Scalar(ScalarValue value){
-        this->data = Utils::MakeMatrix(1,1);
-        this->data->coeffRef(0) = value;
-        this->operations = Utils::MakeLayerArray();
-        this->gradients = Utils::MakeMatrix(1,1);
-    }
-
-    Scalar::Scalar(Tensor const &tensor){
-        assert(tensor.data->rows() == 1 && tensor.data->cols() == 1 );
-        this->data = tensor.data;
-        this->operations = Utils::MakeLayerArray();
-        this->gradients = Utils::MakeMatrix(1,1);
-    }
-
-    Scalar::Scalar(TensorRef tensor){
-        assert(tensor->data->rows() == 1 && tensor->data->cols() == 1 );
-        this->data = tensor->data;
-        this->operations = Utils::MakeLayerArray();
-        this->gradients = Utils::MakeMatrix(1,1);
-    }
-    Scalar::Scalar(MatrixRef matrix){
-        assert(matrix->rows() == 1 && matrix->cols() == 1 );
-        this->data = matrix;
-        this->operations = Utils::MakeLayerArray();
-        this->gradients = Utils::MakeMatrix(1,1);
-    }
-    Scalar::Scalar(Matrix const &matrix){
-        assert(matrix.rows() == 1 && matrix.cols() == 1 );
-        this->data = Utils::MakeMatrix(matrix);
-        this->operations = Utils::MakeLayerArray();
-        this->gradients = Utils::MakeMatrix(1,1);
-    }
-
-    ScalarValue Scalar::value(){
-        return (ScalarValue)this->data->coeff(0);
-    }
-
-    void Scalar::value(ScalarValue scalar){
-        this->data->coeffRef(0,0) = scalar;
-    }
-
-
 }

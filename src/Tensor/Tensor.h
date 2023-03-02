@@ -23,23 +23,23 @@ namespace IdealNN {
     struct Tensor {
 
         //static
+        /*
         static TensorRef MakeTensor();
         static TensorRef MakeTensor(ArraySize in, ArraySize out);
         static TensorRef MakeTensor(Tensor const &tensor);
         static TensorRef MakeTensor(TensorRef tensor);
         static TensorRef MakeTensor(MatrixRef matrix);
         static TensorRef MakeTensor(Matrix const &matrix);
+        */
 
-        /*
         template<typename ... Args>
-        static TensorRef make_tensor(Args&& ... args) {
+        static TensorRef MakeTensor(Args&& ... args) {
             return std::make_shared<Tensor>(args...);
         }
-        */
+
 
 
         //constructors
-        Tensor();
         Tensor(ArraySize rows, ArraySize cols);
         Tensor(Tensor const &tensor);
         explicit Tensor(TensorRef tensor);
@@ -64,34 +64,6 @@ namespace IdealNN {
     };
 
 
-}
-
-
-namespace IdealNN {
-    struct Scalar: public Tensor {
-        //static
-        static ScalarRef MakeScalar();
-        static ScalarRef MakeScalar(ScalarValue value);
-        static ScalarRef MakeScalar(Scalar const &scalar);
-        static ScalarRef MakeScalar(ScalarRef scalar);
-        static ScalarRef MakeScalar(Tensor const &tensor);
-        static ScalarRef MakeScalar(TensorRef tensor);
-        static ScalarRef MakeScalar(Matrix const &matrix);
-        static ScalarRef MakeScalar(MatrixRef matrix);
-
-        //constructors
-        Scalar();
-        explicit Scalar(ScalarValue value);
-        Scalar(Scalar const &scalar);
-        explicit Scalar(ScalarRef scalar);
-        explicit Scalar(Tensor const &tensor);
-        explicit Scalar(TensorRef tensor);
-        explicit Scalar(Matrix const &matrix);
-        explicit Scalar(MatrixRef matrix);
-
-        ScalarValue value();
-        void value(ScalarValue value);
-    };
 }
 
 #endif //IDEALNN_TENSOR_H

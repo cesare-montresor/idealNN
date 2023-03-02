@@ -16,13 +16,13 @@ namespace IdealNN {
         /// ys_hat holds the values of the predictions made by the model, for the entire mini-batch, store it for the backward pass.
         TensorArrayRef ys_hat;
         /// deltas are the relative errors for each sample of the batch, used in the backward pass.
-        ScalarArrayRef deltas;
+        TensorArrayRef deltas;
 
     public:
         /// Compute the loss and the deltas, returns the loss and store the gradients for the backward pass.
-        /// @param ys Represent an array containing the ground-truth
         /// @param ys_hat Represent an array containing the ground-truth
-        virtual ScalarValue loss(TensorArrayRef ys, TensorArrayRef ys_hat )=0;
+        /// @param ys Represent an array containing the ground-truth
+        virtual ScalarValue loss(TensorArrayRef ys_hats, TensorArrayRef ys )=0;
         /// Triggers the cascade of all backward pass
         virtual void backward()=0;
     };

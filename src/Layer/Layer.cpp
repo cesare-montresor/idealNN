@@ -13,9 +13,9 @@ namespace IdealNN {
     //static array
     TensorArrayRef Layer::forwardBatch(TensorArrayRef xs) {
         this->xs = xs;
-        auto bs = xs->size();
+        auto bs = Utils::toArraySize(xs->size());
         auto activations = Utils::MakeTensorArray(bs);
-        for(int i=0; i<bs; i++){
+        for(ArraySize i=0; i<bs; i++){
             auto x = xs->at(i);
             auto output = this->forward(x,i);
             activations->at(i) = output;

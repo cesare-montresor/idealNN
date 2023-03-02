@@ -12,12 +12,12 @@ namespace IdealNN {
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto batch = dl->getData();
-        auto bs = batch->size();
+        auto bs = Utils::toArraySize( batch->size() );
 
 
         auto xs = Utils::MakeTensorArray(bs);
         auto ys = Utils::MakeTensorArray(bs);
-        auto errors = Utils::MakeScalarArray(bs);
+        auto errors = Utils::MakeScalarValueArray(bs);
 
         for(int i =0 ; i< bs; i++){
             xs->at(i) = batch->at(i)->view(0,0,4,1);
@@ -35,10 +35,10 @@ namespace IdealNN {
             auto y_hat = (*ys_hat)[i];
             auto error = y->data->coeff(0) - y_hat->data->coeff(0);
             std::cout << "Error[" << i << "]: " << error << std::endl;
-            errors->at(i) = Scalar::MakeScalar(error);
+            errors->at(i) = error;
         }
 
-        REQUIRE(Utils::ScalarValueEqual(errors->at(0)->value(), -1.76887f) );
+        REQUIRE(Utils::ScalarValueEqual(errors->at(0), -1.76887f) );
     }
 
 
@@ -48,11 +48,11 @@ namespace IdealNN {
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto batch = dl->getData();
-        auto bs = batch->size();
+        auto bs = Utils::toArraySize(batch->size());
 
         auto xs = Utils::MakeTensorArray(bs);
         auto ys = Utils::MakeTensorArray(bs);
-        auto errors = Utils::MakeScalarArray(bs);
+        auto errors = Utils::MakeScalarValueArray(bs);
 
         for(int i =0 ; i< batch->size(); i++){
             xs->at(i) = batch->at(i)->view(0,0,4,1);
@@ -67,9 +67,9 @@ namespace IdealNN {
             auto y_hat = (*ys_hat)[i];
             auto error = y->data->coeff(0) - y_hat->data->coeff(0);
             std::cout << "Error[" << i << "]: " << error << std::endl;
-            errors->at(i) = Scalar::MakeScalar(error);
+            errors->at(i) = error;
         }
 
-        REQUIRE(Utils::ScalarValueEqual(errors->at(0)->value(), -4.46594f) );
+        REQUIRE(Utils::ScalarValueEqual(errors->at(0), -4.46594f) );
     }
 }

@@ -23,6 +23,10 @@ namespace IdealNN{
         /// @param b A real value
         bool ScalarValueEqual(ScalarValue a, ScalarValue b);
 
+        /// Cast std::vector<T>->size() size_type (aka unsigned long) to standard ArraySize
+        /// @param size Vector size
+        ArraySize toArraySize(unsigned long size);
+
         /// Utility method to used to create an empty arrays of ScalarValues
         ScalarValueArrayRef MakeScalarValueArray();
         /// Utility method to used to create an arrays of ScalarValues by preallocating the size of the array
