@@ -18,7 +18,6 @@ namespace IdealNN {
         auto output = Tensor::MakeTensor(result);
         if(x->use_grads) {
             output->operation = shared_from_this();
-            output->extendOperations(x, shared_from_this());
         }
         return output;
     }
@@ -44,14 +43,10 @@ namespace IdealNN {
             }
         }
 
-        auto ops_num = x->operations->size();
-        if(ops_num==0) return;
-
-        auto prevLayer = x->operations->back();
-        x->operations->pop_back();
-        auto next_dx = Tensor::MakeTensor( Matrix((softmax_dx->array()) * (dx->data->array())) );
-
-        prevLayer->backward( next_dx, i );
+        if(x->operation){
+            auto next_dx = Tensor::MakeTensor( Matrix((softmax_dx->array()) * (dx->data->array())) );
+            x->operation->backward(next_dx,i);
+        }
     }
 
 

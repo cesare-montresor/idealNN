@@ -18,7 +18,7 @@ namespace IdealNN {
         /// @param ys Represent an array containing the ground-truth
         ScalarValue loss(TensorArrayRef ys_hat, TensorArrayRef ys ) override;
 
-        /// Triggers the cascade of all backward pass
+        /// Triggers the cascade of all backward pass. Gradient formula: y_hat - y
         void backward() override;
     };
 }

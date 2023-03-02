@@ -5,62 +5,54 @@
 #ifndef IDEALNN_TENSOR_H
 #define IDEALNN_TENSOR_H
 
-
-#include <Eigen/Dense>
 #include <Common.h>
 
 
 
 namespace IdealNN {
 
-    /*
-    template<typename ... Args>
-    inline TensorRef make_tensor(Args&& ... args) {
-        return std::make_shared<Tensor>(args...);
-    }
-    */
-
+    /// General purpose Tensor class, currently supporting only 1D and 2D tensors.
+    /// Tensors can store also gradients and operations for computing partial derivatives.
+    /// As general rule, unless explicitly specified, data is never copied, just referenced for performance reasons.
     struct Tensor {
 
         //static
-        /*
-        static TensorRef MakeTensor();
         static TensorRef MakeTensor(ArraySize in, ArraySize out);
-        static TensorRef MakeTensor(Tensor const &tensor);
-        static TensorRef MakeTensor(TensorRef tensor);
-        static TensorRef MakeTensor(MatrixRef matrix);
-        static TensorRef MakeTensor(Matrix const &matrix);
-        */
-
-        template<typename ... Args>
-        static TensorRef MakeTensor(Args&& ... args) {
-            return std::make_shared<Tensor>(args...);
-        }
+        static TensorRef MakeTensor(Tensor tensor);
+        static TensorRef MakeTensor(const TensorRef& tensor);
+        static TensorRef MakeTensor(const Matrix &matrix);
+        static TensorRef MakeTensor(const MatrixRef& matrix);
 
 
 
         //constructors
+        /// Create a 2D tensor with given rows and columns
         Tensor(ArraySize rows, ArraySize cols);
+        /// Create a Tensor from an existing Tensor
         Tensor(Tensor const &tensor);
-        explicit Tensor(TensorRef tensor);
+        /// Create a Tensor from a pointer to another tensor
+        explicit Tensor(const TensorRef& tensor);
+        /// Create a Tensor from a pointer to a Matrix
         explicit Tensor(MatrixRef matrix);
+        /// Create a Tensor from a Matrix
         explicit Tensor(Matrix const &matrix);
 
 
         //Properties
+        /// Holds the data of the tensor.
         MatrixRef data;
+        /// Defines if the Tensor should accumulate gradients or not.
         bool use_grads = true;
-        LayerArrayRef operations;
+        /// Represent operation executed on the Tensor, it is used by the backward pass. If is not set, it will interrupt the backward steps.
         LayerRef operation;
+        /// Defines the last operation executed on the Tensor, it is used by the backward pass.
         MatrixRef gradients;
 
-        void zero_grad();
-
         //Methods
-        TensorRef view(ArraySize row_min, ArraySize col_min, ArraySize row_count, ArraySize col_count);
-        void inheritOperations(TensorRef tensor);
-        void addOperation(LayerRef layer);
-        void extendOperations(TensorRef tensor, LayerRef layer);
+        /// Reset the accumulated gradients to zero.
+        void zero_grad();
+        /// Returns a Tensor pointer with a subset of the data.
+        TensorRef view(ArrayIndex row_min, ArrayIndex col_min, ArraySize row_count, ArraySize col_count);
     };
 
 

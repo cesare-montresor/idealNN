@@ -16,7 +16,6 @@ namespace IdealNN {
         auto output = Tensor::MakeTensor(result);
         if(x->use_grads) {
             output->operation = shared_from_this();
-            output->extendOperations(x, shared_from_this());
         }
         return output;
     }
@@ -27,14 +26,10 @@ namespace IdealNN {
         auto sigma_x = ( 1 / ( 1 + sigma_exp));
 
         auto sigma_dx = Matrix( (( 1 - sigma_x ) * sigma_x).matrix() );
-        auto ops_num = x->operations->size();
-        if(ops_num==0) return;
-
-        auto prevLayer = x->operations->back();
-        x->operations->pop_back();
-        auto next_dx = Tensor::MakeTensor( sigma_dx );
-
-        prevLayer->backward( next_dx, i );
+        if(x->operation){
+            auto next_dx = Tensor::MakeTensor( sigma_dx );
+            x->operation->backward(next_dx,i);
+        }
     }
 
 } // IdealNN

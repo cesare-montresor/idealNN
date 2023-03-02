@@ -25,7 +25,7 @@ namespace IdealNN {
 
 
         auto fc1 = Utils::MakeDense(4, 10);
-        auto relu1 = Utils::MakeRELUActivation();
+        auto sig1 = Utils::MakeSigmoidActivation();
         auto fc2 = Utils::MakeDense(10, 3);
         auto softmax = Utils::MakeSoftmaxActivation();
 
@@ -44,7 +44,7 @@ namespace IdealNN {
         dl->shuffle();
         while(true) {
             auto batch = dl->getData();
-            auto bs = batch->size();
+            auto bs = Utils::getSize(batch);
             if(bs == 0){
                 if(epoch < epoch_max){
                     epoch++;
@@ -64,16 +64,18 @@ namespace IdealNN {
             }
 
             auto x1 = fc1->forwardBatch(xs);
-            auto a1 = relu1->forwardBatch(x1);
+            auto a1 = sig1->forwardBatch(x1);
             auto x2 = fc2->forwardBatch(a1);
             auto ys_hat = softmax->forwardBatch(x2);
 
-            loss = criterion->loss(ys, ys_hat);
+            loss = criterion->loss(ys_hat,ys);
 
             std::cout << "Loss: " << loss << std::endl;
+            std::cout << fc2->weights->data->array() << std::endl << std::flush;
             criterion->backward();
             optimizer->step();
             optimizer->zero_grad();
+            std::cout << fc2->weights->data->array() << std::endl << std::flush;
         }
 
         REQUIRE( loss < 2.82019f );
@@ -99,7 +101,7 @@ namespace IdealNN {
         auto optimizer = new SDGOptimizer(layers, learning_rate);
 
         auto batch = dl->getData();
-        auto bs = batch->size();
+        auto bs = Utils::getSize(batch);
 
         auto xs = Utils::MakeTensorArray(bs);
         auto ys = Utils::MakeTensorArray(bs);
@@ -111,18 +113,18 @@ namespace IdealNN {
 
         auto x = fc1->forwardBatch(xs);
         auto ys_hat = fc2->forwardBatch(x);
-        auto loss = criterion->loss(ys,ys_hat);
+        auto loss = criterion->loss(ys_hat,ys);
 
-
+        std::cout << fc2->weights->data->array() << std::endl << std::flush;
         criterion->backward();
         optimizer->step();
         optimizer->zero_grad();
+        std::cout << fc2->weights->data->array() << std::endl << std::flush;
 
         auto x2 = fc1->forwardBatch(xs);
         auto ys_hat2 = fc2->forwardBatch(x);
-        auto loss2 = criterion->loss(ys,ys_hat2);
-        std::cout<< "Loss1: " << loss << std::endl;
-        std::cout<< "Loss2: " << loss2 << std::endl;
+        auto loss2 = criterion->loss(ys_hat2,ys);
+
 
         REQUIRE(Utils::ScalarValueEqual(loss, 2.82019f) );
     }

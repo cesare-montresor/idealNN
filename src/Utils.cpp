@@ -28,8 +28,6 @@ namespace IdealNN{
 
         bool ScalarValueEqual(ScalarValue a, ScalarValue b){ return a - b < ScalarDelta; }
 
-        ArraySize toArraySize(unsigned long size){ return static_cast<ArraySize>(size); }
-
         ScalarValueArrayRef MakeScalarValueArray() { return std::make_shared<ScalarValueArray>(); }
         ScalarValueArrayRef MakeScalarValueArray(ArraySize size) { return std::make_shared<ScalarValueArray>(size); }
         ScalarValueArrayRef MakeScalarValueArray(ScalarValueArray scalarValueArray) { return std::make_shared<ScalarValueArray>(std::move(scalarValueArray)); }

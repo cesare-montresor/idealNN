@@ -3,6 +3,7 @@
 
 #include <catch2/catch.hpp>
 #include <iostream>
+#include <Utils.h>
 
 namespace IdealNN {
     
@@ -13,9 +14,10 @@ namespace IdealNN {
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto batch = dl->getData();
-        std::cout << "Batch size: " << batch->size() << std::endl;
+        auto bs = Utils::getSize(batch);
+        std::cout << "Batch size: " << bs << std::endl;
 
-        for (ArrayIndex i = 0; i < batch->size(); i++) {
+        for (ArrayIndex i = 0; i < bs; i++) {
             //cout << "Item " << i << ": " << batch[i]->array() << endl;
         }
         REQUIRE(true);
@@ -35,11 +37,12 @@ namespace IdealNN {
 
         while (true) {
             auto batch = dl->getData();
-            if (batch->size() == 0) {
-                std::cout << "Final batch size: " << batch->size() << std::endl;
+            auto bs = Utils::getSize(batch);
+            if (bs == 0) {
+                std::cout << "Final batch size: " << bs << std::endl;
                 break;
             }
-            for (ArrayIndex i = 0; i < batch->size(); i++) {
+            for (ArrayIndex i = 0; i < bs; i++) {
                 cnt++;
                 //cout << "Item " << i << ": " << batch[i]->array() << endl;
             }
@@ -64,7 +67,8 @@ namespace IdealNN {
         std::cout << "Epoch 0: " << std::endl;
         while (true) {
             auto batch = dl->getData();
-            if (batch->size() == 0) {
+            auto bs = Utils::getSize(batch);
+            if (bs == 0) {
                 if (epochs < maxEpochs) {
                     std::cout << cnt << std::endl;
                     cnt = 0;
@@ -78,7 +82,7 @@ namespace IdealNN {
                 }
 
             }
-            for (ArrayIndex i = 0; i < batch->size(); i++) {
+            for (ArrayIndex i = 0; i < bs; i++) {
                 cnt++;
                 //cout << "Item " << i << ": " << batch[i]->array() << endl;
             }
@@ -94,10 +98,11 @@ namespace IdealNN {
         auto dl = new CSVDataLoader(batch_size, path);
         dl->shuffle();
         auto batch = dl->getData();
+        auto bs = Utils::getSize(batch);
         auto found = false;
 
-        for (ArrayIndex i = 0; i < batch->size(); i++) {
-            auto row = (*batch)[i]->data->array();
+        for (ArrayIndex i = 0; i < bs; i++) {
+            auto row = batch->at(i)->data->array();
             auto cls = int(row(class_idx));
             if (cls >= 1) {
                 std::cout << "Item " << i << ": " << row << std::endl;

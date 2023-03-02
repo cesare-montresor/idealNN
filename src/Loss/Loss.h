@@ -15,7 +15,7 @@ namespace IdealNN {
     protected:
         /// ys_hat holds the values of the predictions made by the model, for the entire mini-batch, store it for the backward pass.
         TensorArrayRef ys_hat;
-        /// deltas are the relative errors for each sample of the batch, used in the backward pass.
+        /// deltas are the relative errors for each sample of the batch. They are computed in the forward pass and used in the backward pass.
         TensorArrayRef deltas;
 
     public:

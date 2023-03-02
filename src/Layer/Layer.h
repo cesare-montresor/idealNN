@@ -15,11 +15,15 @@
 
 namespace IdealNN {
     /// General interface for Layer objects
-    struct ILayer: public std::enable_shared_from_this<Layer> {
+    struct Layer: public std::enable_shared_from_this<Layer> {
+    protected:
+        /// Array of tensors, used to store the whole batch of inputs. Used in the backward pass.
+        TensorArrayRef xs;
 
+    public:
         /// Accept a batch of data and call the forward pass on each of them, it also stores the inputs inside xs
         /// @param xs Array of tensors, representing the a patch of data.
-        virtual TensorArrayRef forwardBatch(TensorArrayRef xs) = 0 ;
+        TensorArrayRef forwardBatch(TensorArrayRef xs);
 
         /// Accept single item from a batch data and execute the forward pass.
         /// @param x Tensor representing a single instance of data
@@ -34,19 +38,6 @@ namespace IdealNN {
         /// Return the list of tensors that can be optimized.
         virtual TensorArrayRef parameters() = 0;
     };
-
-    /// Partial implementation of the ILayer interface
-    struct Layer: public ILayer {
-    protected:
-        /// Array of tensors, used to store the whole batch of inputs. Used in the backward pass.
-        TensorArrayRef xs;
-
-    public:
-        /// Accept a batch of data and call the forward pass on each of them, it also stores the inputs inside xs
-        /// @param xs Array of tensors, representing the a patch of data.
-        TensorArrayRef forwardBatch(TensorArrayRef xs) override;
-    };
-
 
 }
 

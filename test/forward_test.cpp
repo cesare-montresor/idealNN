@@ -12,7 +12,7 @@ namespace IdealNN {
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto batch = dl->getData();
-        auto bs = Utils::toArraySize( batch->size() );
+        auto bs = Utils::getSize( batch );
 
 
         auto xs = Utils::MakeTensorArray(bs);
@@ -31,8 +31,8 @@ namespace IdealNN {
         auto ys_hat = fc2->forwardBatch(a1s);
 
         for(int i =0 ; i< bs; i++){
-            auto y = (*ys)[i];
-            auto y_hat = (*ys_hat)[i];
+            auto y = ys->at(i);
+            auto y_hat = ys_hat->at(i);
             auto error = y->data->coeff(0) - y_hat->data->coeff(0);
             std::cout << "Error[" << i << "]: " << error << std::endl;
             errors->at(i) = error;
@@ -48,13 +48,13 @@ namespace IdealNN {
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto batch = dl->getData();
-        auto bs = Utils::toArraySize(batch->size());
+        auto bs = Utils::getSize(batch);
 
         auto xs = Utils::MakeTensorArray(bs);
         auto ys = Utils::MakeTensorArray(bs);
         auto errors = Utils::MakeScalarValueArray(bs);
 
-        for(int i =0 ; i< batch->size(); i++){
+        for(ArrayIndex i =0 ; i< bs; i++){
             xs->at(i) = batch->at(i)->view(0,0,4,1);
             ys->at(i) = batch->at(i)->view(4,0,1,1);
         }
@@ -62,9 +62,9 @@ namespace IdealNN {
         auto fc1 = Utils::MakeDense(4, 1);
         auto ys_hat = fc1->forwardBatch(xs);
 
-        for(int i =0 ; i< batch->size(); i++){
-            auto y = (*ys)[i];
-            auto y_hat = (*ys_hat)[i];
+        for(ArrayIndex i =0 ; i< bs; i++){
+            auto y = ys->at(i);
+            auto y_hat = ys_hat->at(i);
             auto error = y->data->coeff(0) - y_hat->data->coeff(0);
             std::cout << "Error[" << i << "]: " << error << std::endl;
             errors->at(i) = error;

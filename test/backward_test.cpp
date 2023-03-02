@@ -13,7 +13,7 @@ namespace IdealNN {
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto batch = dl->getData();
-        auto bs = batch->size();
+        auto bs = Utils::getSize(batch);
 
         auto xs = Utils::MakeTensorArray(bs);
         auto ys = Utils::MakeTensorArray(bs);
@@ -30,7 +30,7 @@ namespace IdealNN {
         auto ys_hat = fc2->forwardBatch(x);
 
         auto criterion = new MSELoss();
-        auto loss = criterion->loss(ys,ys_hat);
+        auto loss = criterion->loss(ys_hat,ys);
 
         std::cout << "Grads: FC1 " << fc1->weights->gradients->array() << std::endl;
         std::cout << "Grads: FC2 " << fc2->weights->gradients->array() << std::endl;

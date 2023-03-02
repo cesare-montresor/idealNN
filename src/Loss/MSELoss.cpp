@@ -8,36 +8,31 @@
 
 namespace IdealNN {
 
-
+    // https://www.youtube.com/watch?v=d9AvALaC-5s
     ScalarValue MSELoss::loss( TensorArrayRef ys_hat, TensorArrayRef ys ){
-        auto bs = Utils::toArraySize(ys->size());
+        auto bs = Utils::getSize(ys);
         this->ys_hat = ys_hat;
         deltas = Utils::MakeTensorArray(bs);
         ScalarValue loss = 0;
         for(ArraySize i = 0 ; i<bs; i++){
             auto y = ys->at(i);
             auto y_hat = ys_hat->at(i);
-            auto y_error = (*y->data) - (*y_hat->data);
+            auto y_error = (*y_hat->data) - (*y->data); // final derivative step ->  (y_hat - y)
             deltas->at(i) = Tensor::MakeTensor(y_error);
-            if(deltas->at(i)->use_grads){
-                deltas->at(i)->inheritOperations(y_hat);
-            }
-            loss += pow(y_error.value(), 2);
+            loss += ((y_error.array().pow(2)/2).sum() ) / ((ScalarValue)(y_error.array().size()));
         }
         loss = loss / ScalarValue(bs) ;
         return loss;
     }
 
     void MSELoss::backward(){
-        auto bs = Utils::toArraySize(deltas->size());
+        auto bs = Utils::getSize(ys_hat);
         for(ArraySize i = 0; i<bs; i++) {
             auto delta = deltas->at(i);
-            auto ops_num = delta->operations->size();
-            if(ops_num==0) continue;
-
-            auto prevLayer = delta->operations->back();
-            delta->operations->pop_back();
-            prevLayer->backward(delta,i);
+            auto y_hat = ys_hat->at(i);
+            if(y_hat->operation) {
+                y_hat->operation->backward(delta, i);
+            }
         }
     }
 }

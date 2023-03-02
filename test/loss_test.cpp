@@ -13,7 +13,7 @@ namespace IdealNN {
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto batch = dl->getData();
-        auto bs = batch->size();
+        auto bs = Utils::getSize(batch);
 
         auto xs = Utils::MakeTensorArray(bs);
         auto ys = Utils::MakeTensorArray(bs);
@@ -27,7 +27,7 @@ namespace IdealNN {
         auto ys_hat = fc1->forwardBatch(xs);
 
         auto criterion = new MSELoss();
-        auto loss = criterion->loss(ys,ys_hat);
+        auto loss = criterion->loss(ys_hat,ys);
 
         REQUIRE(Utils::ScalarValueEqual(loss, 19.0876f) );
     }
