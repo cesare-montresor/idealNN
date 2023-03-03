@@ -71,11 +71,11 @@ namespace IdealNN {
             loss = criterion->loss(ys_hat,ys);
 
             std::cout << "Loss: " << loss << std::endl;
-            std::cout << fc2->weights->data->array() << std::endl << std::flush;
+            //std::cout << fc2->weights->data->array() << std::endl << std::flush;
             criterion->backward();
             optimizer->step();
             optimizer->zero_grad();
-            std::cout << fc2->weights->data->array() << std::endl << std::flush;
+            //std::cout << fc2->weights->data->array() << std::endl << std::flush;
         }
 
         REQUIRE( loss < 2.82019f );
