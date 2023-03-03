@@ -8,7 +8,7 @@
 
 namespace IdealNN {
 
-    //https://www.youtube.com/watch?v=znqbtL0fRA0&t=205s
+    //https://www.youtube.com/watch?v=znqbtL0fRA0&t=2132s
     ScalarValue CrossEntropyLoss::loss(TensorArrayRef ys_hat, TensorArrayRef ys ){
         auto bs = Utils::getSize(ys_hat);
         this->ys_hat = ys_hat;
