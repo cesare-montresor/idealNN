@@ -20,7 +20,7 @@ namespace IdealNN {
             auto log_y_hat = (y_hat->data->array() ).log();
             auto y_error = Matrix( (y->data->array() * log_y_hat ).matrix() );
             loss += y_error.array().sum();
-            deltas->at(i) = Tensor::MakeTensor(Matrix((y->data->array() * y_hat->data->array() ).matrix()) );
+            deltas->at(i) = Tensor::MakeTensor(Matrix((y->data->array() / y_hat->data->array() * -1 ).matrix()) );
         }
         return -loss / ScalarValue(bs);
     }
