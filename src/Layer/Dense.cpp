@@ -22,9 +22,6 @@ namespace IdealNN {
         bias->zero_grad();
     }
 
-//Static
-
-
     TensorRef Dense::forward(TensorRef x, ArrayIndex i) {
         auto result = ( (*weights->data) * (*x->data) + (*bias->data));
         auto output = Tensor::MakeTensor(result);
