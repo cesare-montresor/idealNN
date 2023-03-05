@@ -27,6 +27,9 @@ namespace IdealNN{
         /// @param size Vector size
         template<typename T>
         ArraySize getSize( shared_ptr<vector<T>> vector){ return static_cast<ArraySize>(vector->size()); }
+
+        /// Cast vector size size_type (aka unsigned long) to standard ArraySize
+        /// @param size Vector size
         template<typename T>
         ArraySize getSize( vector<T> vector){ return static_cast<ArraySize>(vector.size()); }
 
