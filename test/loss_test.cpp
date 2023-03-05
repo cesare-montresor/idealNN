@@ -17,7 +17,7 @@ namespace IdealNN {
 
         auto xs = Utils::MakeTensorArray(bs);
         auto ys = Utils::MakeTensorArray(bs);
-        CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 3 );
+        CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 1 );
 
         auto fc1 = Utils::MakeDense(4, 1);
         auto ys_hat = fc1->forwardBatch(xs);

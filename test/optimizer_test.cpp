@@ -22,7 +22,8 @@ namespace IdealNN {
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.norm.csv";
         auto dl = new CSVDataLoader(batch_size, path);
 
-
+        auto xs = Utils::MakeTensorArray();
+        auto ys = Utils::MakeTensorArray();
 
         auto fc1 = Utils::MakeDense(4, 10);
         auto sig1 = Utils::MakeSigmoidActivation();
@@ -54,14 +55,7 @@ namespace IdealNN {
                     break;
                 }
             }
-
-            auto xs = Utils::MakeTensorArray(bs);
-            auto ys = Utils::MakeTensorArray(bs);
-
-            for (int i = 0; i < bs; i++) {
-                xs->at(i) = batch->at(i)->view(0, 0, 1, 4);
-                ys->at(i) = batch->at(i)->view(0, 4, 1, 3);
-            }
+            CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 3 );
 
             auto x1 = fc1->forwardBatch(xs);
             auto a1 = sig1->forwardBatch(x1);
@@ -71,11 +65,12 @@ namespace IdealNN {
             loss = criterion->loss(ys_hat,ys);
 
             std::cout << "Loss: " << loss << std::endl;
-            //std::cout << fc2->weights->data->array().coeff(0) << " => " << std::flush;
+            std::cout << fc2->weights->gradients->array().coeff(0) << " => " << std::flush;
             criterion->backward();
             optimizer->step();
+            std::cout << fc2->weights->gradients->array().coeff(0) << std::endl << std::flush;
             optimizer->zero_grad();
-            //std::cout << fc2->weights->data->array().coeff(0) << std::endl << std::flush;
+
         }
 
         REQUIRE( loss < 2.82019f );
@@ -104,18 +99,17 @@ namespace IdealNN {
         auto bs = Utils::getSize(batch);
         auto xs = Utils::MakeTensorArray(bs);
         auto ys = Utils::MakeTensorArray(bs);
-        CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 3 );
+        CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 1 );
 
 
         auto x = fc1->forwardBatch(xs);
         auto ys_hat = fc2->forwardBatch(x);
         auto loss = criterion->loss(ys_hat,ys);
 
-        std::cout << fc2->weights->data->array() << std::endl << std::flush;
+
         criterion->backward();
         optimizer->step();
         optimizer->zero_grad();
-        std::cout << fc2->weights->data->array() << std::endl << std::flush;
 
         auto x2 = fc1->forwardBatch(xs);
         auto ys_hat2 = fc2->forwardBatch(x);

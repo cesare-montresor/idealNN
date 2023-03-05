@@ -55,6 +55,7 @@ namespace IdealNN {
     }
 
 
+
     void Tensor::zero_grad() {
         gradients->setZero();
     }

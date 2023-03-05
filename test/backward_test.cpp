@@ -17,7 +17,7 @@ namespace IdealNN {
 
         auto xs = Utils::MakeTensorArray(bs);
         auto ys = Utils::MakeTensorArray(bs);
-        CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 3 );
+        CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 1 );
 
         auto fc1 = Utils::MakeDense(4, 10);
         auto fc2 = Utils::MakeDense(10, 1);
@@ -29,12 +29,12 @@ namespace IdealNN {
         auto loss = criterion->loss(ys_hat,ys);
 
         //std::cout << "Grads: FC1 " << fc1->weights->gradients->array() << std::endl;
-        //std::cout << "Grads: FC2 " << fc2->weights->gradients->array() << std::endl;
+        std::cout << "Grads: FC2 " << fc2->weights->gradients->array() << std::endl;
 
         criterion->backward();
         std::cout << "Loss: " << loss << std::endl;
         //std::cout << "Grads: FC1 " << fc1->weights->gradients->array() << std::endl;
-        //std::cout << "Grads: FC2 " << fc2->weights->gradients->array() << std::endl;
+        std::cout << "Grads: FC2 " << fc2->weights->gradients->array() << std::endl;
 
         REQUIRE(Utils::ScalarValueEqual(loss, 2.82019f) );
     }
