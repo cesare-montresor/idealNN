@@ -17,7 +17,7 @@ namespace IdealNN {
     struct Tensor {
 
         //static
-        static TensorRef MakeTensor(ArraySize in, ArraySize out);
+        static TensorRef MakeTensor(ArraySize rows, ArraySize cols);
         static TensorRef MakeTensor(Tensor tensor);
         static TensorRef MakeTensor(const TensorRef& tensor);
         static TensorRef MakeTensor(const Matrix &matrix);

@@ -30,6 +30,7 @@ namespace IdealNN {
         for(ArraySize i = 0; i<bs; i++) {
             auto delta = deltas->at(i);
             auto y_hat = ys_hat->at(i);
+            //std::cout << "[GRADS] \t"<<i<<" MSELoss (final) " << std::endl << delta->data->transpose().array() << std::endl << std::flush;
             if(y_hat->operation) {
                 y_hat->operation->backward(delta, i);
             }

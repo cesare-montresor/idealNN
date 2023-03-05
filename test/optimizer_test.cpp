@@ -18,7 +18,7 @@ namespace IdealNN {
         srand(0);
 
         auto learning_rate = 0.00001f;
-        auto batch_size = 4;
+        auto batch_size = 10;
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.norm.csv";
         auto dl = new CSVDataLoader(batch_size, path);
 
@@ -39,7 +39,7 @@ namespace IdealNN {
         auto optimizer = new SDGOptimizer(trainLayers, learning_rate);
 
         auto epoch = 0;
-        auto epoch_max = 10;
+        auto epoch_max = 1;
         ScalarValue loss;
         dl->shuffle();
         while(true) {
@@ -47,7 +47,7 @@ namespace IdealNN {
             auto bs = Utils::getSize(batch);
             if(bs == 0){
                 if(epoch < epoch_max){
-                    epoch++;
+                    ++epoch;
                     dl->shuffle();
                     continue;
                 }else{
@@ -59,8 +59,8 @@ namespace IdealNN {
             auto ys = Utils::MakeTensorArray(bs);
 
             for (int i = 0; i < bs; i++) {
-                xs->at(i) = batch->at(i)->view(0, 0, 4, 1);
-                ys->at(i) = batch->at(i)->view(4, 0, 3, 1);
+                xs->at(i) = batch->at(i)->view(0, 0, 1, 4);
+                ys->at(i) = batch->at(i)->view(0, 4, 1, 3);
             }
 
             auto x1 = fc1->forwardBatch(xs);
@@ -71,11 +71,11 @@ namespace IdealNN {
             loss = criterion->loss(ys_hat,ys);
 
             std::cout << "Loss: " << loss << std::endl;
-            std::cout << fc2->weights->data->array() << std::endl << std::flush;
+            //std::cout << fc2->weights->data->array().coeff(0) << " => " << std::flush;
             criterion->backward();
             optimizer->step();
             optimizer->zero_grad();
-            std::cout << fc2->weights->data->array() << std::endl << std::flush;
+            //std::cout << fc2->weights->data->array().coeff(0) << std::endl << std::flush;
         }
 
         REQUIRE( loss < 2.82019f );
@@ -102,14 +102,10 @@ namespace IdealNN {
 
         auto batch = dl->getData();
         auto bs = Utils::getSize(batch);
-
         auto xs = Utils::MakeTensorArray(bs);
         auto ys = Utils::MakeTensorArray(bs);
+        CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 3 );
 
-        for(int i =0 ; i<bs ; i++){
-            xs->at(i) = batch->at(i)->view(0,0,4,1);
-            ys->at(i) = batch->at(i)->view(4,0,1,1);
-        }
 
         auto x = fc1->forwardBatch(xs);
         auto ys_hat = fc2->forwardBatch(x);

@@ -24,9 +24,10 @@ namespace IdealNN {
         auto relu_dx_op  = ( x->data->array() <= 0 ).select(zeros.array(), dx->data->array());
         auto relu_dx = Matrix(relu_dx_op.matrix() );
 
-
+        //std::cout << "[GRADS] \t"<<i<<" RELU (partial)" << std::endl << relu_dx.array() << std::endl << std::flush;
         if(x->operation){
             auto next_dx = Tensor::MakeTensor( relu_dx );
+            //std::cout << "[GRADS] \t"<<i<<" RELU (final)" << std::endl << next_dx->data->transpose().array() << std::endl << std::flush;
             x->operation->backward(next_dx,i);
         }
     }

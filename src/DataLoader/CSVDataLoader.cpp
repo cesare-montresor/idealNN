@@ -12,7 +12,7 @@
 
 namespace IdealNN {
 
-    CSVDataLoader::CSVDataLoader(int batch_size, string fullpath){
+    CSVDataLoader::CSVDataLoader(int batch_size, const string &fullpath){
         this->batch_size = batch_size;
 
         std::ifstream file(fullpath);
@@ -32,7 +32,7 @@ namespace IdealNN {
         if (file.is_open()) {
             while (getline(file, line, '\n')) {
                 std::stringstream ss2(line);
-                auto row = Tensor::MakeTensor(col_nums, 1);
+                auto row = Tensor::MakeTensor(1,col_nums);
                 uint i = 0;
                 while (getline(ss2, word, ',')) {
                     row->data->col(0).coeffRef(i) = ScalarValue(std::stof(&word[0]));
@@ -49,8 +49,8 @@ namespace IdealNN {
         current = 0;
     }
 
-    ArraySize CSVDataLoader::numRows() const {
-        return (ArraySize)rows.size();
+    ArraySize CSVDataLoader::numRows() {
+        return (ArraySize) rows.size();
     }
 
     void CSVDataLoader::shuffle() {
@@ -63,5 +63,19 @@ namespace IdealNN {
         current += (ArraySize)batchRows.size();
         return  Utils::MakeTensorArray(std::move(batchRows));
     }
+
+    void CSVDataLoader::splitXY(TensorArrayRef &batch, TensorArrayRef &xs, TensorArrayRef &ys, ArrayIndex xs_col_start, ArrayIndex xs_col_count,  ArrayIndex ys_col_start, ArrayIndex ys_col_count ){
+        auto b_size = Utils::getSize(batch);
+        auto xs_size = Utils::getSize(xs);
+        auto ys_size = Utils::getSize(ys);
+        if( xs_size != b_size ){ xs->resize(b_size); }
+        if( ys_size != b_size ){ ys->resize(b_size); }
+
+        for(int i=0 ; i < b_size ; i++){
+            xs->at(i) = batch->at(i)->view(0, xs_col_start, 1, xs_col_count);
+            ys->at(i) = batch->at(i)->view(0, ys_col_start, 1, ys_col_count);
+        }
+    }
+
 
 }

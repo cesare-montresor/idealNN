@@ -33,7 +33,7 @@ namespace IdealNN {
         /// Constructor for CSVDataloader
         /// @param batch_size number of element return for a single batch.
         /// @param path Absolute path to the CSV file.
-        CSVDataLoader(int batch_size, string path);
+        CSVDataLoader(int batch_size, const string &path);
 
         /// Reset the internal counter.
         void rewind();
@@ -42,11 +42,12 @@ namespace IdealNN {
         void shuffle();
 
         /// Return the total number of rows.
-        ArraySize numRows() const;
+        ArraySize numRows();
 
         /// Returns the next batch of data, if no more data is available, returns an empty vector.
         TensorArrayRef getData() override;
 
+        static void splitXY(TensorArrayRef &batch, TensorArrayRef &xs, TensorArrayRef &ys, ArrayIndex xs_col_start, ArrayIndex xs_col_count,  ArrayIndex ys_col_start, ArrayIndex ys_col_count );
 
     };
 }

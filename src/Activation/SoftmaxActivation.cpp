@@ -24,27 +24,28 @@ namespace IdealNN {
 
     void SoftmaxActivation::backward(TensorRef dx, ArrayIndex i) {
         auto x = xs->at(i);
-        auto x_num_row = x->data->rows();
-        auto x_num_col = x->data->cols();
-        auto x_cnt = x_num_row;
+        auto x_cnt = x->data->cols();
         auto x_exp = x->data->array().exp();
         auto x_exp_sum = x_exp.sum();
         auto softmax = Matrix((x_exp / x_exp_sum).matrix());
 
-        auto softmax_dx = Utils::MakeMatrix(x_num_row, x_num_col);
+        auto softmax_dx = Utils::MakeMatrix( x->data->rows(),x->data->cols());
         softmax_dx->setZero();
         for(int i = 0; i < x_cnt; i++ ){
+            ScalarValue grad = 0;
             for(int j = 0; j < x_cnt; j++ ){
                 if(i == j){
-                    softmax_dx->coeffRef(i) += softmax.coeff(i) * (1 - softmax.coeff(i) );
+                    grad += softmax.coeff(i) * (1 - softmax.coeff(i) );
                 }else{
-                    softmax_dx->coeffRef(i) += -( softmax.coeff(i) * softmax.coeff(j) );
+                    grad += -( softmax.coeff(i) * softmax.coeff(j) );
                 }
             }
+            softmax_dx->coeffRef(i) = grad;
         }
-
+        //std::cout << "[GRADS] \t"<<i<<" Softmax (local)" << std::endl << softmax_dx->array() << std::endl << std::flush;
         if(x->operation){
-            auto next_dx = Tensor::MakeTensor( Matrix((softmax_dx->array()) * (dx->data->array())) );
+            auto next_dx = Tensor::MakeTensor( Matrix((softmax_dx->array() * dx->data->array()).matrix() ) );
+            //std::cout << "[GRADS] \t"<<i<<" Softmax (final)" << std::endl << next_dx->data->array() << std::endl << std::flush;
             x->operation->backward(next_dx,i);
         }
     }

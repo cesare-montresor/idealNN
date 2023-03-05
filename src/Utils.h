@@ -97,6 +97,8 @@ namespace IdealNN{
         /// Utility method to create SoftmaxActivation objects wrapped in a shared pointer
         SoftmaxActivationRef MakeSoftmaxActivation();
 
+        /// Utility function used to produce output
+        void Log();
     };
 }
 

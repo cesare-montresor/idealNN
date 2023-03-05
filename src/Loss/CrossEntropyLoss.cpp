@@ -20,7 +20,9 @@ namespace IdealNN {
             auto log_y_hat = (y_hat->data->array() ).log();
             auto y_error = Matrix( (y->data->array() * log_y_hat ).matrix() );
             loss += y_error.array().sum();
-            deltas->at(i) = Tensor::MakeTensor(Matrix((y->data->array() / y_hat->data->array() * -1 ).matrix()) );
+
+            auto delta = Tensor::MakeTensor(Matrix((y->data->array() / y_hat->data->array() * -1 ).matrix()) );
+            deltas->at(i) = delta;
         }
         return -loss / ScalarValue(bs);
     }
@@ -29,6 +31,7 @@ namespace IdealNN {
         auto bs = Utils::getSize( deltas );
         for(ArraySize i = 0; i<bs; i++) {
             auto delta = deltas->at(i);
+            //std::cout << "[GRADS] \t"<<i<<" Cross Entropy loss " << std::endl << delta->data->array() << std::endl << std::flush;
             auto y_hat = ys_hat->at(i);
             if(y_hat->operation) {
                 y_hat->operation->backward(delta,i);

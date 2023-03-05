@@ -19,10 +19,7 @@ namespace IdealNN {
         auto ys = Utils::MakeTensorArray(bs);
         auto errors = Utils::MakeScalarValueArray(bs);
 
-        for(int i =0 ; i< bs; i++){
-            xs->at(i) = batch->at(i)->view(0,0,4,1);
-            ys->at(i) = batch->at(i)->view(4,0,1,1);
-        }
+        CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 3 );
 
         auto fc1 = Utils::MakeDense(4, 10);
         auto fc2 = Utils::MakeDense(10, 1);
@@ -53,11 +50,8 @@ namespace IdealNN {
         auto xs = Utils::MakeTensorArray(bs);
         auto ys = Utils::MakeTensorArray(bs);
         auto errors = Utils::MakeScalarValueArray(bs);
-
-        for(ArrayIndex i =0 ; i< bs; i++){
-            xs->at(i) = batch->at(i)->view(0,0,4,1);
-            ys->at(i) = batch->at(i)->view(4,0,1,1);
-        }
+        
+        CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 3 );
 
         auto fc1 = Utils::MakeDense(4, 1);
         auto ys_hat = fc1->forwardBatch(xs);

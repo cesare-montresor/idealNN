@@ -41,7 +41,7 @@ namespace IdealNN{
     using string = std::string;
 
     /// Default type for Matrices
-    using Matrix = Eigen::MatrixXf ;
+    using Matrix = Eigen::MatrixXd ;
     /// Default type for Matrix pointers
     using MatrixRef = std::shared_ptr<Matrix>;
     /// Default type for Matrix arrays
@@ -53,7 +53,7 @@ namespace IdealNN{
     // using Coeff = Eigen::internal::traits<Matrix>::Scalar ;
 
     /// Default type for Scalar Values
-    using ScalarValue = float ;
+    using ScalarValue = double ;
     /// Default type for arrays of Scalar Values
     using ScalarValueArray = vector<ScalarValue>;
     /// Default type for pointers to arrays of Scalar Values

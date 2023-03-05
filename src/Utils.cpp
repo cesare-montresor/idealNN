@@ -59,6 +59,12 @@ namespace IdealNN{
         SigmoidActivationRef MakeSigmoidActivation() { return std::make_shared<SigmoidActivation>(); }
         RELUActivationRef MakeRELUActivation() { return std::make_shared<RELUActivation>(); }
         SoftmaxActivationRef MakeSoftmaxActivation() { return std::make_shared<SoftmaxActivation>(); }
+
+
+        //TODO: make a log function that can be globally enabled/disabled
+        void log(){
+            //https://stackoverflow.com/questions/3649278/how-can-i-get-the-class-name-from-a-c-object
+        }
     };
 }
 
