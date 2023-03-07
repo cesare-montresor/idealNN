@@ -15,12 +15,12 @@ namespace IdealNN {
         auto batch = dl->getData();
         auto bs = Utils::getSize(batch);
 
-        auto xs = Utils::MakeTensorArray(bs);
-        auto ys = Utils::MakeTensorArray(bs);
+        auto xs = Tensor::MakeTensorArray(bs);
+        auto ys = Tensor::MakeTensorArray(bs);
         CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 1 );
 
-        auto fc1 = Utils::MakeDense(4, 10);
-        auto fc2 = Utils::MakeDense(10, 1);
+        auto fc1 = Dense::MakeDense(4, 10);
+        auto fc2 = Dense::MakeDense(10, 1);
 
         auto x = fc1->forwardBatch(xs);
         auto ys_hat = fc2->forwardBatch(x);

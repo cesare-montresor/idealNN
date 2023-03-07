@@ -7,7 +7,8 @@
 #include <Utils.h>
 
 namespace IdealNN {
-//Constructors
+    DenseRef Dense::MakeDense(int in, int out) { return std::make_shared<Dense>(in, out); }
+
     Dense::Dense(ArraySize  in, ArraySize  out):Layer() {
         this->in = in;
         this->out = out;
@@ -16,8 +17,8 @@ namespace IdealNN {
         bias = Tensor::MakeTensor(1, out);
 
 
-        weights->data->setRandom();
-        bias->data->setZero();
+        weights->initKaiming(in);
+        bias->initKaiming(in);
         weights->zero_grad();
         bias->zero_grad();
     }
@@ -37,7 +38,7 @@ namespace IdealNN {
         //std::cout << "[GRADS] \t" << i << " Dense (local) " << std::endl << x->data->array() << std::endl << std::flush;
         auto bias_dx = (*dx->data);
         auto weights_dx = dx->data->transpose() * (*x->data);
-        //std::cout << "[GRADS] \t" << i << " Dense (final) " << std::endl << weights_dx.array() << std::endl << std::flush;
+        std::cout << "[GRADS] \t" << i << " Dense (final) " << std::endl << weights_dx.array() << std::endl << std::flush;
         (*bias->gradients) += bias_dx;
         (*weights->gradients) += weights_dx;
 
@@ -48,7 +49,7 @@ namespace IdealNN {
     }
 
     TensorArrayRef Dense::parameters() {
-        auto params = Utils::MakeTensorArray();
+        auto params = Tensor::MakeTensorArray();
         params->push_back(weights);
         params->push_back(bias);
         return params;

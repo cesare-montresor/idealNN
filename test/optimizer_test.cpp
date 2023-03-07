@@ -17,18 +17,18 @@ namespace IdealNN {
     TEST_CASE("Optimizer: test SDG 10 epoch") {
         srand(0);
 
-        auto learning_rate = 0.00001f;
+        auto learning_rate = 0.001;
         auto batch_size = 10;
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.norm.csv";
         auto dl = new CSVDataLoader(batch_size, path);
 
-        auto xs = Utils::MakeTensorArray();
-        auto ys = Utils::MakeTensorArray();
+        auto xs = Tensor::MakeTensorArray();
+        auto ys = Tensor::MakeTensorArray();
 
-        auto fc1 = Utils::MakeDense(4, 10);
-        auto sig1 = Utils::MakeSigmoidActivation();
-        auto fc2 = Utils::MakeDense(10, 3);
-        auto softmax = Utils::MakeSoftmaxActivation();
+        auto fc1 = Dense::MakeDense(4, 10);
+        auto tanh1 = SigmoidActivation::MakeSigmoidActivation();
+        auto fc2 = Dense::MakeDense(10, 3);
+        auto softmax = SoftmaxActivation::MakeSoftmaxActivation();
 
         auto criterion = new CrossEntropyLoss();
 
@@ -39,15 +39,23 @@ namespace IdealNN {
 
         auto optimizer = new SDGOptimizer(trainLayers, learning_rate);
 
+
         auto epoch = 0;
-        auto epoch_max = 1;
+        auto epoch_max = 100;
+        auto num_batches = 0;
+
         ScalarValue loss;
+        ScalarValue epochLoss=0;
+
         dl->shuffle();
         while(true) {
             auto batch = dl->getData();
             auto bs = Utils::getSize(batch);
             if(bs == 0){
+                std::cout << "---------------- " << "AVG Loss: " << epochLoss / num_batches << " ----------------" << std::endl;
                 if(epoch < epoch_max){
+                    epochLoss = 0;
+                    num_batches = 0;
                     ++epoch;
                     dl->shuffle();
                     continue;
@@ -58,17 +66,19 @@ namespace IdealNN {
             CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 3 );
 
             auto x1 = fc1->forwardBatch(xs);
-            auto a1 = sig1->forwardBatch(x1);
+            auto a1 = tanh1->forwardBatch(x1);
             auto x2 = fc2->forwardBatch(a1);
             auto ys_hat = softmax->forwardBatch(x2);
 
             loss = criterion->loss(ys_hat,ys);
+            epochLoss += loss;
+            ++num_batches;
 
             std::cout << "Loss: " << loss << std::endl;
-            std::cout << fc2->weights->gradients->array().coeff(0) << " => " << std::flush;
+            //std::cout << fc2->weights->gradients->array().coeff(0) << " => " << std::flush;
             criterion->backward();
             optimizer->step();
-            std::cout << fc2->weights->gradients->array().coeff(0) << std::endl << std::flush;
+            //std::cout << fc2->weights->gradients->array().coeff(0) << std::endl << std::flush;
             optimizer->zero_grad();
 
         }
@@ -80,14 +90,14 @@ namespace IdealNN {
     TEST_CASE("Optimizer: test SDG loss") {
         srand(0);
 
-        auto learning_rate = 0.000001f;
+        auto learning_rate = 0.0001f;
         auto batch_size = 3;
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto criterion = new MSELoss();
 
-        auto fc1 = Utils::MakeDense(4, 10);
-        auto fc2 = Utils::MakeDense(10, 1);
+        auto fc1 = Dense::MakeDense(4, 10);
+        auto fc2 = Dense::MakeDense(10, 1);
         auto layers = Utils::MakeLayerArray();
         layers->push_back(fc1);
         layers->push_back(fc2);
@@ -97,8 +107,8 @@ namespace IdealNN {
 
         auto batch = dl->getData();
         auto bs = Utils::getSize(batch);
-        auto xs = Utils::MakeTensorArray(bs);
-        auto ys = Utils::MakeTensorArray(bs);
+        auto xs = Tensor::MakeTensorArray(bs);
+        auto ys = Tensor::MakeTensorArray(bs);
         CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 1 );
 
 

@@ -29,6 +29,11 @@ namespace IdealNN {
         /// vector of biases
         TensorRef bias;
 
+        /// Utility method to create Dense layer objects wrapped in a shared pointer
+        /// @param in number of neurons in the previous layer
+        /// @param out number of neurons in the next layer
+        static DenseRef MakeDense(int in, int out);
+
         /// Construct a dense layer specifying the number of in/out units
         /// @param in Number of input units
         /// @param out Number of out units

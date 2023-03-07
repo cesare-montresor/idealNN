@@ -19,6 +19,9 @@
 
 namespace IdealNN{
 
+    /// Default type for Scalar Values
+    using ScalarValue = double;
+
     /// Default type for vector/array index
     using ArrayIndex = std::int64_t;
     /// Default type for vector/array size
@@ -37,6 +40,11 @@ namespace IdealNN{
 
     /// Default type for random engine
     using random_engine = std::default_random_engine;
+    /// Default type for random engine for normal/gaussian distribution
+    using normal_distribution = std::normal_distribution<ScalarValue>;
+    /// Default type for random engine for uniform distribution
+    using uniform_distribution = std::uniform_real_distribution<ScalarValue>;
+
     /// Default type for strings
     using string = std::string;
 
@@ -52,14 +60,15 @@ namespace IdealNN{
     // Default type for Matrix coefficients (unused)
     // using Coeff = Eigen::internal::traits<Matrix>::Scalar ;
 
-    /// Default type for Scalar Values
-    using ScalarValue = double ;
+
     /// Default type for arrays of Scalar Values
     using ScalarValueArray = vector<ScalarValue>;
     /// Default type for pointers to arrays of Scalar Values
     using ScalarValueArrayRef = shared_ptr<ScalarValueArray> ;
     /// ScalarDelta defines the tolerance for real value comparison
     const ScalarValue ScalarDelta = 0.00001;
+
+
 
     /// Forward declaration of Tensor class
     struct Tensor;
@@ -69,15 +78,6 @@ namespace IdealNN{
     using TensorArray = vector<TensorRef>;
     /// Default type for pointers to array of Tensors
     using TensorArrayRef = shared_ptr<TensorArray>;
-
-    /// Forward declaration of Scalar
-    struct Scalar;
-    /// Default type for Scalar pointers
-    using ScalarRef = shared_ptr<Scalar>;
-    /// Default type for array of Scalars
-    using ScalarArray = vector<ScalarRef>;
-    /// Default type for pointers to array of Scalars
-    using ScalarArrayRef = shared_ptr<ScalarArray>;
 
     /// Forward declaration of Layer class
     struct Layer;

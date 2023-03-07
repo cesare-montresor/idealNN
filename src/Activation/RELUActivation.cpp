@@ -8,6 +8,7 @@
 
 
 namespace IdealNN {
+    RELUActivationRef RELUActivation::MakeRELUActivation() { return std::make_shared<RELUActivation>(); }
 
     TensorRef RELUActivation::forward(TensorRef x, ArrayIndex i) {
         auto result = x->data->array().max(0).matrix();

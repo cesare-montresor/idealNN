@@ -12,7 +12,7 @@ namespace IdealNN {
     ScalarValue CrossEntropyLoss::loss(TensorArrayRef ys_hat, TensorArrayRef ys ){
         auto bs = Utils::getSize(ys_hat);
         this->ys_hat = ys_hat;
-        deltas = Utils::MakeTensorArray(bs);
+        deltas = Tensor::MakeTensorArray(bs);
         ScalarValue loss = 0;
         for(ArraySize i = 0 ; i<bs; i++){
             auto y = ys->at(i);

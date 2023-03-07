@@ -12,6 +12,12 @@
 //Tensor
 
 namespace IdealNN {
+    //static array
+    TensorArrayRef Tensor::MakeTensorArray(){ return std::make_shared<TensorArray>(); }
+    TensorArrayRef Tensor::MakeTensorArray(ArraySize size){ return std::make_shared<TensorArray>(size); }
+    TensorArrayRef Tensor::MakeTensorArray(TensorArray tensorArray){ return std::make_shared<TensorArray>(std::move(tensorArray)); }
+
+
 
     TensorRef Tensor::MakeTensor(ArraySize rows, ArraySize cols) { return std::make_shared<Tensor>(rows, cols); }
     TensorRef Tensor::MakeTensor(Tensor &tensor) { return std::make_shared<Tensor>( std::move(tensor) ); }
@@ -54,9 +60,16 @@ namespace IdealNN {
         return MakeTensor(view);
     }
 
-
-
     void Tensor::zero_grad() {
         gradients->setZero();
     }
+
+    void Tensor::initZero(){ data->setZero(); }
+    void Tensor::initUniform(){ data->setRandom(); }
+    void Tensor::initKaiming(ArrayIndex fan_in){
+        //https://stackoverflow.com/questions/35827926/eigen-matrix-library-filling-a-matrix-with-random-float-values-in-a-given-range
+        initUniform();
+        (*data) = (data->array() / sqrt(static_cast<ScalarValue>(fan_in)) ).matrix();
+    }
+
 }

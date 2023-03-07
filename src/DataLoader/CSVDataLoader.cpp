@@ -61,7 +61,7 @@ namespace IdealNN {
     TensorArrayRef CSVDataLoader::getData() {
         auto batchRows = Utils::slice(rows,current,batch_size);
         current += (ArraySize)batchRows.size();
-        return  Utils::MakeTensorArray(std::move(batchRows));
+        return  Tensor::MakeTensorArray(std::move(batchRows));
     }
 
     void CSVDataLoader::splitXY(TensorArrayRef &batch, TensorArrayRef &xs, TensorArrayRef &ys, ArrayIndex xs_col_start, ArrayIndex xs_col_count,  ArrayIndex ys_col_start, ArrayIndex ys_col_count ){

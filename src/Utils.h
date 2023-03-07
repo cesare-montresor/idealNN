@@ -11,6 +11,7 @@ namespace IdealNN{
 
     /// Utils namespace is a collection of utility methods to create IdealNN standard objects
     namespace Utils{
+
         /// Method used to get portions of array of tensors
         /// @param array Array of tensors
         /// @param start Index of the first item to be returned
@@ -70,37 +71,12 @@ namespace IdealNN{
         LayerArrayRef MakeLayerArray(LayerArray layerArray);
 
 
-        /// Utility method to used to create an empty arrays of Tensors
-        TensorArrayRef MakeTensorArray();
-        /// Utility method to used to create an arrays of Tensors by preallocating the size of the array
-        /// @param size Size of the array
-        TensorArrayRef MakeTensorArray(ArraySize size);
-        /// Utility method to used to move the ownership of an array of Tensors to a pointer
-        /// @param tensorArray Layer array to be wrapped by the pointer.
-        TensorArrayRef MakeTensorArray(TensorArray tensorArray);
 
 
-        /// Utility method to used to create an empty arrays of Scalars
-        ScalarArrayRef MakeScalarArray();
-        /// Utility method to used to create an arrays of Scalars by preallocating the size of the array
-        /// @param size Size of the array
-        ScalarArrayRef MakeScalarArray(ArraySize size);
-        /// Utility method to used to move the ownership of an array of Scalars to a pointer
-        /// @param scalarArray Layer array to be wrapped by the pointer.
-        ScalarArrayRef MakeScalarArray(ScalarArray scalarArray);
 
-        /// Utility method to create Dense layer objects wrapped in a shared pointer
-        /// @param in number of neurons in the previous layer
-        /// @param out number of neurons in the next layer
-        DenseRef MakeDense(int in, int out);
-        /// Utility method to create SigmoidActivation objects wrapped in a shared pointer
-        SigmoidActivationRef MakeSigmoidActivation();
-        /// Utility method to create RELUActivation objects wrapped in a shared pointer
-        RELUActivationRef MakeRELUActivation();
-        /// Utility method to create SoftmaxActivation objects wrapped in a shared pointer
-        SoftmaxActivationRef MakeSoftmaxActivation();
 
-        /// Utility function used to produce output
+
+        ///TODO: Utility function used to produce output
         void Log();
     };
 }

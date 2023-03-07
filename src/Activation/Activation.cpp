@@ -3,11 +3,11 @@
 //
 
 #include <Activation/Activation.h>
-#include <Utils.h>
+#include <Tensor/Tensor.h>
 
 namespace IdealNN {
 
     TensorArrayRef Activation::parameters() {
-        return Utils::MakeTensorArray();
+        return Tensor::MakeTensorArray();
     }
 }

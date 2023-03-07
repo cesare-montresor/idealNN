@@ -44,21 +44,6 @@ namespace IdealNN{
         LayerArrayRef MakeLayerArray(LayerArray layerArray){ return std::make_shared<LayerArray>(std::move(layerArray)); }
 
 
-        //static array
-        TensorArrayRef MakeTensorArray(){ return std::make_shared<TensorArray>(); }
-        TensorArrayRef MakeTensorArray(ArraySize size){ return std::make_shared<TensorArray>(size); }
-        TensorArrayRef MakeTensorArray(TensorArray tensorArray){ return std::make_shared<TensorArray>(std::move(tensorArray)); }
-
-        //static array
-        ScalarArrayRef MakeScalarArray(){ return std::make_shared<ScalarArray>(); }
-        ScalarArrayRef MakeScalarArray(ArraySize size){ return std::make_shared<ScalarArray>(size); }
-        ScalarArrayRef MakeScalarArray(ScalarArray scalarArray){ return std::make_shared<ScalarArray>(std::move(scalarArray)); }
-
-        //
-        DenseRef MakeDense(int in, int out) { return std::make_shared<Dense>(in, out); }
-        SigmoidActivationRef MakeSigmoidActivation() { return std::make_shared<SigmoidActivation>(); }
-        RELUActivationRef MakeRELUActivation() { return std::make_shared<RELUActivation>(); }
-        SoftmaxActivationRef MakeSoftmaxActivation() { return std::make_shared<SoftmaxActivation>(); }
 
 
         //TODO: make a log function that can be globally enabled/disabled

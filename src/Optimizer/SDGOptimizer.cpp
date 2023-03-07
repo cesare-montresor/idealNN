@@ -10,7 +10,7 @@ namespace IdealNN{
 
     SDGOptimizer::SDGOptimizer(const LayerArrayRef& layers, ScalarValue learning_rate){
         this->learning_rate = learning_rate;
-        this->parameters = Utils::MakeTensorArray();
+        this->parameters = Tensor::MakeTensorArray();
         auto ls = Utils::getSize(layers);
         for(ArraySize i = 0; i< ls; i++){
             auto params = layers->at(i)->parameters();
@@ -23,7 +23,7 @@ namespace IdealNN{
 
     SDGOptimizer::SDGOptimizer(const TensorArrayRef& params, ScalarValue learning_rate){
         this->learning_rate = learning_rate;
-        this->parameters = Utils::MakeTensorArray();
+        this->parameters = Tensor::MakeTensorArray();
         auto ps = Utils::getSize(params);
         for(ArraySize j=0; j<ps; j++){
             this->parameters->push_back( params->at(j) );
