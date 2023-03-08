@@ -25,3 +25,4 @@ _NOTE: The framework is called IdealNN in the same sense of 'ideal filters' in t
 - https://www.youtube.com/watch?v=MswxJw-8PvE
 - https://forums.fast.ai/t/gradients-for-softmax-are-tiny-solved/18970/11
 - http://ufldl.stanford.edu/tutorial/supervised/SoftmaxRegression/
+- https://iamtrask.github.io/2015/07/12/basic-python-network/

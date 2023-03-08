@@ -13,22 +13,37 @@ namespace IdealNN {
     TensorRef RELUActivation::forward(TensorRef x, ArrayIndex i) {
         auto result = x->data->array().max(0).matrix();
         auto output = Tensor::MakeTensor(result);
-        if(x->use_grads) {
-            output->operation = shared_from_this();
-        }
+
+        output->operation = shared_from_this();
         return output;
     }
 
     void RELUActivation::backward(TensorRef dx, ArrayIndex i) {
         auto x = xs->at(i);
-        auto zeros = Utils::MakeMatrix(x->data->rows(), x->data->cols())->setZero();
-        auto relu_dx_op  = ( x->data->array() <= 0 ).select(zeros.array(), dx->data->array());
-        auto relu_dx = Matrix(relu_dx_op.matrix() );
 
-        //std::cout << "[GRADS] \t"<<i<<" RELU (partial)" << std::endl << relu_dx.array() << std::endl << std::flush;
+        auto x_rows = x->data->rows();
+        auto x_cols = x->data->cols();
+
+        auto dx_rows = dx->data->rows();
+        auto dx_cols = dx->data->cols();
+
+
+        std::cout << "[RELU] \t DIM X  [ " << std::endl << x_rows << " ; "<< x_cols << " ]" << std::endl << std::flush;
+        std::cout << "[RELU] \t DIM DX [ " << std::endl << dx_rows << " ; "<< dx_cols << " ]" << std::endl << std::flush;
+
+
+        auto zeros = Utils::MakeMatrix(dx->data->rows(), dx->data->cols())->setZero();
+        auto relu_dx = (( x->data->array() <= 0 ).select(zeros.array(), dx->data->array() )).matrix();
+
+        auto rdx_rows = relu_dx.rows();
+        auto rdx_cols = relu_dx.cols();
+
+        std::cout << "[RELU] \t DIM DX [ " << std::endl << rdx_rows << " ; "<< rdx_cols << " ]" << std::endl << std::flush;
+
+        std::cout << "[GRADS] \t"<<i<<" RELU input DX" << std::endl << dx->data->array() << std::endl << std::flush;
         if(x->operation){
-            auto next_dx = Tensor::MakeTensor( relu_dx );
-            //std::cout << "[GRADS] \t"<<i<<" RELU (final)" << std::endl << next_dx->data->transpose().array() << std::endl << std::flush;
+            auto next_dx = Tensor::MakeTensor( relu_dx.matrix() );
+            std::cout << "[GRADS] \t"<<i<<" RELU (final)" << std::endl << next_dx->data->array() << std::endl << std::flush;
             x->operation->backward(next_dx,i);
         }
     }

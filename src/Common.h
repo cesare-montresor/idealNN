@@ -98,6 +98,11 @@ namespace IdealNN{
     /// Default type for pointers to Sigmoid Activation
     using SigmoidActivationRef = shared_ptr<SigmoidActivation>;
 
+    /// Forward declaration of SigmoidActivation class
+    struct TanhActivation;
+    /// Default type for pointers to Sigmoid Activation
+    using TanhActivationRef = shared_ptr<TanhActivation>;
+
     /// Forward declaration of RELUActivationRef layer class
     struct RELUActivation;
     /// Default type for pointers to RELU Activation

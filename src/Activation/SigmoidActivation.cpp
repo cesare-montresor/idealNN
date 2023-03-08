@@ -15,9 +15,8 @@ namespace IdealNN {
         auto sigma_exp = ((*x->data) * -1).array().exp();
         auto result = ( 1 / ( 1 + sigma_exp)).matrix();
         auto output = Tensor::MakeTensor(result);
-        if(x->use_grads) {
-            output->operation = shared_from_this();
-        }
+
+        output->operation = shared_from_this();
         return output;
     }
 
@@ -25,11 +24,11 @@ namespace IdealNN {
         auto x = xs->at(i);
         auto sigma_exp = ((*x->data) * -1).array().exp();
         auto sigma_x = ( 1 / ( 1 + sigma_exp));
-
         auto sigma_dx = (( 1 - sigma_x ) * sigma_x).matrix() ;
+
         //std::cout << "[GRADS] \t"<<i<<" Sigmoid (partial)" << std::endl << sigma_dx.array() << std::endl << std::flush;
         if(x->operation){
-            auto next_dx = Tensor::MakeTensor( sigma_dx );
+            auto next_dx = Tensor::MakeTensor( (sigma_dx.array() * dx->data->array() ).matrix() );
             //std::cout << "[GRADS] \t"<<i<<" Sigmoid (final)" << std::endl << next_dx->data->array() << std::endl << std::flush;
             x->operation->backward(next_dx,i);
         }

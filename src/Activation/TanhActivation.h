@@ -2,15 +2,17 @@
 // Created by cesare on 22/02/23.
 //
 
-#ifndef IDEALNN_SIGMOIDACTIVATION_H
-#define IDEALNN_SIGMOIDACTIVATION_H
+#ifndef IDEALNN_TANHACTIVATION_H
+#define IDEALNN_TANHACTIVATION_H
 
 #include <Activation/Activation.h>
 
 namespace IdealNN {
 
     /// Implementation of the Tanh activation
-    struct TanhActivation:  public Activation {
+    struct TanhActivation: public Activation {
+        /// Utility method to create TanhActivation objects wrapped in a shared pointer
+        static TanhActivationRef MakeTanhActivation();
 
         /// Accept single item from a batch data and execute the forward pass, using the formula: tanh(x)
         /// @param x Tensor representing a single instance of data
@@ -25,4 +27,4 @@ namespace IdealNN {
 
 } // IdealNN
 
-#endif //IDEALNN_SIGMOIDACTIVATION_H
+#endif //IDEALNN_TANHACTIVATION_H
