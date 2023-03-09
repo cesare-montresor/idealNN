@@ -35,7 +35,8 @@ namespace IdealNN {
             errors->at(i) = error;
         }
 
-        REQUIRE(Utils::ScalarValueEqual(errors->at(0), -1.76887f) );
+        delete dl;
+        REQUIRE(Utils::ScalarValueEqual(errors->at(0), -0.565442) );
     }
 
 
@@ -64,6 +65,7 @@ namespace IdealNN {
             errors->at(i) = error;
         }
 
-        REQUIRE(Utils::ScalarValueEqual(errors->at(0), -4.46594f) );
+        delete dl;
+        REQUIRE(Utils::ScalarValueEqual(errors->at(0), -0.565442) );
     }
 }

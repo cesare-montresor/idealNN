@@ -17,7 +17,7 @@ namespace IdealNN{
         /// @param start Index of the first item to be returned
         /// @param count Number of items to be returned
         /// The method always returns an array of tensors, eventually empty.
-        TensorArray slice(TensorArray array, ArrayIndex start, ArraySize count);
+        TensorArray slice(const TensorArrayRef &array, ArrayIndex start, ArraySize count);
 
         /// Method used to verify the equality of two real numbers, it uses ScalarDelta (see Common.h) to define a tolerance gap.
         /// @param a A real value
@@ -25,12 +25,12 @@ namespace IdealNN{
         bool ScalarValueEqual(ScalarValue a, ScalarValue b);
 
         /// Cast vector size size_type (aka unsigned long) to standard ArraySize
-        /// @param size Vector size
+        /// @param vector Pointer to Vector
         template<typename T>
         ArraySize getSize( shared_ptr<vector<T>> vector){ return static_cast<ArraySize>(vector->size()); }
 
         /// Cast vector size size_type (aka unsigned long) to standard ArraySize
-        /// @param size Vector size
+        /// @param vector Vector
         template<typename T>
         ArraySize getSize( vector<T> vector){ return static_cast<ArraySize>(vector.size()); }
 

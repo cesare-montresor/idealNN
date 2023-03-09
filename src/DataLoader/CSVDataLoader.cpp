@@ -8,11 +8,13 @@
 #include <algorithm>
 #include <Common.h>
 #include <Utils.h>
+#include <Tensor/Tensor.h>
 
 
 namespace IdealNN {
 
     CSVDataLoader::CSVDataLoader(int batch_size, const string &fullpath){
+        this->rows = Tensor::MakeTensorArray();
         this->batch_size = batch_size;
 
         std::ifstream file(fullpath);
@@ -24,7 +26,7 @@ namespace IdealNN {
         while (getline(ss1, word, ',')) {
             parsed_vec.push_back(ScalarValue(std::stof(&word[0])));
         }
-        col_nums = (ArraySize)parsed_vec.size();
+        this->col_nums = (ArraySize)parsed_vec.size();
 
         file.seekg(0);
 
@@ -35,10 +37,10 @@ namespace IdealNN {
                 auto row = Tensor::MakeTensor(1,col_nums);
                 uint i = 0;
                 while (getline(ss2, word, ',')) {
-                    row->data->col(0).coeffRef(i) = ScalarValue(std::stof(&word[0]));
+                    row->data->col(0).coeffRef(i) = ScalarValue( std::stof(&word[0]) );
                     i++;
                 }
-                rows.push_back( row );
+                rows->push_back( row );
             }
 
         }
@@ -50,11 +52,11 @@ namespace IdealNN {
     }
 
     ArraySize CSVDataLoader::numRows() {
-        return (ArraySize) rows.size();
+        return (ArraySize) rows->size();
     }
 
     void CSVDataLoader::shuffle() {
-        std::shuffle(rows.begin(), rows.end(), rndEngine);
+        std::shuffle(rows->begin(), rows->end(), rndEngine);
         this->rewind();
     }
 
@@ -64,7 +66,7 @@ namespace IdealNN {
         return  Tensor::MakeTensorArray(std::move(batchRows));
     }
 
-    void CSVDataLoader::splitXY(TensorArrayRef &batch, TensorArrayRef &xs, TensorArrayRef &ys, ArrayIndex xs_col_start, ArrayIndex xs_col_count,  ArrayIndex ys_col_start, ArrayIndex ys_col_count ){
+    void CSVDataLoader::splitXY(const TensorArrayRef &batch,const  TensorArrayRef &xs,const  TensorArrayRef &ys, ArrayIndex xs_col_start, ArrayIndex xs_col_count,  ArrayIndex ys_col_start, ArrayIndex ys_col_count ){
         auto b_size = Utils::getSize(batch);
         auto xs_size = Utils::getSize(xs);
         auto ys_size = Utils::getSize(ys);

@@ -36,6 +36,9 @@ namespace IdealNN {
         //std::cout << "Grads: FC1 " << fc1->weights->gradients->array() << std::endl;
         std::cout << "Grads: FC2 " << fc2->weights->gradients->array() << std::endl;
 
+
+        delete dl;
+        delete criterion;
         REQUIRE(Utils::ScalarValueEqual(loss, 2.82019f) );
     }
 }

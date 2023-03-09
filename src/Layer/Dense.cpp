@@ -17,13 +17,13 @@ namespace IdealNN {
         bias = Tensor::MakeTensor(1, out);
 
 
-        weights->initKaiming(in);
-        bias->initKaiming(in);
+        weights->initKaiming(in, 1, sqrt(3.0));
+        bias->initKaiming(in, 1, 1);
         weights->zero_grad();
         bias->zero_grad();
     }
 
-    TensorRef Dense::forward(TensorRef x, ArrayIndex i) {
+    TensorRef Dense::forward(TensorRef x) {
         auto result = ( (*x->data) * (*weights->data) + (*bias->data) );
         auto output = Tensor::MakeTensor(result);
 
@@ -32,7 +32,7 @@ namespace IdealNN {
     }
 
     void Dense::backward(TensorRef dx, ArrayIndex i) {
-        auto x = xs->at(i); // xs is the batch, x is the single input
+        auto x = inputs->at(i); // inputs is the batch, x is the single input
         auto result = ( (*x->data) * (*weights->data) + (*bias->data) );
 
         //bias

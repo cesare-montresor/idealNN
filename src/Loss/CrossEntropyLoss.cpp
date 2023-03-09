@@ -31,7 +31,7 @@ namespace IdealNN {
         auto bs = Utils::getSize( deltas );
         for(ArraySize i = 0; i<bs; i++) {
             auto delta = deltas->at(i);
-            //std::cout << "[GRADS] \t"<<i<<" Cross Entropy loss " << std::endl << delta->data->array() << std::endl << std::flush;
+            //std::cout << "[GRADS] \t"<<i<<" Cross Entropy loss \t" << delta->data->array() << std::endl << std::flush;
             auto y_hat = ys_hat->at(i);
             if(y_hat->operation) {
                 y_hat->operation->backward(delta,i);

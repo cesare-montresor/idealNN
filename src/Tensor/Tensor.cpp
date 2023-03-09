@@ -66,10 +66,16 @@ namespace IdealNN {
 
     void Tensor::initZero(){ data->setZero(); }
     void Tensor::initUniform(){ data->setRandom(); }
-    void Tensor::initKaiming(ArrayIndex fan_in){
-        //https://stackoverflow.com/questions/35827926/eigen-matrix-library-filling-a-matrix-with-random-float-values-in-a-given-range
+
+
+    void Tensor::initKaiming(ArrayIndex fan_in, ScalarValue gain, ScalarValue scaleFactor){
+        // https://pytorch.org/docs/stable/nn.init.html#torch-nn-init
         initUniform();
-        (*data) = (data->array() / sqrt(static_cast<ScalarValue>(fan_in)) ).matrix();
+        auto fan = static_cast<ScalarValue>(fan_in);
+        auto bound = (gain/sqrt(fan))*scaleFactor;
+        (*data) = ( data->array() * bound ).matrix();
     }
+
+
 
 }

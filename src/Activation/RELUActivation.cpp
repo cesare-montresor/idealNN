@@ -10,7 +10,7 @@
 namespace IdealNN {
     RELUActivationRef RELUActivation::MakeRELUActivation() { return std::make_shared<RELUActivation>(); }
 
-    TensorRef RELUActivation::forward(TensorRef x, ArrayIndex i) {
+    TensorRef RELUActivation::forward(TensorRef x) {
         auto result = x->data->array().max(0).matrix();
         auto output = Tensor::MakeTensor(result);
 
@@ -19,7 +19,7 @@ namespace IdealNN {
     }
 
     void RELUActivation::backward(TensorRef dx, ArrayIndex i) {
-        auto x = xs->at(i);
+        auto x = inputs->at(i);
 
         auto x_rows = x->data->rows();
         auto x_cols = x->data->cols();

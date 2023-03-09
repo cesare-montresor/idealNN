@@ -96,9 +96,16 @@ namespace IdealNN {
         /// Initialize the data to random values between [-1, 1] using a uniform distribution.
         void initUniform();
 
-        /// Initialize the data to random values between [-1/sqrt(fan_in), 1/sqrt(fan_in)] using a uniform distribution.
+        /// Initialize the data to random uniform values between [-1*bound, 1*bound], with bound = (gain/sqrt(fan_in))*scaleFactor
         /// @param fan_in Number of input units
-        void initKaiming(ArrayIndex fan_in);
+        /// @param gain Defined per type of layer ( see more: https://pytorch.org/docs/stable/nn.init.html )
+        /// @param scaleFactor Scaling factor: sqrt(3) for weights, 1 for biases
+        void initKaiming(ArrayIndex fan_in, ScalarValue gain, ScalarValue scaleFactor);
+
+
+        //void Tensor::initNormal();
+        //see more https://stackoverflow.com/questions/35827926/eigen-matrix-library-filling-a-matrix-with-random-float-values-in-a-given-range
+
     };
 
 

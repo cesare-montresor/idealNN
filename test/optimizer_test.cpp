@@ -15,11 +15,11 @@
 
 namespace IdealNN {
 
-    TEST_CASE("Optimizer: test SDG 30 epoch") {
+    TEST_CASE("Optimizer: train with SDG on multiple epochs") {
         srand(0);
 
-        auto learning_rate = 0.001;
-        auto batch_size = 15;
+        auto learning_rate = 0.0001;
+        auto batch_size = 5;
         auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.norm.csv";
         auto dl = new CSVDataLoader(batch_size, path);
 
@@ -44,9 +44,11 @@ namespace IdealNN {
 
 
         auto epoch = 0;
-        auto epoch_max = 30;
+        auto epoch_max = 10;
         auto num_batches = 0;
 
+        ScalarValue initialLoss=0;
+        ScalarValue finalLoss=0;
         ScalarValue loss;
         ScalarValue epochLoss=0;
 
@@ -57,12 +59,16 @@ namespace IdealNN {
             if(bs == 0){
                 std::cout << "[EPOCH \t" << epoch << "]" << " ---------------- " << "AVG Loss: " << epochLoss / num_batches << " ----------------" << std::endl;
                 if(epoch < epoch_max){
+                    if (epoch == 0){
+                        initialLoss = (epochLoss / num_batches);
+                    }
                     epochLoss = 0;
                     num_batches = 0;
                     ++epoch;
                     dl->shuffle();
                     continue;
                 }else{
+                    finalLoss = (epochLoss / num_batches);
                     break;
                 }
             }
@@ -77,7 +83,7 @@ namespace IdealNN {
             epochLoss += loss;
             ++num_batches;
 
-            std::cout << "Loss: " << loss << std::endl;
+            //std::cout << "Loss: " << loss << std::endl;
             //std::cout << fc2->weights->gradients->array().coeff(0) << " => " << std::flush;
             criterion->backward();
             optimizer->step();
@@ -86,7 +92,10 @@ namespace IdealNN {
 
         }
 
-        REQUIRE( loss < 2.82019f );
+        delete dl;
+        delete criterion;
+        delete optimizer;
+        REQUIRE( initialLoss > finalLoss );
     }
 
 
@@ -128,7 +137,9 @@ namespace IdealNN {
         auto ys_hat2 = fc2->forwardBatch(x);
         auto loss2 = criterion->loss(ys_hat2,ys);
 
-
+        delete dl;
+        delete criterion;
+        delete optimizer;
         REQUIRE(Utils::ScalarValueEqual(loss, 2.82019f) );
     }
 }

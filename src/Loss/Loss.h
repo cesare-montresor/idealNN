@@ -22,7 +22,7 @@ namespace IdealNN {
         /// Compute the loss and the deltas, returns the loss and store the gradients for the backward pass.
         /// @param ys_hat Represent an array containing the ground-truth
         /// @param ys Represent an array containing the ground-truth
-        virtual ScalarValue loss(TensorArrayRef ys_hats, TensorArrayRef ys )=0;
+        virtual ScalarValue loss(TensorArrayRef ys_hat, TensorArrayRef ys )=0;
         /// Triggers the cascade of all backward pass
         virtual void backward()=0;
     };

@@ -12,7 +12,7 @@ namespace IdealNN {
 
     TanhActivationRef TanhActivation::MakeTanhActivation() { return std::make_shared<TanhActivation>(); }
 
-    TensorRef TanhActivation::forward(TensorRef x, ArrayIndex i) {
+    TensorRef TanhActivation::forward(TensorRef x) {
         auto result =  x->data->array().tanh().matrix();
         auto output = Tensor::MakeTensor(result);
 
@@ -21,7 +21,7 @@ namespace IdealNN {
     }
 
     void TanhActivation::backward(TensorRef dx, ArrayIndex i) {
-        auto x = xs->at(i);
+        auto x = inputs->at(i);
         auto tanh_2 = x->data->array().tanh().pow(2);
 
         auto tanh_dx = (1-tanh_2).matrix() ;

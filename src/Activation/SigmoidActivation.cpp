@@ -11,7 +11,7 @@
 namespace IdealNN {
     SigmoidActivationRef SigmoidActivation::MakeSigmoidActivation() { return std::make_shared<SigmoidActivation>(); }
 
-    TensorRef SigmoidActivation::forward(TensorRef x, ArrayIndex i) {
+    TensorRef SigmoidActivation::forward(TensorRef x) {
         auto sigma_exp = ((*x->data) * -1).array().exp();
         auto result = ( 1 / ( 1 + sigma_exp)).matrix();
         auto output = Tensor::MakeTensor(result);
@@ -21,7 +21,7 @@ namespace IdealNN {
     }
 
     void SigmoidActivation::backward(TensorRef dx, ArrayIndex i) {
-        auto x = xs->at(i);
+        auto x = inputs->at(i);
         auto sigma_exp = ((*x->data) * -1).array().exp();
         auto sigma_x = ( 1 / ( 1 + sigma_exp));
         auto sigma_dx = (( 1 - sigma_x ) * sigma_x).matrix() ;

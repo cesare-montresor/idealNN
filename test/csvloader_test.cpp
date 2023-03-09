@@ -20,6 +20,7 @@ namespace IdealNN {
         for (ArrayIndex i = 0; i < bs; i++) {
             //cout << "Item " << i << ": " << batch[i]->array() << endl;
         }
+        delete dl;
         REQUIRE(true);
     }
 
@@ -48,6 +49,7 @@ namespace IdealNN {
             }
         }
 
+        delete dl;
         REQUIRE(numRows == cnt);
     }
 
@@ -88,6 +90,7 @@ namespace IdealNN {
             }
         }
 
+        delete dl;
         REQUIRE(numRows == cnt);
     }
 
@@ -111,6 +114,7 @@ namespace IdealNN {
             }
 
         }
+        delete dl;
         REQUIRE(found);
     }
 

@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
 project(
     idealNN
-        DESCRIPTION  "A ideal Neural Network C++ Library"
+        DESCRIPTION  "A ideal Neural Network C++ Library that mimics pytorch API"
         HOMEPAGE_URL "github.com/cesare-montresor/IdealNN"
         LANGUAGES    CXX
 )
 
+set(CMAKE_CXX_STANDARD          17)
 set(CMAKE_CXX_STANDARD_REQUIRED     ON)
 set(CMAKE_CXX_EXTENSIONS            OFF)
 
@@ -31,22 +32,25 @@ set(INCLUDES
 
 
 
-add_library(idealNN ${SOURCES} )
-target_include_directories(idealNN PUBLIC ${PROJECT_SOURCE_DIR}/src)
+add_library(libidealNN ${SOURCES} )
+target_include_directories(libidealNN PUBLIC ${PROJECT_SOURCE_DIR}/src)
 
 
 find_package (Eigen3 REQUIRED)
-target_link_libraries(idealNN Eigen3::Eigen)
+target_link_libraries(libidealNN Eigen3::Eigen)
 
+
+target_compile_options(libidealNN PRIVATE ${COMPILER_FLAGS} )
+target_link_options(libidealNN PRIVATE ${LINKER_FLAGS} )
 
 # ==== Testing ====
 
-add_executable(idealNN_test EXCLUDE_FROM_ALL ${SOURCES_TEST} third_party/catch2/catch.hpp)
-target_link_libraries(idealNN_test idealNN)
+add_executable(libidealNN_test EXCLUDE_FROM_ALL ${SOURCES_TEST} third_party/catch2/catch.hpp)
+target_link_libraries(libidealNN_test libidealNN)
 
-#target_sources(idealNN_test PRIVATE ${SOURCES_TEST})
+
 target_include_directories(
-    idealNN_test
+    libidealNN_test
         PRIVATE src/
         PRIVATE test/
         PRIVATE ${INCLUDES}
@@ -55,11 +59,11 @@ target_include_directories(
 enable_testing()
 
 add_test(NAME test
-        COMMAND ${CMAKE_BINARY_DIR}/idealNN_test )
+        COMMAND ${CMAKE_BINARY_DIR}/libidealNN_test )
 
 add_test(NAME valgrind
         COMMAND valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes
-        ${CMAKE_BINARY_DIR}/idealNN_test)
+        ${CMAKE_BINARY_DIR}/libidealNN_test)
 
 # ===== Documentation =====
 find_package(Doxygen)

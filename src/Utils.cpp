@@ -15,12 +15,14 @@
 namespace IdealNN{
     namespace Utils{
 
-        TensorArray slice(TensorArray array, ArrayIndex start, ArraySize count){
-            if(start + 1 >= array.size() ) {return TensorArray{};}
-            auto items_count = start + count < array.size() ? count : (array.size() - start);
+        TensorArray slice(const TensorArrayRef& array, ArrayIndex start, ArraySize count){
+            auto as = static_cast<ArraySize>(array->size());
 
-            auto first = array.begin() + start;
-            auto last = array.begin() + start + (ArraySize)items_count;
+            if(start + 1 >= as ) {return TensorArray{};}
+            auto items_count = start + count < as ? count : (as - start);
+
+            auto first = array->begin() + start;
+            auto last = array->begin() + start + items_count;
 
             return TensorArray{first, last};
         }
@@ -44,12 +46,10 @@ namespace IdealNN{
         LayerArrayRef MakeLayerArray(LayerArray layerArray){ return std::make_shared<LayerArray>(std::move(layerArray)); }
 
 
-
-
         //TODO: make a log function that can be globally enabled/disabled
-        void log(){
+        //void log(){
             //https://stackoverflow.com/questions/3649278/how-can-i-get-the-class-name-from-a-c-object
-        }
+        //}
     };
 }
 

@@ -2,6 +2,15 @@
 IdealNN is simple Neural Network framework written in C++ that aims to provide a pytorch-like APIs.    
 _NOTE: The framework is called IdealNN in the same sense of 'ideal filters' in the frequency domain._
 
+## Env Setup
+
+sudo apt install libeigen3-dev 
+sudo apt install valgrind
+sudo apt install gcovr
+
+
+sudo apt install texlive-font-utils
+
 ## Documentation
 
 

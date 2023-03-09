@@ -12,16 +12,16 @@
 namespace IdealNN {
 
     //static array
-    TensorArrayRef Layer::forwardBatch(TensorArrayRef xs) {
-        this->xs = xs;
+    TensorArrayRef Layer::forwardBatch(const TensorArrayRef &xs) {
+        this->inputs = xs;
         auto bs = Utils::getSize(xs);
-        auto activations = Tensor::MakeTensorArray(bs);
+        outputs = Tensor::MakeTensorArray(bs);
         for(ArraySize i=0; i<bs; i++){
             auto x = xs->at(i);
-            auto output = this->forward(x,i);
-            activations->at(i) = output;
+            auto output = this->forward(x);
+            outputs->at(i) = output;
         }
-        return activations;
+        return outputs;
     }
 
 }
