@@ -40,30 +40,9 @@ namespace IdealNN {
             (*bias->gradients) += (*dx->data);
         }
 
-
-        auto x_r = x->data->rows();
-        auto x_c = x->data->cols();
-
-        auto r_r = result.rows();
-        auto r_c = result.cols();
-
-        auto dx_r = dx->data->rows();
-        auto dx_c = dx->data->cols();
-
         //weights
         auto dense_dx = (*dx->data) * weights->data->transpose();
-
-        auto wd_r = dense_dx.rows();
-        auto wd_c = dense_dx.cols();
-
         auto weights_dx = result.transpose() * dense_dx;
-
-        auto wdx_r = weights_dx.rows();
-        auto wdx_c = weights_dx.cols();
-
-        auto w_r = weights->data->rows();
-        auto w_c = weights->data->cols();
-
         if(weights->use_grads) {
             (*weights->gradients) += weights_dx.transpose(); /// should I ?
         }
