@@ -16,10 +16,12 @@ namespace IdealNN{
         /// @param learning_rate Initial learning rate
         SDGOptimizer(const LayerArrayRef& layers, ScalarValue learning_rate);
 
+        /*
         /// Constructor for SGDOptimizer
         /// @param params List of tensors to be optimized.
         /// @param learning_rate Initial learning rate
         SDGOptimizer(const TensorArrayRef& params, ScalarValue learning_rate);
+        */
 
         ///Apply the accumulated gradients corrections to the parameters.
         void step() override;

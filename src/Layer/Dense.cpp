@@ -4,7 +4,7 @@
 
 #include <Layer/Dense.h>
 #include <Tensor/Tensor.h>
-#include <Utils.h>
+
 
 namespace IdealNN {
     DenseRef Dense::MakeDense(int in, int out) { return std::make_shared<Dense>(in, out); }
