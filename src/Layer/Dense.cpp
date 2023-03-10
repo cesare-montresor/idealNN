@@ -33,7 +33,7 @@ namespace IdealNN {
 
     void Dense::backward(TensorRef dx, ArrayIndex i) {
         auto x = inputs->at(i); // inputs is the batch, x is the single input
-        auto result = ( (*x->data) * (*weights->data) + (*bias->data) );
+        auto output = this->outputs->at(i);
 
         //bias
         if(bias->use_grads) {
@@ -42,7 +42,7 @@ namespace IdealNN {
 
         //weights
         auto dense_dx = (*dx->data) * weights->data->transpose();
-        auto weights_dx = result.transpose() * dense_dx;
+        auto weights_dx = output->data->transpose() * dense_dx;
         if(weights->use_grads) {
             (*weights->gradients) += weights_dx.transpose(); /// should I ?
         }

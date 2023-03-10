@@ -10,7 +10,7 @@ namespace IdealNN {
         srand(0);
 
         auto batch_size = 3;
-        auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
+        auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto batch = dl->getData();
         auto bs = Utils::getSize(batch);

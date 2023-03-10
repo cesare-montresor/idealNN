@@ -15,16 +15,16 @@
 namespace IdealNN{
     namespace Utils{
 
-        TensorArray slice(const TensorArrayRef& array, ArrayIndex start, ArraySize count){
+        TensorArrayRef slice(const TensorArrayRef& array, ArrayIndex start, ArraySize count){
             auto as = static_cast<ArraySize>(array->size());
 
-            if(start + 1 >= as ) {return TensorArray{};}
+            if(start + 1 >= as ) {return Tensor::MakeTensorArray();}
             auto items_count = start + count < as ? count : (as - start);
 
             auto first = array->begin() + start;
             auto last = array->begin() + start + items_count;
 
-            return TensorArray{first, last};
+            return Tensor::MakeTensorArray(TensorArray{first, last});
         }
 
 

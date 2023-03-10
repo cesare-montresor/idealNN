@@ -17,27 +17,30 @@ namespace IdealNN {
         this->rows = Tensor::MakeTensorArray();
         this->batch_size = batch_size;
 
+        auto rowDelim = '\n';
+        auto colDelim = ',';
+
         std::ifstream file(fullpath);
         string line, word;
         // determine number of columns in file
-        getline(file, line, '\n');
+        getline(file, line, rowDelim);
         std::stringstream ss1(line);
         ScalarValueArray parsed_vec;
-        while (getline(ss1, word, ',')) {
-            parsed_vec.push_back(ScalarValue(std::stof(&word[0])));
+        while (getline(ss1, word, colDelim)) {
+            parsed_vec.push_back(ScalarValue(std::stod(&word[0])));
         }
-        this->col_nums = (ArraySize)parsed_vec.size();
+        this->col_nums = Utils::getSize(parsed_vec);
 
         file.seekg(0);
 
         // read the file
         if (file.is_open()) {
-            while (getline(file, line, '\n')) {
+            while (getline(file, line, rowDelim)) {
                 std::stringstream ss2(line);
                 auto row = Tensor::MakeTensor(1,col_nums);
-                uint i = 0;
-                while (getline(ss2, word, ',')) {
-                    row->data->col(0).coeffRef(i) = ScalarValue( std::stof(&word[0]) );
+                ArrayIndex i = 0;
+                while (getline(ss2, word, colDelim)) {
+                    row->data->col(0).coeffRef(i) = ScalarValue( std::stod(&word[0]) );
                     i++;
                 }
                 rows->push_back( row );
@@ -52,7 +55,7 @@ namespace IdealNN {
     }
 
     ArraySize CSVDataLoader::numRows() {
-        return (ArraySize) rows->size();
+        return Utils::getSize(rows);
     }
 
     void CSVDataLoader::shuffle() {
@@ -62,8 +65,8 @@ namespace IdealNN {
 
     TensorArrayRef CSVDataLoader::getData() {
         auto batchRows = Utils::slice(rows,current,batch_size);
-        current += (ArraySize)batchRows.size();
-        return  Tensor::MakeTensorArray(std::move(batchRows));
+        current += Utils::getSize(batchRows);
+        return batchRows;
     }
 
     void CSVDataLoader::splitXY(const TensorArrayRef &batch,const  TensorArrayRef &xs,const  TensorArrayRef &ys, ArrayIndex xs_col_start, ArrayIndex xs_col_count,  ArrayIndex ys_col_start, ArrayIndex ys_col_count ){

@@ -22,7 +22,8 @@ namespace IdealNN {
 
     void TanhActivation::backward(TensorRef dx, ArrayIndex i) {
         auto x = inputs->at(i);
-        auto tanh_2 = x->data->array().tanh().pow(2);
+        auto output = outputs->at(i);
+        auto tanh_2 = output->data->array().pow(2);
 
         auto tanh_dx = (1-tanh_2).matrix() ;
         //std::cout << "[GRADS] \t"<<i<<" Sigmoid (partial)" << std::endl << sigma_dx.array() << std::endl << std::flush;

@@ -20,22 +20,17 @@ namespace IdealNN {
         //std::cout << "[FORWARD] \t" << i << " Softmax A " << result.array() << std::endl << std::flush;
 
         auto output = Tensor::MakeTensor(result);
-
         output->operation = shared_from_this();
         return output;
     }
 
     void SoftmaxActivation::backward(TensorRef dx, ArrayIndex i) {
         auto x = inputs->at(i);
-
-        auto x_stable = (x->data->array() - x->data->array().maxCoeff()).matrix();
-        auto x_exp = x_stable.array().exp();
-        auto x_exp_sum = x_exp.sum();
-        auto softmax = (x_exp / x_exp_sum).matrix();
+        auto output = outputs->at(i);
 
         //std::cout << "[GRADS] \t"<<i<<" Softmax (x) \t\t" << x->data->array() << std::endl << std::flush;
         //std::cout << "[GRADS] \t"<<i<<" Softmax (x_stable) \t\t" << x_stable.array() << std::endl << std::flush;
-        auto softmax_dx = (softmax.array() * (1 - softmax.array())).matrix();
+        auto softmax_dx = (output->data->array() * (1 - output->data->array())).matrix();
         //std::cout << "[GRADS] \t"<<i<<" Softmax (local) \t" << softmax_dx.array() << std::endl << std::flush;
         if(x->operation){
             auto next_dx = Tensor::MakeTensor( (softmax_dx.array() * dx->data->array()).matrix()  );

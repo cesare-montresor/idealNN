@@ -10,7 +10,7 @@
 
 namespace IdealNN{
     /// Simple implementation of SDG, Stochastic Gradient Descent
-    struct SDGOptimizer: public Optimizer {
+    struct SDGOptimizer final: public Optimizer {
         /// Constructor for SGDOptimizer
         /// @param layers List of layers to be optimized ( their internal parameters )
         /// @param learning_rate Initial learning rate

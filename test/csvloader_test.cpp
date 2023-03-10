@@ -11,7 +11,7 @@ namespace IdealNN {
         srand(0);
 
         auto batch_size = 3;
-        auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
+        auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto batch = dl->getData();
         auto bs = Utils::getSize(batch);
@@ -30,7 +30,7 @@ namespace IdealNN {
         auto numRows = 150; //Hardcoded for iris dataset
 
         auto batch_size = 7;
-        auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
+        auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         REQUIRE(numRows == dl->numRows());
 
@@ -57,7 +57,7 @@ namespace IdealNN {
         auto numRows = 150; //Hardcoded for iris dataset
 
         auto batch_size = 7;
-        auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
+        auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         REQUIRE(numRows == dl->numRows());
 

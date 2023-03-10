@@ -22,9 +22,8 @@ namespace IdealNN {
 
     void SigmoidActivation::backward(TensorRef dx, ArrayIndex i) {
         auto x = inputs->at(i);
-        auto sigma_exp = ((*x->data) * -1).array().exp();
-        auto sigma_x = ( 1 / ( 1 + sigma_exp));
-        auto sigma_dx = (( 1 - sigma_x ) * sigma_x).matrix() ;
+        auto output = outputs->at(i);
+        auto sigma_dx = (( 1 - output->data->array() ) * output->data->array()).matrix() ;
 
         //std::cout << "[GRADS] \t"<<i<<" Sigmoid (partial)" << std::endl << sigma_dx.array() << std::endl << std::flush;
         if(x->operation){

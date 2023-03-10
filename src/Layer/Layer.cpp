@@ -16,6 +16,7 @@ namespace IdealNN {
         this->inputs = xs;
         auto bs = Utils::getSize(xs);
         outputs = Tensor::MakeTensorArray(bs);
+        //TODO: OpenMP parallel
         for(ArraySize i=0; i<bs; i++){
             auto x = xs->at(i);
             auto output = this->forward(x);

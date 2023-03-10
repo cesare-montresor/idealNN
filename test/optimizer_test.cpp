@@ -20,7 +20,7 @@ namespace IdealNN {
 
         auto learning_rate = 0.0001;
         auto batch_size = 5;
-        auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.norm.csv";
+        auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.norm.csv";
         auto dl = new CSVDataLoader(batch_size, path);
 
         auto xs = Tensor::MakeTensorArray();
@@ -135,7 +135,6 @@ namespace IdealNN {
 
         auto x2 = fc1->forwardBatch(xs);
         auto ys_hat2 = fc2->forwardBatch(x);
-        auto loss2 = criterion->loss(ys_hat2,ys);
 
         delete dl;
         delete criterion;
