@@ -14,7 +14,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED     ON)
 # Disable compiler specific extensions.
 set(CMAKE_CXX_EXTENSIONS            OFF)
 
-# List all soruce files
+# List all source files
 file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*)
 # List all test files
 file(GLOB_RECURSE SOURCES_TEST ${PROJECT_SOURCE_DIR}/test/*.cpp)
