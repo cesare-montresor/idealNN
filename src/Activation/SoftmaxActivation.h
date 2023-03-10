@@ -10,7 +10,7 @@
 namespace IdealNN {
 
     /// Implementation of the Softmax activation
-    struct SoftmaxActivation final: public Activation {
+    struct SoftmaxActivation: public Activation {
         /// Utility method to create SoftmaxActivation objects wrapped in a shared pointer
         static SoftmaxActivationRef MakeSoftmaxActivation();
 

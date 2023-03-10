@@ -23,13 +23,15 @@ namespace IdealNN {
      */
     //shared pointer multipli, hanno lo stesso owner
 
+
+
     protected:
         /// Array of tensors, used to store the whole batch of inputs. Used in the backward pass.
         TensorArrayRef inputs;
         /// Array of tensors, used to store the whole batch of output. Often used in the backward pass.
         TensorArrayRef outputs;
 
-
+        virtual ~Layer() = default;
 
     public:
         /// Accept a batch of data and call the forward pass on each of them, it also stores the inputs inside inputs

@@ -18,6 +18,8 @@ namespace IdealNN {
         /// deltas are the relative errors for each sample of the batch. They are computed in the forward pass and used in the backward pass.
         TensorArrayRef deltas;
 
+        virtual ~Loss() = default;
+
     public:
         /// Compute the loss and the deltas, returns the loss and store the gradients for the backward pass.
         /// @param ys_hat Represent an array containing the ground-truth

@@ -10,7 +10,7 @@
 namespace IdealNN {
 
     /// Implementation of the Tanh activation
-    struct TanhActivation final: public Activation {
+    struct TanhActivation: public Activation {
         /// Utility method to create TanhActivation objects wrapped in a shared pointer
         static TanhActivationRef MakeTanhActivation();
 

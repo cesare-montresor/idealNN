@@ -14,10 +14,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED     ON)
 # Disable compiler specific extensions.
 set(CMAKE_CXX_EXTENSIONS            OFF)
 
-# List all source files
-file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*)
-# List all test files
-file(GLOB_RECURSE SOURCES_TEST ${PROJECT_SOURCE_DIR}/test/*.cpp)
+
 
 # Compile with coverage support
 option(TEST_COVERAGE "Enable test coverage" ON)
@@ -50,7 +47,11 @@ set(LINKER_FLAGS
 ## see more: # https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html
 
 
-# Include 3rd party-headers ( catch2 )
+# List all source files
+file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*)
+# List all test files
+file(GLOB_RECURSE SOURCES_TEST ${PROJECT_SOURCE_DIR}/test/*.cpp)
+# List all 3rd party-headers ( catch2 )
 set(INCLUDES ${PROJECT_SOURCE_DIR}/third_party )
 
 
@@ -59,22 +60,22 @@ set(INCLUDES ${PROJECT_SOURCE_DIR}/third_party )
 # add_library(libidealnn ${SOURCES} )  #Non-static lib
 
 # add target library, static
-add_library(libidealnn STATIC ${SOURCES} )
-target_include_directories(libidealnn PUBLIC ${PROJECT_SOURCE_DIR}/src)
+add_library(idealnn STATIC ${SOURCES} )
+target_include_directories(idealnn PUBLIC ${PROJECT_SOURCE_DIR}/src)
 
 # add Eigen3 as requirement
 find_package(Eigen3 REQUIRED)
-target_link_libraries(libidealnn Eigen3::Eigen)
+target_link_libraries(idealnn Eigen3::Eigen)
 
 # set compiler and linker flags accordingly
-target_compile_options(libidealnn PRIVATE ${COMPILER_FLAGS} )
-target_link_options(libidealnn PRIVATE ${LINKER_FLAGS} )
+target_compile_options(idealnn PRIVATE ${COMPILER_FLAGS} )
+target_link_options(idealnn PRIVATE ${LINKER_FLAGS} )
 
 # ensure presence of bin/ folder for install action
 file(MAKE_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
-# copy liblibidealnn.a to main bin/ folder
+# copy libidealnn.a to main bin/ folder
 install(
-        FILES       ${CMAKE_BINARY_DIR}/liblibidealnn.a
+        FILES       ${CMAKE_BINARY_DIR}/libidealnn.a
         DESTINATION ${PROJECT_SOURCE_DIR}/bin
         OPTIONAL
 )
@@ -82,28 +83,28 @@ install(
 # =============== Testing ===============
 
 # add executable target for tests
-add_executable(libidealnn_test EXCLUDE_FROM_ALL ${SOURCES_TEST} third_party/catch2/catch.hpp)
+add_executable(idealnn_test EXCLUDE_FROM_ALL ${SOURCES_TEST} third_party/catch2/catch.hpp)
 # link test ecxecutable with libidealnn
-target_link_libraries(libidealnn_test libidealnn)
+target_link_libraries(idealnn_test idealnn)
 # add include directories for src/, tests/ and third_party/
 target_include_directories(
-    libidealnn_test
+        idealnn_test
         PRIVATE src/
         PRIVATE test/
         PRIVATE ${INCLUDES}
 )
 # set compiler and linker flags for test executable
-target_compile_options(libidealnn_test PRIVATE ${COMPILER_FLAGS} )
-target_link_options(libidealnn_test PRIVATE ${LINKER_FLAGS} )
+target_compile_options(idealnn_test PRIVATE ${COMPILER_FLAGS} )
+target_link_options(idealnn_test PRIVATE ${LINKER_FLAGS} )
 
 #eneable testing
 enable_testing()
 #default test
-add_test(NAME test COMMAND ${CMAKE_BINARY_DIR}/libidealnn_test )
+add_test(NAME test COMMAND ${CMAKE_BINARY_DIR}/idealnn_test )
 #valgrind test for memory leaks
 add_test(NAME valgrind
     COMMAND valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes
-    ${CMAKE_BINARY_DIR}/libidealnn_test
+    ${CMAKE_BINARY_DIR}/idealnn_test
     CONFIGURATIONS valgrind # disabled by default, use ctest -C valgrind
 )
 
@@ -119,6 +120,7 @@ if (DOXYGEN_FOUND)
         COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_SOURCE_DIR}/Doxyfile
         COMMENT "Generating API documentation with Doxygen"
     )
+    add_dependencies(doc idealnn)
     #add install action for doc/ if present
     install(
         DIRECTORY ${CMAKE_BINARY_DIR}/doc
@@ -139,6 +141,7 @@ if (TEST_COVERAGE)
 
     #add coverage target
     add_custom_target(coverage
+        COMMAND ${CMAKE_BINARY_DIR}/idealnn_test || (exit 0)
         COMMAND gcovr
             --root ${PROJECT_SOURCE_DIR}
             --exclude ${PROJECT_SOURCE_DIR}/test/
@@ -147,6 +150,8 @@ if (TEST_COVERAGE)
             --html --html-details coverage/coverage.html
             COMMENT "Generating code coverage"
     )
+    add_dependencies(coverage idealnn_test)
+
     #add install action for doc/coverage/ if present
     install(
             DIRECTORY   ${CMAKE_BINARY_DIR}/coverage
@@ -154,3 +159,4 @@ if (TEST_COVERAGE)
             OPTIONAL
     )
 endif()
+

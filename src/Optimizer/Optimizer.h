@@ -11,6 +11,11 @@
 namespace IdealNN{
     /// General purpose interface for any Optimizer object
     struct Optimizer {
+    protected:
+        virtual ~Optimizer() = default;
+
+    public:
+
         ///Default learning rate
         ScalarValue learning_rate;
         ///Array of Tensors to be optimized

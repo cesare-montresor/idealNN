@@ -11,7 +11,7 @@
 
 namespace IdealNN {
     /// Implements the Cross Entropy Loss function, useful for multi-class classification tasks.
-    struct CrossEntropyLoss final: public Loss {
+    struct CrossEntropyLoss: public Loss {
 
         /// Compute the loss function using the formula: sum( y * -log(y_hat) ) / batch_size
         /// @param ys_hat Represent an array containing the ground-truth

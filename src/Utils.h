@@ -76,9 +76,9 @@ namespace IdealNN{
 
 
 
-        ///TODO: Utility function used to produce output
-        void Log();
-    };
+        //TODO: Utility function used to produce output
+        //void Log();
+    }
 }
 
 #endif //IDEALNN_UTILS_H

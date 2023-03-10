@@ -11,7 +11,7 @@
 namespace IdealNN {
 
     /// Class for loading CVS data
-    struct CSVDataLoader final: public DataLoader {
+    struct CSVDataLoader: public DataLoader {
     protected:
         /// Holds the whole dataset to reduce overhead at train time
         TensorArrayRef rows;

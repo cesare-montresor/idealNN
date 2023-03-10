@@ -14,6 +14,9 @@ namespace IdealNN {
     struct DataLoader {
         /// Returns the next batch of data, if no more data is available, returns an empty vector.
         virtual TensorArrayRef getData() = 0;
+    protected:
+        virtual ~DataLoader() = default;
+
     };
 
 }

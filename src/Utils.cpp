@@ -50,7 +50,7 @@ namespace IdealNN{
         //void log(){
             //https://stackoverflow.com/questions/3649278/how-can-i-get-the-class-name-from-a-c-object
         //}
-    };
+    }
 }
 
 #endif //IDEALNN_UTILS_H

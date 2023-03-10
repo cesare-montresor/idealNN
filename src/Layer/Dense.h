@@ -16,7 +16,7 @@
 namespace IdealNN {
 
     /// Implements a standard Dense or Fully Connected Layer.
-    struct Dense final: public Layer {
+    struct Dense: public Layer {
     protected:
         /// Number of input units
         ArraySize in;

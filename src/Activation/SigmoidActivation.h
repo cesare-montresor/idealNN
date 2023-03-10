@@ -10,7 +10,7 @@
 namespace IdealNN {
 
     /// Implementation of the Sigmoid activation
-    struct SigmoidActivation final:  public Activation {
+    struct SigmoidActivation:  public Activation {
         /// Utility method to create SigmoidActivation objects wrapped in a shared pointer
         static SigmoidActivationRef MakeSigmoidActivation();
 

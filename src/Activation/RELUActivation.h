@@ -9,7 +9,7 @@
 
 namespace IdealNN {
     /// Implementation of the RELU activation
-    struct RELUActivation final:  public Activation {
+    struct RELUActivation:  public Activation {
         /// Utility method to create RELUActivation objects wrapped in a shared pointer
         static RELUActivationRef MakeRELUActivation();
 
