@@ -1,5 +1,5 @@
 # idealNN
-IdealNN is simple Neural Network framework written in C++ that aims to provide a pytorch-like APIs.    
+IdealNN is simple Neural Network framework written in C++ that aims to provide pytorch-like APIs. The library is mainly intended for educational purposes.
 _NOTE: The framework is called IdealNN in the same sense of 'ideal filters' in the frequency domain._
 
 ## Dependencies
