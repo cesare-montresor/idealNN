@@ -10,9 +10,14 @@ namespace IdealNN {
 
 /* TARGET GOAL:
 
- transform = transforms.Compose(
-    [transforms.ToTensor(),
-     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+import torch
+from torch import transforms
+from torch import torchvision
+
+transform = transforms.Compose(
+ [transforms.ToTensor(),
+  transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]
+)
 
 trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
                                         download=True, transform=transform)

@@ -12,11 +12,13 @@
 namespace IdealNN {
     /// Represent a general purpose interface for DataLoaders
     struct DataLoader {
+
+    protected:
+        /// Provides an overridable default destructor, in case some derived class would need a more complex destruction logic.
+        virtual ~DataLoader() = default;
+    public:
         /// Returns the next batch of data, if no more data is available, returns an empty vector.
         virtual TensorArrayRef getData() = 0;
-    protected:
-        virtual ~DataLoader() = default;
-
     };
 
 }

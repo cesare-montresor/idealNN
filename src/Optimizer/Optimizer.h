@@ -12,10 +12,10 @@ namespace IdealNN{
     /// General purpose interface for any Optimizer object
     struct Optimizer {
     protected:
+        /// Provides an overridable default destructor, in case some derived class would need a more complex destruction logic.
         virtual ~Optimizer() = default;
 
     public:
-
         ///Default learning rate
         ScalarValue learning_rate;
         ///Array of Tensors to be optimized

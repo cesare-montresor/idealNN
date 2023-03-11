@@ -17,7 +17,7 @@ namespace IdealNN {
         TensorArrayRef ys_hat;
         /// deltas are the relative errors for each sample of the batch. They are computed in the forward pass and used in the backward pass.
         TensorArrayRef deltas;
-
+        /// Provides an overridable default destructor, in case some derived class would need a more complex destruction logic.
         virtual ~Loss() = default;
 
     public:

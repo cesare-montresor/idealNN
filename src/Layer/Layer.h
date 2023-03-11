@@ -7,14 +7,14 @@
 #ifndef IDEALNN_LAYER_H
 #define IDEALNN_LAYER_H
 
-#include <vector>
 #include <memory>
 #include <Common.h>
 
 
 
 namespace IdealNN {
-    /// General interface for Layer objects
+    /// General interface for Layer objects, most methods are defined a pure-virtual except for forwardBatch.
+    /// The class prvides a concrete implementation forwardBatch, as turned out to be appropriate for most Layers.
     struct Layer: public std::enable_shared_from_this<Layer> {
     /*  https://en.cppreference.com/w/cpp/memory/enable_shared_from_this
         std::enable_shared_from_this allows an object t that is currently managed by a std::shared_ptr named pt to safely generate additional std::shared_ptr instances pt1, pt2, ... that all share ownership of t with pt.
@@ -30,7 +30,7 @@ namespace IdealNN {
         TensorArrayRef inputs;
         /// Array of tensors, used to store the whole batch of output. Often used in the backward pass.
         TensorArrayRef outputs;
-
+        /// Provides an overridable default destructor, in case some derived class would need a more complex destruction logic.
         virtual ~Layer() = default;
 
     public:
