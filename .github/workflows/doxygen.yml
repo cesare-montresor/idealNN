@@ -1,4 +1,4 @@
-name: Doxygen to github Pages
+name: Doxygen to github-pages
 
 on:
   push:
