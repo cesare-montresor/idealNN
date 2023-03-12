@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(
     IdealNN
-        DESCRIPTION  "A ideal Neural Network C++ Library that mimics pytorch API"
+        DESCRIPTION  "A educational Neural Network C++ Library that mimics pytorch API"
         HOMEPAGE_URL "github.com/cesare-montresor/IdealNN"
         LANGUAGES    CXX
 )
