@@ -24,12 +24,20 @@ namespace IdealNN::Utils{
     /// Cast vector size size_type (aka unsigned long) to standard ArraySize
     /// @param vector Pointer to Vector
     template<typename T>
-    ArraySize getSize( shared_ptr<vector<T>> vector){ return static_cast<ArraySize>(vector->size()); }
+    ArraySize getSize( shared_ptr<vector<T>> vector){
+        auto size = static_cast<ArraySize>(vector->size());
+        assert(size >= 0); //Overflow
+        return size;
+    }
 
     /// Cast vector size size_type (aka unsigned long) to standard ArraySize
     /// @param vector Vector
     template<typename T>
-    ArraySize getSize( vector<T> vector){ return static_cast<ArraySize>(vector.size()); }
+    ArraySize getSize( vector<T> vector){
+        auto size = static_cast<ArraySize>(vector.size());
+        assert(size >= 0); //Overflow
+        return size;
+    }
 
     /// Utility method to used to create an empty arrays of ScalarValues
     ScalarValueArrayRef MakeScalarValueArray();

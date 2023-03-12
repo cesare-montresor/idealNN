@@ -5,7 +5,8 @@
 #include <Loss/CrossEntropyLoss.h>
 #include <Optimizer/SDGOptimizer.h>
 #include <Activation/SoftmaxActivation.h>
-#include <Activation/RELUActivation.h>
+#include <Activation/TanhActivation.h>
+#include <Activation/SigmoidActivation.h>
 
 #include <catch2/catch.hpp>
 #include <iostream>
@@ -14,9 +15,9 @@ namespace IdealNN {
 
     TEST_CASE("Classification: train with SDG on multiple epochs") {
         srand(0);
-
-        auto learning_rate = 0.0001;
-        auto batch_size = 5;
+        std::cout << "Classification: train with SDG on multiple epochs" << std::endl << std::flush;
+        auto learning_rate = 0.001;
+        auto batch_size = 30;
         auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.norm.csv";
         auto dl = new CSVDataLoader(batch_size, path);
 
@@ -24,8 +25,9 @@ namespace IdealNN {
         auto ys = Tensor::MakeTensorArray();
 
         auto fc1 = LinearLayer::MakeLinearLayer(4, 10);
-        auto act1 = RELUActivation::MakeRELUActivation();
+        auto act1 = TanhActivation::MakeTanhActivation();
         auto fc2 = LinearLayer::MakeLinearLayer(10, 3);
+        auto act2 = TanhActivation::MakeTanhActivation();
         auto softmax = SoftmaxActivation::MakeSoftmaxActivation();
 
         auto criterion = new CrossEntropyLoss();
@@ -39,7 +41,8 @@ namespace IdealNN {
 
 
         auto epoch = 0;
-        auto epoch_max = 30;
+        //auto epoch_max = 30; // with valgrind it takes too long
+        auto epoch_max = 3;
         auto num_batches = 0;
 
         ScalarValue initialLoss=0;
@@ -73,7 +76,8 @@ namespace IdealNN {
             auto x1 = fc1->forwardBatch(xs);
             auto a1 = act1->forwardBatch(x1);
             auto x2 = fc2->forwardBatch(a1);
-            auto ys_hat = softmax->forwardBatch(x2);
+            auto a2 = act2->forwardBatch(x2);
+            auto ys_hat = softmax->forwardBatch(a2);
 
             loss = criterion->loss(ys_hat,ys);
             epochLoss += loss;

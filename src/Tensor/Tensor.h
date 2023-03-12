@@ -58,7 +58,7 @@ namespace IdealNN {
 
         /// Create a Tensor from an existing Tensor
         /// @param tensor Source tensor
-        Tensor(Tensor const &tensor);
+        Tensor(const Tensor &tensor);
 
         /// Create a Tensor from a pointer to another tensor
         /// @param tensor Pointer to tensor

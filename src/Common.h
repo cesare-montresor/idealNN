@@ -50,7 +50,7 @@ namespace IdealNN{
     /// Default type for TensorData
     using TensorData = Eigen::MatrixXd;
     /// Default type for TensorData pointers
-    using TensorDataRef = std::shared_ptr<TensorData>;
+    using TensorDataRef = shared_ptr<TensorData>;
     /// Default type for TensorData arrays
     using TensorDataArray = vector<TensorDataRef> ;
     /// Default type for pointers to arrays of TensorData

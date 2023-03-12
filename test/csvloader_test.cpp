@@ -54,6 +54,7 @@ namespace IdealNN {
     }
 
     TEST_CASE("CSVDataLoader: rewind") {
+        srand(0);
         auto numRows = 150; //Hardcoded for iris dataset
 
         auto batch_size = 7;
@@ -95,9 +96,10 @@ namespace IdealNN {
     }
 
     TEST_CASE("CSVDataLoader: shuffle") {
+        srand(0);
         auto class_idx = 4;
         auto batch_size = 50; //
-        auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
+        auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         dl->shuffle();
         auto batch = dl->getData();

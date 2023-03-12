@@ -17,19 +17,18 @@ namespace IdealNN {
 
     TEST_CASE("Regression: train with SDG on multiple epochs") {
         srand(0);
-
+        std::cout << "Regression: train with SDG on multiple epochs" << std::endl << std::flush;
         auto learning_rate = 0.0001;
         auto batch_size = 5;
-        auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.norm.csv";
+        auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
 
         auto xs = Tensor::MakeTensorArray();
         auto ys = Tensor::MakeTensorArray();
 
         auto fc1 = LinearLayer::MakeLinearLayer(4, 10);
-        auto act1 = TanhActivation::MakeTanhActivation();
-        auto fc2 = LinearLayer::MakeLinearLayer(10, 3);
-        auto softmax = SoftmaxActivation::MakeSoftmaxActivation();
+        auto act1 = RELUActivation::MakeRELUActivation();
+        auto fc2 = LinearLayer::MakeLinearLayer(10, 1);
 
         auto criterion = new MSELoss();
 
@@ -42,7 +41,8 @@ namespace IdealNN {
 
 
         auto epoch = 0;
-        auto epoch_max = 30;
+        //auto epoch_max = 30; // with valgrind it takes too long
+        auto epoch_max = 3;
         auto num_batches = 0;
 
         ScalarValue initialLoss=0;
@@ -71,12 +71,11 @@ namespace IdealNN {
                     break;
                 }
             }
-            CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 3 );
+            CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 1 );
 
             auto x1 = fc1->forwardBatch(xs);
             auto a1 = act1->forwardBatch(x1);
-            auto x2 = fc2->forwardBatch(a1);
-            auto ys_hat = softmax->forwardBatch(x2);
+            auto ys_hat = fc2->forwardBatch(a1);
 
             loss = criterion->loss(ys_hat,ys);
             epochLoss += loss;

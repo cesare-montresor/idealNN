@@ -3,13 +3,13 @@
 //
 
 #include <DataLoader/CSVDataLoader.h>
-#include <iostream>
-#include <fstream>
-#include <algorithm>
 #include <Common.h>
 #include <Utils.h>
 #include <Tensor/Tensor.h>
 
+#include <iostream>
+#include <fstream>
+#include <algorithm>
 
 namespace IdealNN {
 
@@ -21,6 +21,10 @@ namespace IdealNN {
         auto colDelim = ',';
 
         std::ifstream file(fullpath);
+        if(!file.good()){
+            std::cout << "The file as path " << fullpath << " does not exists" << std::endl << std::flush;
+            assert(false);
+        }
         string line, word;
         // determine number of columns in file
         getline(file, line, rowDelim);

@@ -8,14 +8,13 @@
 #include "Common.h"
 #include "Tensor/Tensor.h"
 #include "Layer/LinearLayer.h"
-#include "Activation/SigmoidActivation.h"
-#include "Activation/RELUActivation.h"
-#include "Activation/SoftmaxActivation.h"
+#include "Utils.h"
 
 namespace IdealNN::Utils{
 
     TensorArrayRef slice(const TensorArrayRef& array, ArrayIndex start, ArraySize count){
         auto as = static_cast<ArraySize>(array->size());
+        assert(as >= 0); //Overflow
 
         if(start + 1 >= as ) {return Tensor::MakeTensorArray();}
         auto items_count = start + count < as ? count : (as - start);

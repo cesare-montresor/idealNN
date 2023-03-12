@@ -10,10 +10,11 @@ _NOTE: The framework is called IdealNN in the same sense of 'ideal filters' in t
 sudo apt install libeigen3-dev 
 ```
 
-### Test & Coverage
+### Test, Coverage & Analysis
 ```bash
 sudo apt install valgrind
 sudo apt install gcovr
+sudo apt install cloc
 ```
 
 ### Documentation

@@ -20,12 +20,14 @@ namespace IdealNN {
 
         auto learning_rate = 0.0001f;
         auto batch_size = 3;
-        auto path = "/home/cesare/Projects/idealNN/data/iris/IRIS.csv";
+        auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
         auto dl = new CSVDataLoader(batch_size, path);
         auto criterion = new MSELoss();
 
         auto fc1 = LinearLayer::MakeLinearLayer(4, 10);
+        auto act1 = SigmoidActivation::MakeSigmoidActivation();
         auto fc2 = LinearLayer::MakeLinearLayer(10, 1);
+
         auto layers = Utils::MakeLayerArray();
         layers->push_back(fc1);
         layers->push_back(fc2);
@@ -40,8 +42,9 @@ namespace IdealNN {
         CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 1 );
 
 
-        auto x = fc1->forwardBatch(xs);
-        auto ys_hat = fc2->forwardBatch(x);
+        auto x1 = fc1->forwardBatch(xs);
+        auto a1 = act1->forwardBatch(x1);
+        auto ys_hat = fc2->forwardBatch(a1);
         auto loss = criterion->loss(ys_hat,ys);
 
 
@@ -49,12 +52,10 @@ namespace IdealNN {
         optimizer->step();
         optimizer->zero_grad();
 
-        auto x2 = fc1->forwardBatch(xs);
-        auto ys_hat2 = fc2->forwardBatch(x);
-
         delete dl;
         delete criterion;
         delete optimizer;
-        REQUIRE(Utils::ScalarValueEqual(loss, 2.82019f) );
+        std::cout << "loss:" << loss << std::endl << std::flush;
+        REQUIRE(Utils::ScalarValueEqual(loss, 0.612119f) );
     }
 }

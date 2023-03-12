@@ -105,7 +105,7 @@ add_test(NAME test COMMAND ${CMAKE_BINARY_DIR}/idealnn_test )
 add_test(NAME valgrind
     COMMAND valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes
     ${CMAKE_BINARY_DIR}/idealnn_test
-    CONFIGURATIONS valgrind # disabled by default, use ctest -C valgrind
+    # CONFIGURATIONS valgrind # disabled by default, use ctest -C valgrind
 )
 
 

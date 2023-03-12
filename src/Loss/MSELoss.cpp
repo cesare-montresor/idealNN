@@ -17,9 +17,9 @@ namespace IdealNN {
         for(ArraySize i = 0 ; i<bs; i++){
             auto y = ys->at(i);
             auto y_hat = ys_hat->at(i);
-            auto y_error = (*y_hat->data) - (*y->data); // final derivative step ->  (y_hat - y)
+            auto y_error = y_hat->data->array() - y->data->array(); // final derivative step ->  (y_hat - y)
             deltas->at(i) = Tensor::MakeTensor(y_error);
-            loss += ((y_error.array().pow(2)/2).sum() ) / ((ScalarValue)(y_error.array().size()));
+            loss += ( (y_error.array().pow(2)/2 ).sum() ) / ( (ScalarValue)( y_error.array().size() ));
         }
         loss = loss / ScalarValue(bs) ;
         return loss;
