@@ -1,0 +1,50 @@
+name: Doxygen to github-pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Doxygen
+        run: sudo apt-get update && sudo apt-get install -y doxygen texlive-font-utils graphviz
+      - name: Install Project Dependencies
+        run: sudo apt-get update && sudo apt-get install -y libeigen3-dev
+    
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+        # Should match the cmake workflow
+      - name: Create build Folders
+        run: mkdir -p ${{github.workspace}}/build/debug/
+      - name: Configure CMake
+        run: cmake -B ${{github.workspace}}/build/debug/
+      - name: Build
+        run: cmake --build ${{github.workspace}}/build/debug/ -t doc
+        
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ${{github.workspace}}/build/debug/doc/html
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
