@@ -41,8 +41,8 @@ namespace IdealNN {
 
 
         auto epoch = 0;
-        //auto epoch_max = 30; // with valgrind it takes too long
-        auto epoch_max = 3;
+        auto epoch_max = 30; // with valgrind it takes too long
+        //auto epoch_max = 3;
         auto num_batches = 0;
 
         ScalarValue initialLoss=0;
