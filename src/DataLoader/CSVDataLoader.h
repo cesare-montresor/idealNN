@@ -9,6 +9,10 @@
 #include <Common.h>
 
 namespace IdealNN {
+    struct CSVDataLoader;
+    /// Default type for pointers to CSVDataLoader error
+    using CSVDataLoaderRef = shared_ptr<CSVDataLoader>;
+
 
     /// Class for loading CVS data
     struct CSVDataLoader: public DataLoader {
@@ -29,11 +33,13 @@ namespace IdealNN {
         random_engine rndEngine{};
 
     public:
+        /// Utility method to create MSELoss objects wrapped in a shared pointer
+        static CSVDataLoaderRef MakeCSVDataLoader(ArraySize batch_size, const string &path);
 
         /// Constructor for CSVDataloader
         /// @param batch_size number of element return for a single batch.
         /// @param path Absolute path to the CSV file.
-        CSVDataLoader(int batch_size, const string &path);
+        CSVDataLoader(ArraySize batch_size, const string &path);
 
         /// Reset the internal counter.
         void rewind();

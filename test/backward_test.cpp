@@ -8,10 +8,11 @@
 namespace IdealNN {
     TEST_CASE("Backward: test dense-linear") {
         srand(0);
+        std::cout<<"Backward: test dense-linear"<<std::endl<<std::flush;
 
         auto batch_size = 3;
         auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
-        auto dl = new CSVDataLoader(batch_size, path);
+        auto dl = CSVDataLoader::MakeCSVDataLoader(batch_size, path);
         auto batch = dl->getData();
         auto bs = Utils::getSize(batch);
 
@@ -25,7 +26,7 @@ namespace IdealNN {
         auto x = fc1->forwardBatch(xs);
         auto ys_hat = fc2->forwardBatch(x);
 
-        auto criterion = new MSELoss();
+        auto criterion = MSELoss::MakeMSELoss();
         auto loss = criterion->loss(ys_hat,ys);
 
         std::cout << "Grads: FC1 " << fc1->weights->gradients->array() << std::endl;
@@ -36,9 +37,6 @@ namespace IdealNN {
         std::cout << "Grads: FC1 " << fc1->weights->gradients->array() << std::endl;
         std::cout << "Grads: FC2 " << fc2->weights->gradients->array() << std::endl;
 
-
-        delete dl;
-        delete criterion;
         REQUIRE(Utils::ScalarValueEqual(loss, 2.82019f) );
     }
 }

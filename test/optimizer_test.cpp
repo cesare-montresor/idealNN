@@ -17,12 +17,13 @@ namespace IdealNN {
 
     TEST_CASE("Optimizer: test SDG loss") {
         srand(0);
+        std::cout<<"Optimizer: test SDG loss"<<std::endl<<std::flush;
 
         auto learning_rate = 0.0001f;
         auto batch_size = 3;
         auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
-        auto dl = new CSVDataLoader(batch_size, path);
-        auto criterion = new MSELoss();
+        auto dl = CSVDataLoader::MakeCSVDataLoader(batch_size, path);
+        auto criterion = MSELoss::MakeMSELoss();
 
         auto fc1 = LinearLayer::MakeLinearLayer(4, 10);
         auto act1 = SigmoidActivation::MakeSigmoidActivation();
@@ -33,7 +34,7 @@ namespace IdealNN {
         layers->push_back(fc2);
 
 
-        auto optimizer = new SDGOptimizer(layers, learning_rate);
+        auto optimizer = SDGOptimizer::MakeSDGOptimizer(layers, learning_rate);
 
         auto batch = dl->getData();
         auto bs = Utils::getSize(batch);
@@ -52,9 +53,6 @@ namespace IdealNN {
         optimizer->step();
         optimizer->zero_grad();
 
-        delete dl;
-        delete criterion;
-        delete optimizer;
         std::cout << "loss:" << loss << std::endl << std::flush;
         REQUIRE(Utils::ScalarValueEqual(loss, 0.612119f) );
     }

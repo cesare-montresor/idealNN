@@ -8,10 +8,11 @@
 namespace IdealNN {
     TEST_CASE("Loss: MSELoss") {
         srand(0);
+        std::cout<<"Loss: MSELoss"<<std::endl<<std::flush;
 
         auto batch_size = 3;
         auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
-        auto dl = new CSVDataLoader(batch_size, path);
+        auto dl = CSVDataLoader::MakeCSVDataLoader(batch_size, path);
         auto batch = dl->getData();
         auto bs = Utils::getSize(batch);
 
@@ -22,11 +23,9 @@ namespace IdealNN {
         auto fc1 = LinearLayer::MakeLinearLayer(4, 1);
         auto ys_hat = fc1->forwardBatch(xs);
 
-        auto criterion = new MSELoss();
+        auto criterion = MSELoss::MakeMSELoss();
         auto loss = criterion->loss(ys_hat,ys);
 
-        delete dl;
-        delete criterion;
         REQUIRE(Utils::ScalarValueEqual(loss, 19.0876f) );
     }
 }

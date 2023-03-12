@@ -15,6 +15,12 @@
 
 namespace IdealNN {
 
+    struct LinearLayer;
+    /// Default type for pointers to LinearLayer layers
+    using LinearLayerRef = shared_ptr<LinearLayer>;
+
+
+
     /// Implements a standard LinearLayer, Linear or Fully Connected Layer.
     struct LinearLayer: public Layer {
     protected:
@@ -32,7 +38,7 @@ namespace IdealNN {
         /// Utility method to create LinearLayer layer objects wrapped in a shared pointer
         /// @param in number of neurons in the previous layer
         /// @param out number of neurons in the next layer
-        static DenseRef MakeLinearLayer(int in, int out);
+        static LinearLayerRef MakeLinearLayer(int in, int out);
 
         /// Construct a dense layer specifying the number of in/out units
         /// @param in Number of input units

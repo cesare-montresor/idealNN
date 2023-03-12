@@ -7,10 +7,10 @@
 namespace IdealNN {
     TEST_CASE("Forward: 2 layers") {
         srand(0);
-
+        std::cout<<"Forward: 2 layers"<<std::endl<<std::flush;
         auto batch_size = 3;
         auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
-        auto dl = new CSVDataLoader(batch_size, path);
+        auto dl = CSVDataLoader::MakeCSVDataLoader(batch_size, path);
         auto batch = dl->getData();
         auto bs = Utils::getSize( batch );
 
@@ -35,16 +35,17 @@ namespace IdealNN {
             errors->at(i) = error;
         }
 
-        delete dl;
         REQUIRE(Utils::ScalarValueEqual(errors->at(0), -0.565442) );
     }
 
 
     TEST_CASE("Forward: 1 layer") {
         srand(0);
+        std::cout<<"Forward: 1 layers"<<std::endl<<std::flush;
+
         auto batch_size = 3;
         auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
-        auto dl = new CSVDataLoader(batch_size, path);
+        auto dl = CSVDataLoader::MakeCSVDataLoader(batch_size, path);
         auto batch = dl->getData();
         auto bs = Utils::getSize(batch);
 
@@ -65,7 +66,6 @@ namespace IdealNN {
             errors->at(i) = error;
         }
 
-        delete dl;
         REQUIRE(Utils::ScalarValueEqual(errors->at(0), -0.565442) );
     }
 }

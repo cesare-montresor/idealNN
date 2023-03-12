@@ -8,6 +8,9 @@
 
 namespace IdealNN {
 
+    MSELossRef MSELoss::MakeMSELoss() { return std::make_shared<MSELoss>(); }
+
+
     // https://www.youtube.com/watch?v=d9AvALaC-5s
     ScalarValue MSELoss::loss( TensorArrayRef ys_hat, TensorArrayRef ys ){
         auto bs = Utils::getSize(ys);

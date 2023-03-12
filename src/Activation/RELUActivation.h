@@ -8,6 +8,10 @@
 #include <Activation/Activation.h>
 
 namespace IdealNN {
+    struct RELUActivation;
+    /// Default type for pointers to RELU Activation
+    using RELUActivationRef = shared_ptr<RELUActivation>;
+
     /// Implementation of the RELU activation
     struct RELUActivation:  public Activation {
         /// Utility method to create RELUActivation objects wrapped in a shared pointer

@@ -10,8 +10,16 @@
 #include <Loss/Loss.h>
 
 namespace IdealNN {
+    struct CrossEntropyLoss;
+    /// Default type for pointers to CrossEntropy Loss
+    using CrossEntropyLossRef = shared_ptr<CrossEntropyLoss>;
+
+
+
     /// Implements the Cross Entropy Loss function, useful for multi-class classification tasks.
     struct CrossEntropyLoss: public Loss {
+        /// Utility method to create CrossEntropyLoss objects wrapped in a shared pointer
+        static CrossEntropyLossRef MakeCrossEntropyLoss();
 
         /// Compute the loss function using the formula: sum( y * -log(y_hat) ) / batch_size
         /// @param ys_hat Represent an array containing the ground-truth

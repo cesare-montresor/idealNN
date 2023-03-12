@@ -18,10 +18,11 @@ namespace IdealNN {
     TEST_CASE("Regression: train with SDG on multiple epochs") {
         srand(0);
         std::cout << "Regression: train with SDG on multiple epochs" << std::endl << std::flush;
+
         auto learning_rate = 0.0001;
         auto batch_size = 5;
         auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
-        auto dl = new CSVDataLoader(batch_size, path);
+        auto dl = CSVDataLoader::MakeCSVDataLoader(batch_size, path);
 
         auto xs = Tensor::MakeTensorArray();
         auto ys = Tensor::MakeTensorArray();
@@ -30,14 +31,14 @@ namespace IdealNN {
         auto act1 = RELUActivation::MakeRELUActivation();
         auto fc2 = LinearLayer::MakeLinearLayer(10, 1);
 
-        auto criterion = new MSELoss();
+        auto criterion = MSELoss::MakeMSELoss();
 
         auto trainLayers = Utils::MakeLayerArray();
         trainLayers->push_back(fc1);
         trainLayers->push_back(fc2);
 
 
-        auto optimizer = new SDGOptimizer(trainLayers, learning_rate);
+        auto optimizer = SDGOptimizer::MakeSDGOptimizer(trainLayers, learning_rate);
 
 
         auto epoch = 0;
@@ -87,9 +88,7 @@ namespace IdealNN {
 
         }
 
-        delete dl;
-        delete criterion;
-        delete optimizer;
+
         REQUIRE( initialLoss > finalLoss );
     }
 

@@ -8,6 +8,9 @@
 #include <Activation/Activation.h>
 
 namespace IdealNN {
+    struct TanhActivation;
+    /// Default type for pointers to Sigmoid Activation
+    using TanhActivationRef = shared_ptr<TanhActivation>;
 
     /// Implementation of the Tanh activation
     struct TanhActivation: public Activation {

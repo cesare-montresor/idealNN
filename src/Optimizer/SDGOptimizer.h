@@ -9,8 +9,15 @@
 #include <Common.h>
 
 namespace IdealNN{
+    struct SDGOptimizer;
+    /// Default type for pointers to SDGOptimizer Loss
+    using SDGOptimizerRef = shared_ptr<SDGOptimizer>;
+
     /// Simple implementation of SDG, Stochastic Gradient Descent
     struct SDGOptimizer: public Optimizer {
+        /// Utility method to create SDGOptimizer objects wrapped in a shared pointer
+        static SDGOptimizerRef MakeSDGOptimizer(const LayerArrayRef& layers, ScalarValue learning_rate);
+
         /// Constructor for SGDOptimizer
         /// @param layers List of layers to be optimized ( their internal parameters )
         /// @param learning_rate Initial learning rate

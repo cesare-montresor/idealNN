@@ -8,6 +8,10 @@
 #include <Activation/Activation.h>
 
 namespace IdealNN {
+    
+    struct SigmoidActivation;
+    /// Default type for pointers to Sigmoid Activation
+    using SigmoidActivationRef = shared_ptr<SigmoidActivation>;
 
     /// Implementation of the Sigmoid activation
     struct SigmoidActivation:  public Activation {

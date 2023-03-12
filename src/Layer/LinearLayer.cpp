@@ -7,7 +7,7 @@
 
 
 namespace IdealNN {
-    DenseRef LinearLayer::MakeLinearLayer(int in, int out) { return std::make_shared<LinearLayer>(in, out); }
+    LinearLayerRef LinearLayer::MakeLinearLayer(int in, int out) { return std::make_shared<LinearLayer>(in, out); }
 
     LinearLayer::LinearLayer(ArraySize in, ArraySize out): Layer() {
         this->in = in;

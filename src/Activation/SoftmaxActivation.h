@@ -8,6 +8,9 @@
 #include <Activation/Activation.h>
 
 namespace IdealNN {
+    struct SoftmaxActivation;
+    /// Default type for pointers to Softmax Activation
+    using SoftmaxActivationRef = shared_ptr<SoftmaxActivation>;
 
     /// Implementation of the Softmax activation
     struct SoftmaxActivation: public Activation {

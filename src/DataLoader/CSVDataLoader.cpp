@@ -12,8 +12,10 @@
 #include <algorithm>
 
 namespace IdealNN {
+    CSVDataLoaderRef CSVDataLoader::MakeCSVDataLoader(ArraySize batch_size, const string &fullpath) { return std::make_shared<CSVDataLoader>(batch_size, fullpath); }
 
-    CSVDataLoader::CSVDataLoader(int batch_size, const string &fullpath){
+
+    CSVDataLoader::CSVDataLoader(ArraySize batch_size, const string &fullpath){
         rows = Tensor::MakeTensorArray();
         this->batch_size = batch_size;
 

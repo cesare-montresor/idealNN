@@ -19,7 +19,7 @@ namespace IdealNN {
         auto learning_rate = 0.001;
         auto batch_size = 30;
         auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.norm.csv";
-        auto dl = new CSVDataLoader(batch_size, path);
+        auto dl = CSVDataLoader::MakeCSVDataLoader(batch_size, path);
 
         auto xs = Tensor::MakeTensorArray();
         auto ys = Tensor::MakeTensorArray();
@@ -30,14 +30,14 @@ namespace IdealNN {
         auto act2 = TanhActivation::MakeTanhActivation();
         auto softmax = SoftmaxActivation::MakeSoftmaxActivation();
 
-        auto criterion = new CrossEntropyLoss();
+        auto criterion = CrossEntropyLoss::MakeCrossEntropyLoss();
 
         auto trainLayers = Utils::MakeLayerArray();
         trainLayers->push_back(fc1);
         trainLayers->push_back(fc2);
 
 
-        auto optimizer = new SDGOptimizer(trainLayers, learning_rate);
+        auto optimizer = SDGOptimizer::MakeSDGOptimizer(trainLayers, learning_rate);
 
 
         auto epoch = 0;
@@ -89,9 +89,6 @@ namespace IdealNN {
 
         }
 
-        delete dl;
-        delete criterion;
-        delete optimizer;
         REQUIRE( initialLoss > finalLoss );
     }
 

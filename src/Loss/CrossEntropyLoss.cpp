@@ -7,6 +7,7 @@
 #include <Layer/LinearLayer.h>
 
 namespace IdealNN {
+    CrossEntropyLossRef CrossEntropyLoss::MakeCrossEntropyLoss() { return std::make_shared<CrossEntropyLoss>(); }
 
     //https://www.youtube.com/watch?v=znqbtL0fRA0&t=2132s
     ScalarValue CrossEntropyLoss::loss(TensorArrayRef ys_hat, TensorArrayRef ys ){

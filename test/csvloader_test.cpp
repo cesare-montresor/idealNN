@@ -9,29 +9,29 @@ namespace IdealNN {
     
     TEST_CASE("CSVDataLoader: show batch") {
         srand(0);
-
+        std::cout<<"CSVDataLoader: show batch"<<std::endl<<std::flush;
         auto batch_size = 3;
         auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
-        auto dl = new CSVDataLoader(batch_size, path);
+        auto dl = CSVDataLoader::MakeCSVDataLoader(batch_size, path);
         auto batch = dl->getData();
         auto bs = Utils::getSize(batch);
         std::cout << "Batch size: " << bs << std::endl;
 
         for (ArrayIndex i = 0; i < bs; i++) {
-            //cout << "Item " << i << ": " << batch[i]->array() << endl;
+            //std::cout << "Item " << i << ": " << batch[i]->array() << endl;
         }
-        delete dl;
+
         REQUIRE(true);
     }
 
     TEST_CASE("CSVDataLoader: show all batch") {
         srand(0);
-
+        std::cout<<"CSVDataLoader: show all batch"<<std::endl<<std::flush;
         auto numRows = 150; //Hardcoded for iris dataset
 
         auto batch_size = 7;
         auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
-        auto dl = new CSVDataLoader(batch_size, path);
+        auto dl = CSVDataLoader::MakeCSVDataLoader(batch_size, path);
         REQUIRE(numRows == dl->numRows());
 
         auto cnt = 0;
@@ -45,21 +45,22 @@ namespace IdealNN {
             }
             for (ArrayIndex i = 0; i < bs; i++) {
                 cnt++;
-                //cout << "Item " << i << ": " << batch[i]->array() << endl;
+                //std::cout << "Item " << i << ": " << batch[i]->array() << endl;
             }
         }
 
-        delete dl;
+
         REQUIRE(numRows == cnt);
     }
 
     TEST_CASE("CSVDataLoader: rewind") {
         srand(0);
+        std::cout<<"CSVDataLoader: rewind"<<std::endl<<std::flush;
         auto numRows = 150; //Hardcoded for iris dataset
 
         auto batch_size = 7;
         auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
-        auto dl = new CSVDataLoader(batch_size, path);
+        auto dl = CSVDataLoader::MakeCSVDataLoader(batch_size, path);
         REQUIRE(numRows == dl->numRows());
 
         auto cnt = 0;
@@ -87,20 +88,21 @@ namespace IdealNN {
             }
             for (ArrayIndex i = 0; i < bs; i++) {
                 cnt++;
-                //cout << "Item " << i << ": " << batch[i]->array() << endl;
+                //std::cout << "Item " << i << ": " << batch[i]->array() << endl;
             }
         }
 
-        delete dl;
+
         REQUIRE(numRows == cnt);
     }
 
     TEST_CASE("CSVDataLoader: shuffle") {
         srand(0);
+        std::cout<<"CSVDataLoader: shuffle"<<std::endl<<std::flush;
         auto class_idx = 4;
         auto batch_size = 50; //
         auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
-        auto dl = new CSVDataLoader(batch_size, path);
+        auto dl = CSVDataLoader::MakeCSVDataLoader(batch_size, path);
         dl->shuffle();
         auto batch = dl->getData();
         auto bs = Utils::getSize(batch);
@@ -116,7 +118,7 @@ namespace IdealNN {
             }
 
         }
-        delete dl;
+
         REQUIRE(found);
     }
 

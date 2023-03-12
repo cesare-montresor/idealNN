@@ -8,6 +8,9 @@
 
 namespace IdealNN{
 
+    SDGOptimizerRef SDGOptimizer::MakeSDGOptimizer(const LayerArrayRef& layers, ScalarValue learning_rate) { return std::make_shared<SDGOptimizer>(layers, learning_rate); }
+
+
     SDGOptimizer::SDGOptimizer(const LayerArrayRef& layers, ScalarValue learning_rate) {
         this->learning_rate = learning_rate;
         parameters = Tensor::MakeTensorArray();

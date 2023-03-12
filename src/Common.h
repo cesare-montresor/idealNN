@@ -87,35 +87,6 @@ namespace IdealNN{
     /// Default type for pointers to array of Layers
     using LayerArrayRef = shared_ptr<LayerArray>;
 
-    /// Forward declaration of LinearLayer layer class
-    struct LinearLayer;
-    /// Default type for pointers to LinearLayer layers
-    using DenseRef = shared_ptr<LinearLayer>;
-
-    /// Forward declaration of SigmoidActivation class
-    struct SigmoidActivation;
-    /// Default type for pointers to Sigmoid Activation
-    using SigmoidActivationRef = shared_ptr<SigmoidActivation>;
-
-    /// Forward declaration of SigmoidActivation class
-    struct TanhActivation;
-    /// Default type for pointers to Sigmoid Activation
-    using TanhActivationRef = shared_ptr<TanhActivation>;
-
-    /// Forward declaration of RELUActivationRef layer class
-    struct RELUActivation;
-    /// Default type for pointers to RELU Activation
-    using RELUActivationRef = shared_ptr<RELUActivation>;
-
-    /// Forward declaration of SoftmaxActivation layer class
-    struct SoftmaxActivation;
-    /// Default type for pointers to Softmax Activation
-    using SoftmaxActivationRef = shared_ptr<SoftmaxActivation>;
-
-    /// Forward declaration of Loss class
-    struct Loss;
-    /// Default type for pointers to Loss error
-    using LossRef = shared_ptr<Loss>;
 }
 
 
