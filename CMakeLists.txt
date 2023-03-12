@@ -16,7 +16,7 @@ set(CMAKE_CXX_EXTENSIONS            OFF)
 
 
 # Produce a static lib
-option(STATIC_LIB "Produce a static lib" OFF)
+option(STATIC_LIB "Produce a static lib" ON)
 # Compile with coverage support
 option(TEST_COVERAGE "Enable test coverage" ON)
 # Undefined behavior checking at runtime
@@ -48,6 +48,8 @@ set(LINKER_FLAGS
 # -fno-omit-frame-pointer: Keep the frame pointer in a register for functions that don't need one. (default: -omit-frame-pointer)
 ## see more: # https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html
 
+#set(CMAKE_CXX_FLAGS_DEBUG_INIT ${COMPILER_FLAGS})
+#set(CMAKE_CXX_FLAGS_RELEASE_INIT "-Wall -Wextra -Wpedantic -Werror")
 
 # List all source files
 file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*)
@@ -112,7 +114,7 @@ add_test(NAME test COMMAND ${CMAKE_BINARY_DIR}/idealnn_test )
 add_test(NAME valgrind
     COMMAND valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes -s
     ${CMAKE_BINARY_DIR}/idealnn_test
-    #CONFIGURATIONS valgrind # disabled by default, use ctest -C valgrind
+    CONFIGURATIONS valgrind # disabled by default, use ctest -C valgrind
 )
 
 
