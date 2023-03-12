@@ -27,7 +27,7 @@ namespace IdealNN {
         auto result = ( (*x->data) * (*weights->data) + (*bias->data) );
         auto output = Tensor::MakeTensor(result);
 
-        output->operation = shared_from_this();
+        output->operation = weak_from_this();
         return output;
     }
 
@@ -47,9 +47,10 @@ namespace IdealNN {
             (*weights->gradients) += weights_dx.transpose(); /// should I ?
         }
 
-        if(x->operation) {
+        auto operation = x->operation.lock();
+        if(operation){
             auto next_dx = Tensor::MakeTensor( dense_dx );
-            x->operation->backward(next_dx, i);
+            operation->backward(next_dx,i);
         }
     }
 

@@ -12,7 +12,12 @@
 #include <iostream>
 #include <random>
 
+/*! @mainpage
+ IdealNN is a simple Neural Network framework written in C++ that aims to provide pytorch-like APIs.
+ The library is mainly intended for educational purposes to demystify the complexities behind neural network frameworks.
 
+ https://github.com/cesare-montresor/idealNN
+ */
 
 /// Common.h contains type definitions for the whole project
 /// serves also as forward declaration to avoid circular dependencies.
@@ -30,6 +35,10 @@ namespace IdealNN{
     /// Default type for shared pointers
     template<typename T>
     using shared_ptr = std::shared_ptr<T>;
+
+    /// Default type for weak pointers
+    template<typename T>
+    using weak_ptr = std::weak_ptr<T>;
     //is this hiding too much information about the type of pointer used?
     //using Ref = std::shared_ptr<T>;
 
@@ -56,10 +65,6 @@ namespace IdealNN{
     /// Default type for pointers to arrays of TensorData
     using TensorDataArrayRef = shared_ptr<TensorDataArray> ;
 
-    // Default type for TensorData coefficients (unused)
-    // using Coeff = Eigen::internal::traits<TensorData>::Scalar ;
-
-
     /// Default type for arrays of Scalar Values
     using ScalarValueArray = vector<ScalarValue>;
     /// Default type for pointers to arrays of Scalar Values
@@ -78,14 +83,19 @@ namespace IdealNN{
     /// Default type for pointers to array of Tensors
     using TensorArrayRef = shared_ptr<TensorArray>;
 
+
+
     /// Forward declaration of Layer class
     struct Layer;
     /// Default type for Layer pointers
     using LayerRef = shared_ptr<Layer>;
+    /// Default type for weak Layer pointers, used to avoid circular ownership between Tensor and Layer
+    using LayerWeakRef = weak_ptr<Layer>;
     /// Default type for array of Layers
     using LayerArray = vector<LayerRef>;
     /// Default type for pointers to array of Layers
     using LayerArrayRef = shared_ptr<LayerArray>;
+
 
 }
 

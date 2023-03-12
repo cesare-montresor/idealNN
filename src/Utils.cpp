@@ -14,7 +14,7 @@ namespace IdealNN::Utils{
 
     TensorArrayRef slice(const TensorArrayRef& array, ArrayIndex start, ArraySize count){
         auto as = static_cast<ArraySize>(array->size());
-        assert(as >= 0); //Overflow
+        assert(as >= 0 && "IdealNN::Utils::slice: conversion of size_t to unsigned did overflow."); //Overflow
 
         if(start + 1 >= as ) {return Tensor::MakeTensorArray();}
         auto items_count = start + count < as ? count : (as - start);

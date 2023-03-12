@@ -26,7 +26,6 @@ namespace IdealNN {
 
 
         //static
-
         /// Create a pointer to a 2D tensor with given rows and columns
         /// @param rows Number of rows
         /// @param cols Number of columns
@@ -72,6 +71,8 @@ namespace IdealNN {
         /// @param tensorData Pointer to tensorData
         explicit Tensor(TensorDataRef tensorData);
 
+        /// Provides an overridable default destructor, in case some derived class would need a more complex destruction logic.
+        virtual ~Tensor() = default;
 
 
         //Properties
@@ -80,10 +81,10 @@ namespace IdealNN {
         /// Defines if the Tensor should accumulate gradients or not.
         bool use_grads = true;
         /// Represent operation executed on the Tensor, it is used by the backward pass. If is not set, it will interrupt the backward steps.
-        LayerRef operation;
+        LayerWeakRef operation;
         /// Defines the last operation executed on the Tensor, it is used by the backward pass.
         TensorDataRef gradients;
-
+        
         //Methods
         /// Reset the accumulated gradients to zero.
         void zero_grad();

@@ -20,7 +20,7 @@ namespace IdealNN {
         //std::cout << "[FORWARD] \t" << i << " Softmax A " << result.array() << std::endl << std::flush;
 
         auto output = Tensor::MakeTensor(result);
-        output->operation = shared_from_this();
+        output->operation = weak_from_this();
         return output;
     }
 
@@ -32,10 +32,11 @@ namespace IdealNN {
         //std::cout << "[GRADS] \t"<<i<<" Softmax (x_stable) \t\t" << x_stable.array() << std::endl << std::flush;
         auto softmax_dx = (output->data->array() * (1 - output->data->array())).matrix();
         //std::cout << "[GRADS] \t"<<i<<" Softmax (local) \t" << softmax_dx.array() << std::endl << std::flush;
-        if(x->operation){
+        auto operation = x->operation.lock();
+        if(operation){
             auto next_dx = Tensor::MakeTensor( (softmax_dx.array() * dx->data->array()).matrix()  );
             //std::cout << "[GRADS] \t"<<i<<" Softmax (final) \t" << next_dx->data->array() << std::endl << std::flush;
-            x->operation->backward(next_dx,i);
+            operation->backward(next_dx,i);
         }
     }
 

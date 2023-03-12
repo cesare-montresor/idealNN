@@ -13,7 +13,7 @@ namespace IdealNN {
 
     //static array
     TensorArrayRef Layer::forwardBatch(const TensorArrayRef &xs) {
-        this->inputs = xs;
+        inputs = xs;
         auto bs = Utils::getSize(xs);
         outputs = Tensor::MakeTensorArray(bs);
         //TODO: OpenMP parallel

@@ -57,10 +57,11 @@ set(INCLUDES ${PROJECT_SOURCE_DIR}/third_party )
 
 # =============== Library ===============
 
-# add_library(libidealnn ${SOURCES} )  #Non-static lib
+
 
 # add target library, static
-add_library(idealnn STATIC ${SOURCES} )
+add_library(idealnn STATIC ${SOURCES} ) #Static
+#add_library(idealnn ${SOURCES} )  #Non-static lib
 target_include_directories(idealnn PUBLIC ${PROJECT_SOURCE_DIR}/src)
 
 # add Eigen3 as requirement
@@ -81,10 +82,11 @@ install(
 )
 
 # =============== Testing ===============
-
+#enable testing
+enable_testing()
 # add executable target for tests
 add_executable(idealnn_test EXCLUDE_FROM_ALL ${SOURCES_TEST} third_party/catch2/catch.hpp)
-# link test ecxecutable with libidealnn
+# link test executable with libidealnn
 target_link_libraries(idealnn_test idealnn)
 # add include directories for src/, tests/ and third_party/
 target_include_directories(
@@ -97,15 +99,14 @@ target_include_directories(
 target_compile_options(idealnn_test PRIVATE ${COMPILER_FLAGS} )
 target_link_options(idealnn_test PRIVATE ${LINKER_FLAGS} )
 
-#eneable testing
-enable_testing()
+
 #default test
 add_test(NAME test COMMAND ${CMAKE_BINARY_DIR}/idealnn_test )
 #valgrind test for memory leaks
 add_test(NAME valgrind
     COMMAND valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes
     ${CMAKE_BINARY_DIR}/idealnn_test
-    # CONFIGURATIONS valgrind # disabled by default, use ctest -C valgrind
+    #CONFIGURATIONS valgrind # disabled by default, use ctest -C valgrind
 )
 
 

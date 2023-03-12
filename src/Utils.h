@@ -26,7 +26,7 @@ namespace IdealNN::Utils{
     template<typename T>
     ArraySize getSize( shared_ptr<vector<T>> vector){
         auto size = static_cast<ArraySize>(vector->size());
-        assert(size >= 0); //Overflow
+        assert(size >= 0 && "IdealNN::Utils::getSize: conversion of size_t to unsigned did overflow."); //Overflow
         return size;
     }
 
@@ -35,7 +35,7 @@ namespace IdealNN::Utils{
     template<typename T>
     ArraySize getSize( vector<T> vector){
         auto size = static_cast<ArraySize>(vector.size());
-        assert(size >= 0); //Overflow
+        assert(size >= 0 && "IdealNN::Utils::getSize: conversion of size_t to unsigned did overflow."); //Overflow
         return size;
     }
 

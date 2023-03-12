@@ -19,14 +19,15 @@ sudo apt install cloc
 
 ### Documentation
 ```bash
-sudo apt install doxygen
+sudo apt install doxygen 
 sudo apt install texlive-font-utils
 sudo apt install graphviz
 ```
 
 ## Documentation
 
-
+API: https://cesare-montresor.github.io/idealNN/
+Writeup: https://github.com/cesare-montresor/idealNN/blob/main/README.pdf
 
 ## Resources and Articles
 

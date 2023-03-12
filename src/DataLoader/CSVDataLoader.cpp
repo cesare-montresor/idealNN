@@ -24,8 +24,7 @@ namespace IdealNN {
 
         std::ifstream file(fullpath);
         if(!file.good()){
-            std::cout << "The file as path " << fullpath << " does not exists" << std::endl << std::flush;
-            assert(false);
+            assert( false && "IdealNN::CSVDataLoader::constructor: The CSV file does not exists." );
         }
         string line, word;
         // determine number of columns in file

@@ -3,12 +3,9 @@
 #include <DataLoader/CSVDataLoader.h>
 #include <Utils.h>
 #include <Loss/MSELoss.h>
-#include <Loss/CrossEntropyLoss.h>
 #include <Optimizer/SDGOptimizer.h>
-#include <Activation/SigmoidActivation.h>
-#include <Activation/SoftmaxActivation.h>
 #include <Activation/RELUActivation.h>
-#include <Activation/TanhActivation.h>
+
 
 #include <catch2/catch.hpp>
 #include <iostream>
@@ -85,7 +82,6 @@ namespace IdealNN {
             criterion->backward();
             optimizer->step();
             optimizer->zero_grad();
-
         }
 
 

@@ -16,7 +16,7 @@ namespace IdealNN {
         auto result = ( 1 / ( 1 + sigma_exp)).matrix();
         auto output = Tensor::MakeTensor(result);
 
-        output->operation = shared_from_this();
+        output->operation = weak_from_this();
         return output;
     }
 
@@ -26,10 +26,11 @@ namespace IdealNN {
         auto sigma_dx = (( 1 - output->data->array() ) * output->data->array()).matrix() ;
 
         //std::cout << "[GRADS] \t"<<i<<" Sigmoid (partial)" << std::endl << sigma_dx.array() << std::endl << std::flush;
-        if(x->operation){
+        auto operation = x->operation.lock();
+        if(operation){
             auto next_dx = Tensor::MakeTensor( (sigma_dx.array() * dx->data->array() ).matrix() );
             //std::cout << "[GRADS] \t"<<i<<" Sigmoid (final)" << std::endl << next_dx->data->array() << std::endl << std::flush;
-            x->operation->backward(next_dx,i);
+            operation->backward(next_dx,i);
         }
     }
 

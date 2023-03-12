@@ -34,8 +34,9 @@ namespace IdealNN {
             auto delta = deltas->at(i);
             //std::cout << "[GRADS] \t"<<i<<" Cross Entropy loss \t" << delta->data->array() << std::endl << std::flush;
             auto y_hat = ys_hat->at(i);
-            if(y_hat->operation) {
-                y_hat->operation->backward(delta,i);
+            auto operation = y_hat->operation.lock();
+            if(operation){
+                operation->backward(delta,i);
             }
         }
     }
