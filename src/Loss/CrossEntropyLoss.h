@@ -21,12 +21,12 @@ namespace IdealNN {
         /// Utility method to create CrossEntropyLoss objects wrapped in a shared pointer
         static CrossEntropyLossRef MakeCrossEntropyLoss();
 
-        /// Compute the loss function using the formula: sum( y * -log(y_hat) ) / batch_size
+        /// Compute the loss function using the formula: \f$ \frac{\sum( y * -\log(hat{y}) )}{batch_size} \f$
         /// @param ys_hat Represent an array containing the ground-truth
         /// @param ys Represent an array containing the ground-truth
         ScalarValue loss(TensorArrayRef ys_hat, TensorArrayRef ys) override;
 
-        /// Triggers the cascade of all backward pass. Gradient formula: -(y / y_hat)
+        /// Triggers the cascade of all backward pass. Gradient formula: \f$  -\frac{y}{hat{y}} \f$
         void backward() override;
     };
 }

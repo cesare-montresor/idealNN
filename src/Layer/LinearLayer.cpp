@@ -9,7 +9,7 @@
 namespace IdealNN {
     LinearLayerRef LinearLayer::MakeLinearLayer(int in, int out) { return std::make_shared<LinearLayer>(in, out); }
 
-    LinearLayer::LinearLayer(ArraySize in, ArraySize out): Layer() {
+    LinearLayer::LinearLayer(ArraySize in, ArraySize out){
         this->in = in;
         this->out = out;
 

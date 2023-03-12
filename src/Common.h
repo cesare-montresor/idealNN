@@ -5,6 +5,24 @@
 #ifndef IDEALNN_COMMON_H
 #define IDEALNN_COMMON_H
 
+/*! @mainpage
+ IdealNN is a simple Neural Network framework written in C++ that aims to provide pytorch-like APIs.
+ The library is mainly intended for educational purposes to demystify the complexities behind neural network frameworks.
+
+ 
+
+<h3>Quick links</h3>
+<ul>
+ <li><a href="https://github.com/cesare-montresor/idealNN">GitHub IdealNN</a></li>
+ <li><a href="https://cesare-montresor.github.io/idealNN/_common_8h_source.html">IdealNN Types</a></li>
+ <li><a href="https://cesare-montresor.github.io/idealNN/hierarchy.html">Classes</a></li>
+ <li><a href="https://cesare-montresor.github.io/idealNN/files.html">Files</a></li>
+</ul>
+
+
+*/
+
+
 #include <vector>
 #include <memory>
 #include <cstdint>
@@ -12,12 +30,7 @@
 #include <iostream>
 #include <random>
 
-/*! @mainpage
- IdealNN is a simple Neural Network framework written in C++ that aims to provide pytorch-like APIs.
- The library is mainly intended for educational purposes to demystify the complexities behind neural network frameworks.
 
- https://github.com/cesare-montresor/idealNN
- */
 
 /// Common.h contains type definitions for the whole project
 /// serves also as forward declaration to avoid circular dependencies.

@@ -15,11 +15,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED     ON)
 set(CMAKE_CXX_EXTENSIONS            OFF)
 
 
-
+# Produce a static lib
+option(STATIC_LIB "Produce a static lib" OFF)
 # Compile with coverage support
 option(TEST_COVERAGE "Enable test coverage" ON)
 # Undefined behavior checking at runtime
 option(UB_SANITIZER "Enable undefined behaviour sanitizer" ON)
+
 
 # set default compiler flags
 set(COMPILER_FLAGS
@@ -60,8 +62,12 @@ set(INCLUDES ${PROJECT_SOURCE_DIR}/third_party )
 
 
 # add target library, static
-add_library(idealnn STATIC ${SOURCES} ) #Static
-#add_library(idealnn ${SOURCES} )  #Non-static lib
+if(STATIC_LIB)
+    add_library(idealnn STATIC ${SOURCES} ) #Static
+else()
+    add_library(idealnn ${SOURCES} )  #Non-static lib
+endif()
+
 target_include_directories(idealnn PUBLIC ${PROJECT_SOURCE_DIR}/src)
 
 # add Eigen3 as requirement
@@ -104,7 +110,7 @@ target_link_options(idealnn_test PRIVATE ${LINKER_FLAGS} )
 add_test(NAME test COMMAND ${CMAKE_BINARY_DIR}/idealnn_test )
 #valgrind test for memory leaks
 add_test(NAME valgrind
-    COMMAND valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes
+    COMMAND valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes -s
     ${CMAKE_BINARY_DIR}/idealnn_test
     #CONFIGURATIONS valgrind # disabled by default, use ctest -C valgrind
 )
@@ -121,7 +127,7 @@ if (DOXYGEN_FOUND)
         COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_SOURCE_DIR}/Doxyfile
         COMMENT "Generating API documentation with Doxygen"
     )
-    add_dependencies(doc idealnn)
+
     #add install action for doc/ if present
     install(
         DIRECTORY ${CMAKE_BINARY_DIR}/doc

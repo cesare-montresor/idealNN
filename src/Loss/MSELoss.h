@@ -19,12 +19,12 @@ namespace IdealNN {
         /// Utility method to create MSELoss objects wrapped in a shared pointer
         static MSELossRef MakeMSELoss();
 
-        /// Compute the loss function using the formula: sum( 1/2 * (y - y_hat)^2 ) / batch_size
+        /// Compute the loss function using the formula: \f$ \frac{1}{2}*\frac{\sum{(y-\hat{y})^2}}{batch_size} \f$
         /// @param ys_hat Represent an array containing the ground-truth
         /// @param ys Represent an array containing the ground-truth
         ScalarValue loss(TensorArrayRef ys_hat, TensorArrayRef ys ) override;
 
-        /// Triggers the cascade of all backward pass. Gradient formula: ( y_hat - y )
+        /// Triggers the cascade of all backward pass. Gradient formula: \f$ ( \hat{y} - y ) \f$
         void backward() override;
     };
 }

@@ -20,7 +20,7 @@ sudo apt install cloc
 ### Documentation
 ```bash
 sudo apt install doxygen 
-sudo apt install texlive-font-utils
+sudo apt install texlive texlive-font-utils
 sudo apt install graphviz
 ```
 
