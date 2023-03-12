@@ -39,7 +39,7 @@ namespace IdealNN {
 
 
         auto epoch = 0;
-        auto epoch_max = 10;
+        auto epoch_max = 30;
         auto num_batches = 0;
 
         ScalarValue initialLoss=0;

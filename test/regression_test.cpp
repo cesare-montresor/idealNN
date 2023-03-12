@@ -27,8 +27,6 @@ namespace IdealNN {
         auto ys = Tensor::MakeTensorArray();
 
         auto fc1 = LinearLayer::MakeLinearLayer(4, 10);
-        //auto act1 = RELUActivation::MakeRELUActivation();
-        //auto act1 = SigmoidActivation::MakeSigmoidActivation();
         auto act1 = TanhActivation::MakeTanhActivation();
         auto fc2 = LinearLayer::MakeLinearLayer(10, 3);
         auto softmax = SoftmaxActivation::MakeSoftmaxActivation();
@@ -44,7 +42,7 @@ namespace IdealNN {
 
 
         auto epoch = 0;
-        auto epoch_max = 10;
+        auto epoch_max = 30;
         auto num_batches = 0;
 
         ScalarValue initialLoss=0;
@@ -57,7 +55,8 @@ namespace IdealNN {
             auto batch = dl->getData();
             auto bs = Utils::getSize(batch);
             if(bs == 0){
-                std::cout << "[EPOCH \t" << epoch << "]" << " ---------------- " << "AVG Loss: " << epochLoss / num_batches << " ----------------" << std::endl;
+                std::cout << "[EPOCH \t" << epoch << "]" << " --- " << "AVG Loss: ";
+                std::cout << epochLoss / num_batches << " --- " << std::endl;
                 if(epoch < epoch_max){
                     if (epoch == 0){
                         initialLoss = (epochLoss / num_batches);
@@ -83,11 +82,8 @@ namespace IdealNN {
             epochLoss += loss;
             ++num_batches;
 
-            //std::cout << "Loss: " << loss << std::endl;
-            //std::cout << fc2->weights->gradients->array().coeff(0) << " => " << std::flush;
             criterion->backward();
             optimizer->step();
-            //std::cout << fc2->weights->gradients->array().coeff(0) << std::endl << std::flush;
             optimizer->zero_grad();
 
         }

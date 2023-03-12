@@ -65,7 +65,7 @@ namespace IdealNN{
     /// Default type for pointers to arrays of Scalar Values
     using ScalarValueArrayRef = shared_ptr<ScalarValueArray> ;
     /// ScalarDelta defines the tolerance for real value comparison
-    const ScalarValue ScalarDelta = 0.00001;
+    const constexpr ScalarValue ScalarDelta = 0.00001;
 
 
 
