@@ -14,7 +14,7 @@
 namespace IdealNN {
 
     CSVDataLoader::CSVDataLoader(int batch_size, const string &fullpath){
-        this->rows = Tensor::MakeTensorArray();
+        rows = Tensor::MakeTensorArray();
         this->batch_size = batch_size;
 
         auto rowDelim = '\n';
@@ -29,7 +29,7 @@ namespace IdealNN {
         while (getline(ss1, word, colDelim)) {
             parsed_vec.push_back(ScalarValue(std::stod(&word[0])));
         }
-        this->col_nums = Utils::getSize(parsed_vec);
+        col_nums = Utils::getSize(parsed_vec);
 
         file.seekg(0);
 
@@ -47,7 +47,7 @@ namespace IdealNN {
             }
 
         }
-        this->rewind();
+        rewind();
     }
 
     void CSVDataLoader::rewind() {
@@ -60,7 +60,7 @@ namespace IdealNN {
 
     void CSVDataLoader::shuffle() {
         std::shuffle(rows->begin(), rows->end(), rndEngine);
-        this->rewind();
+        rewind();
     }
 
     TensorArrayRef CSVDataLoader::getData() {

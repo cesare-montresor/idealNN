@@ -10,13 +10,13 @@ namespace IdealNN{
 
     SDGOptimizer::SDGOptimizer(const LayerArrayRef& layers, ScalarValue learning_rate) {
         this->learning_rate = learning_rate;
-        this->parameters = Tensor::MakeTensorArray();
+        parameters = Tensor::MakeTensorArray();
         auto ls = Utils::getSize(layers);
         for(ArraySize i = 0; i< ls; i++){
             auto params = layers->at(i)->parameters();
             auto ps = Utils::getSize(params);
             for(ArraySize j=0; j<ps; j++){
-                this->parameters->push_back( params->at(j) );
+                parameters->push_back( params->at(j) );
             }
         }
     }
@@ -35,9 +35,9 @@ namespace IdealNN{
 
     void SDGOptimizer::step(){
         //TODO: OpenMP parallel
-        auto ps = Utils::getSize(this->parameters);
+        auto ps = Utils::getSize(parameters);
         for(ArraySize i=0; i< ps; i++){
-            auto param = this->parameters->at(i);
+            auto param = parameters->at(i);
             auto grads = param->gradients;
             (*param->data) -= (*grads) * learning_rate;
         }
@@ -45,9 +45,9 @@ namespace IdealNN{
 
     void SDGOptimizer::zero_grad(){
         //TODO: OpenMP parallel
-        auto ps = Utils::getSize(this->parameters);
+        auto ps = Utils::getSize(parameters);
         for(ArraySize i=0; i< ps; i++){
-            auto param = this->parameters->at(i);
+            auto param = parameters->at(i);
             param->zero_grad();
         }
     }

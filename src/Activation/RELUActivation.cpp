@@ -21,7 +21,7 @@ namespace IdealNN {
     void RELUActivation::backward(TensorRef dx, ArrayIndex i) {
         auto x = inputs->at(i);
 
-        auto zeros = Utils::MakeMatrix(dx->data->rows(), dx->data->cols())->setZero();
+        auto zeros = Utils::MakeTensorData(dx->data->rows(), dx->data->cols())->setZero();
         auto relu_dx = (( x->data->array() <= 0 ).select(zeros.array(), dx->data->array() )).matrix();
 
         //std::cout << "[GRADS] \t"<<i<<" RELU input DX" << std::endl << dx->data->array() << std::endl << std::flush;

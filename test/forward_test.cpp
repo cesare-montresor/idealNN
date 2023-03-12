@@ -1,5 +1,5 @@
 #include <catch2/catch.hpp>
-#include <Layer/Dense.h>
+#include <Layer/LinearLayer.h>
 #include <DataLoader/CSVDataLoader.h>
 #include <iostream>
 #include <Utils.h>
@@ -21,8 +21,8 @@ namespace IdealNN {
 
         CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 1 );
 
-        auto fc1 = Dense::MakeDense(4, 10);
-        auto fc2 = Dense::MakeDense(10, 1);
+        auto fc1 = LinearLayer::MakeLinearLayer(4, 10);
+        auto fc2 = LinearLayer::MakeLinearLayer(10, 1);
 
         auto a1s = fc1->forwardBatch(xs);
         auto ys_hat = fc2->forwardBatch(a1s);
@@ -54,7 +54,7 @@ namespace IdealNN {
         
         CSVDataLoader::splitXY(batch, xs, ys, 0, 4,  4, 1 );
 
-        auto fc1 = Dense::MakeDense(4, 1);
+        auto fc1 = LinearLayer::MakeLinearLayer(4, 1);
         auto ys_hat = fc1->forwardBatch(xs);
 
         for(ArrayIndex i =0 ; i< bs; i++){

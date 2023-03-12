@@ -4,7 +4,7 @@
 
 #include <Loss/MSELoss.h>
 #include <Utils.h>
-#include <Layer/Dense.h>
+#include <Layer/LinearLayer.h>
 
 namespace IdealNN {
 

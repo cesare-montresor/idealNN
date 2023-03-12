@@ -38,15 +38,15 @@ namespace IdealNN {
 
         /// Create a Tensor from a pointer to another tensor
         /// @param tensor Pointer to tensor
-        static TensorRef MakeTensor(const TensorRef& tensor);
+        static TensorRef MakeTensor(const TensorRef &tensor);
 
-        /// Create a Tensor from a Matrix
-        /// @param matrix A matrix object
-        static TensorRef MakeTensor(const Matrix &matrix);
+        /// Create a Tensor from a TensorData
+        /// @param tensorData A tensorData object
+        static TensorRef MakeTensor(const TensorData &tensorData);
 
-        /// Create a Tensor from a pointer to a Matrix
-        /// @param matrix Pointer to matrix
-        static TensorRef MakeTensor(const MatrixRef& matrix);
+        /// Create a Tensor from a pointer to a TensorData
+        /// @param tensorData Pointer to tensorData
+        static TensorRef MakeTensor(const TensorDataRef &tensorData);
 
 
 
@@ -64,25 +64,25 @@ namespace IdealNN {
         /// @param tensor Pointer to tensor
         explicit Tensor(const TensorRef& tensor);
 
-        /// Create a Tensor from a Matrix
-        /// @param matrix A matrix object
-        explicit Tensor(Matrix const &matrix);
+        /// Create a Tensor from a TensorData
+        /// @param tensorData A tensorData object
+        explicit Tensor(const TensorData &tensorData);
 
-        /// Create a Tensor from a pointer to a Matrix
-        /// @param matrix Pointer to matrix
-        explicit Tensor(MatrixRef matrix);
+        /// Create a Tensor from a pointer to a TensorData
+        /// @param tensorData Pointer to tensorData
+        explicit Tensor(TensorDataRef tensorData);
 
 
 
         //Properties
         /// Holds the data of the tensor.
-        MatrixRef data;
+        TensorDataRef data;
         /// Defines if the Tensor should accumulate gradients or not.
         bool use_grads = true;
         /// Represent operation executed on the Tensor, it is used by the backward pass. If is not set, it will interrupt the backward steps.
         LayerRef operation;
         /// Defines the last operation executed on the Tensor, it is used by the backward pass.
-        MatrixRef gradients;
+        TensorDataRef gradients;
 
         //Methods
         /// Reset the accumulated gradients to zero.

@@ -4,7 +4,7 @@
 
 #include <Loss/CrossEntropyLoss.h>
 #include <Utils.h>
-#include <Layer/Dense.h>
+#include <Layer/LinearLayer.h>
 
 namespace IdealNN {
 
@@ -18,10 +18,10 @@ namespace IdealNN {
             auto y = ys->at(i);
             auto y_hat = ys_hat->at(i);
             auto log_y_hat = (y_hat->data->array() ).log();
-            auto y_error = Matrix( (y->data->array() * log_y_hat ).matrix() );
+            auto y_error = (y->data->array() * log_y_hat ).matrix();
             loss += y_error.array().sum();
 
-            auto delta = Tensor::MakeTensor(Matrix((y->data->array() / y_hat->data->array() * -1 ).matrix()) );
+            auto delta = Tensor::MakeTensor(((y->data->array() / y_hat->data->array() * -1 ).matrix()) );
             deltas->at(i) = delta;
         }
         return -loss / ScalarValue(bs);

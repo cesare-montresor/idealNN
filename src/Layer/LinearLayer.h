@@ -15,8 +15,8 @@
 
 namespace IdealNN {
 
-    /// Implements a standard Dense or Fully Connected Layer.
-    struct Dense: public Layer {
+    /// Implements a standard LinearLayer, Linear or Fully Connected Layer.
+    struct LinearLayer: public Layer {
     protected:
         /// Number of input units
         ArraySize in;
@@ -24,20 +24,20 @@ namespace IdealNN {
         ArraySize out;
 
     public:
-        /// matrix of weights
+        /// 2D matrix of weights
         TensorRef weights;
         /// vector of biases
         TensorRef bias;
 
-        /// Utility method to create Dense layer objects wrapped in a shared pointer
+        /// Utility method to create LinearLayer layer objects wrapped in a shared pointer
         /// @param in number of neurons in the previous layer
         /// @param out number of neurons in the next layer
-        static DenseRef MakeDense(int in, int out);
+        static DenseRef MakeLinearLayer(int in, int out);
 
         /// Construct a dense layer specifying the number of in/out units
         /// @param in Number of input units
         /// @param out Number of out units
-        Dense(ArraySize  in, ArraySize  out);
+        LinearLayer(ArraySize  in, ArraySize  out);
 
         /// Accept single item from a batch data and execute a linear transformation for the forward pass.
         /// @param x Tensor representing a single instance of data

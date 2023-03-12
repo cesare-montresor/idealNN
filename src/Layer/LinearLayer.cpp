@@ -2,14 +2,14 @@
 // Created by cesare on 08/02/23.
 //
 
-#include <Layer/Dense.h>
+#include <Layer/LinearLayer.h>
 #include <Tensor/Tensor.h>
 
 
 namespace IdealNN {
-    DenseRef Dense::MakeDense(int in, int out) { return std::make_shared<Dense>(in, out); }
+    DenseRef LinearLayer::MakeLinearLayer(int in, int out) { return std::make_shared<LinearLayer>(in, out); }
 
-    Dense::Dense(ArraySize in, ArraySize out):Layer() {
+    LinearLayer::LinearLayer(ArraySize in, ArraySize out): Layer() {
         this->in = in;
         this->out = out;
 
@@ -23,7 +23,7 @@ namespace IdealNN {
         bias->zero_grad();
     }
 
-    TensorRef Dense::forward(TensorRef x) {
+    TensorRef LinearLayer::forward(TensorRef x) {
         auto result = ( (*x->data) * (*weights->data) + (*bias->data) );
         auto output = Tensor::MakeTensor(result);
 
@@ -31,9 +31,9 @@ namespace IdealNN {
         return output;
     }
 
-    void Dense::backward(TensorRef dx, ArrayIndex i) {
+    void LinearLayer::backward(TensorRef dx, ArrayIndex i) {
         auto x = inputs->at(i); // inputs is the batch, x is the single input
-        auto output = this->outputs->at(i);
+        auto output = outputs->at(i);
 
         //bias
         if(bias->use_grads) {
@@ -53,7 +53,7 @@ namespace IdealNN {
         }
     }
 
-    TensorArrayRef Dense::parameters() {
+    TensorArrayRef LinearLayer::parameters() {
         auto params = Tensor::MakeTensorArray();
         params->push_back(weights);
         params->push_back(bias);

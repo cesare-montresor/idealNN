@@ -1,4 +1,4 @@
-//#include <Eigen/Dense>
+//#include <Eigen/LinearLayer>
 
 //
 // Created by Cesare on 25/10/2022.
@@ -13,8 +13,8 @@
 
 
 namespace IdealNN {
-    /// General interface for Layer objects, most methods are defined a pure-virtual except for forwardBatch.
-    /// The class prvides a concrete implementation forwardBatch, as turned out to be appropriate for most Layers.
+    /// General interface for Layer objects, most methods are defined as pure-virtual except for forwardBatch,
+    /// for which class provides a concrete implementation as turned out to be appropriate for most Layers.
     struct Layer: public std::enable_shared_from_this<Layer> {
     /*  https://en.cppreference.com/w/cpp/memory/enable_shared_from_this
         std::enable_shared_from_this allows an object t that is currently managed by a std::shared_ptr named pt to safely generate additional std::shared_ptr instances pt1, pt2, ... that all share ownership of t with pt.

@@ -1,4 +1,4 @@
-//#include <Eigen/Dense>
+//#include <Eigen/LinearLayer>
 
 //
 // Created by Cesare on 25/10/2022.
@@ -19,7 +19,7 @@ namespace IdealNN {
         //TODO: OpenMP parallel
         for(ArraySize i=0; i<bs; i++){
             auto x = xs->at(i);
-            auto output = this->forward(x);
+            auto output = forward(x);
             outputs->at(i) = output;
         }
         return outputs;

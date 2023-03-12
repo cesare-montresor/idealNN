@@ -7,7 +7,7 @@
 
 #include "Common.h"
 #include "Tensor/Tensor.h"
-#include "Layer/Dense.h"
+#include "Layer/LinearLayer.h"
 #include "Activation/SigmoidActivation.h"
 #include "Activation/RELUActivation.h"
 #include "Activation/SoftmaxActivation.h"
@@ -34,12 +34,12 @@ namespace IdealNN{
         ScalarValueArrayRef MakeScalarValueArray(ArraySize size) { return std::make_shared<ScalarValueArray>(size); }
         ScalarValueArrayRef MakeScalarValueArray(ScalarValueArray scalarValueArray) { return std::make_shared<ScalarValueArray>(std::move(scalarValueArray)); }
 
-        MatrixRef MakeMatrix(ArraySize rows, ArraySize cols) { return std::make_shared<Matrix>(rows, cols); }
-        MatrixRef MakeMatrix(Matrix matrix) { return std::make_shared<Matrix>(std::move(matrix)); }
+        TensorDataRef MakeTensorData(ArraySize rows, ArraySize cols) { return std::make_shared<TensorData>(rows, cols); }
+        TensorDataRef MakeTensorData(TensorData tensorData) { return std::make_shared<TensorData>(std::move(tensorData)); }
 
-        MatrixArrayRef MakeMatrixArray() { return std::make_shared<MatrixArray>(); }
-        MatrixArrayRef MakeMatrixArray(ArraySize size) { return std::make_shared<MatrixArray>(size); }
-        MatrixArrayRef MakeMatrixArray(MatrixArray matrixArray) { return std::make_shared<MatrixArray>(std::move(matrixArray)); }
+        TensorDataArrayRef MakeTensorDataArray() { return std::make_shared<TensorDataArray>(); }
+        TensorDataArrayRef MakeTensorDataArray(ArraySize size) { return std::make_shared<TensorDataArray>(size); }
+        TensorDataArrayRef MakeTensorDataArray(TensorDataArray tensorDataArray) { return std::make_shared<TensorDataArray>(std::move(tensorDataArray)); }
 
         LayerArrayRef MakeLayerArray(){ return std::make_shared<LayerArray>(); }
         LayerArrayRef MakeLayerArray(ArraySize size){ return std::make_shared<LayerArray>(size); }

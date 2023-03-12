@@ -33,7 +33,6 @@ namespace IdealNN{
     //is this hiding too much information about the type of pointer used?
     //using Ref = std::shared_ptr<T>;
 
-
     /// Default type for arrays
     template<typename T>
     using vector = std::vector<T>;
@@ -48,17 +47,17 @@ namespace IdealNN{
     /// Default type for strings
     using string = std::string;
 
-    /// Default type for Matrices
-    using Matrix = Eigen::MatrixXd ;
-    /// Default type for Matrix pointers
-    using MatrixRef = std::shared_ptr<Matrix>;
-    /// Default type for Matrix arrays
-    using MatrixArray = vector<MatrixRef> ;
-    /// Default type for pointers to arrays of Matrices
-    using MatrixArrayRef = shared_ptr<MatrixArray> ;
+    /// Default type for TensorData
+    using TensorData = Eigen::MatrixXd;
+    /// Default type for TensorData pointers
+    using TensorDataRef = std::shared_ptr<TensorData>;
+    /// Default type for TensorData arrays
+    using TensorDataArray = vector<TensorDataRef> ;
+    /// Default type for pointers to arrays of TensorData
+    using TensorDataArrayRef = shared_ptr<TensorDataArray> ;
 
-    // Default type for Matrix coefficients (unused)
-    // using Coeff = Eigen::internal::traits<Matrix>::Scalar ;
+    // Default type for TensorData coefficients (unused)
+    // using Coeff = Eigen::internal::traits<TensorData>::Scalar ;
 
 
     /// Default type for arrays of Scalar Values
@@ -88,10 +87,10 @@ namespace IdealNN{
     /// Default type for pointers to array of Layers
     using LayerArrayRef = shared_ptr<LayerArray>;
 
-    /// Forward declaration of Dense layer class
-    struct Dense;
-    /// Default type for pointers to Dense layers
-    using DenseRef = shared_ptr<Dense>;
+    /// Forward declaration of LinearLayer layer class
+    struct LinearLayer;
+    /// Default type for pointers to LinearLayer layers
+    using DenseRef = shared_ptr<LinearLayer>;
 
     /// Forward declaration of SigmoidActivation class
     struct SigmoidActivation;

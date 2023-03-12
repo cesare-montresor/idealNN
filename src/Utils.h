@@ -43,22 +43,22 @@ namespace IdealNN{
         /// @param scalarValueArray ScalarValueArray to be wrapped by the pointer.
         ScalarValueArrayRef MakeScalarValueArray(ScalarValueArray scalarValueArray);
 
-        /// Utility method to used to create a matrix of given size
-        /// @param rows Number of rows of the Matrix
-        /// @param cols Number of columns of the Matrix
-        MatrixRef MakeMatrix(ArraySize rows, ArraySize cols);
-        /// Utility method to used to move the ownership of Matrix to a pointer
-        /// @param matrix Matrix to be wrapped by the pointer.
-        MatrixRef MakeMatrix(Matrix matrix);
+        /// Utility method to used to create a TensorData of given size
+        /// @param rows Number of rows of the TensorData
+        /// @param cols Number of columns of the TensorData
+        TensorDataRef MakeTensorData(ArraySize rows, ArraySize cols);
+        /// Utility method to used to move the ownership of TensorData to a pointer
+        /// @param tensorData TensorData to be wrapped by the pointer.
+        TensorDataRef MakeTensorData(TensorData tensorData);
 
         /// Utility method to used to create an empty arrays of Matrices
-        MatrixArrayRef MakeMatrixArray();
+        TensorDataArrayRef MakeTensorDataArray();
         /// Utility method to used to create an arrays of Matrices by preallocating the size of the array
         /// @param size Size of the array
-        MatrixArrayRef MakeMatrixArray(ArraySize size);
+        TensorDataArrayRef MakeTensorDataArray(ArraySize size);
         /// Utility method to used to move the ownership of an array of Matrices to a pointer
-        /// @param matrixArray Matrix to be wrapped by the pointer.
-        MatrixArrayRef MakeMatrixArray(MatrixArray matrixArray);
+        /// @param tensorDataArray TensorDataArray to be wrapped by the pointer.
+        TensorDataArrayRef MakeTensorDataArray(TensorDataArray tensorDataArray);
 
 
         /// Utility method to used to create an empty arrays of Layers

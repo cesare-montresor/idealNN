@@ -12,7 +12,7 @@ namespace IdealNN {
     /// Represents a general purpose interface for Activation layers/functions
     struct Activation: public Layer {
         /// Activation layers have no params to train, always return an empty vector.
-        TensorArrayRef parameters() override;
+        TensorArrayRef parameters() final;
     };
 }
 
