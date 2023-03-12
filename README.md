@@ -25,10 +25,10 @@ sudo apt install graphviz
 ```
 
 ## Documentation
-
-API: https://cesare-montresor.github.io/idealNN/
-Writeup: https://github.com/cesare-montresor/idealNN/blob/main/README.pdf
-
+     
+API: https://cesare-montresor.github.io/idealNN/     
+Writeup: https://github.com/cesare-montresor/idealNN/blob/main/README.pdf     
+    
 ## Resources and Articles
 
 #### Project
