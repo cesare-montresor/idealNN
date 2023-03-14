@@ -31,6 +31,10 @@ namespace IdealNN {
         /// @param cols Number of columns
         static TensorRef MakeTensor(ArraySize rows, ArraySize cols);
 
+        /// Create a Tensor from a pointer to another tensor
+        /// @param tensor Pointer to tensor
+        static TensorRef MakeTensor(const TensorRef& tensor);
+
         /// Create a Tensor from a TensorData
         /// @param tensorData A tensorData object
         static TensorRef MakeTensor(TensorData &&tensorData);
@@ -47,14 +51,9 @@ namespace IdealNN {
         /// @param cols Number of columns
         Tensor(ArraySize rows, ArraySize cols);
 
-
         /// Create a Tensor from a pointer to another tensor
         /// @param tensor Pointer to tensor
         explicit Tensor(const TensorRef& tensor);
-
-        /// Create a Tensor from a TensorData
-        /// @param tensorData A tensorData object
-        explicit Tensor(TensorData &tensorData);
 
         /// Create a Tensor from a TensorData
         /// @param tensorData A tensorData object

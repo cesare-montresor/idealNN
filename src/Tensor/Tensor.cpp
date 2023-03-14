@@ -20,6 +20,7 @@ namespace IdealNN {
 
 
     TensorRef Tensor::MakeTensor(ArraySize rows, ArraySize cols) { return std::make_shared<Tensor>(rows, cols); }
+    TensorRef Tensor::MakeTensor(const TensorRef& tensor) { return std::make_shared<Tensor>(tensor); }
     TensorRef Tensor::MakeTensor(TensorData &&tensorData) { return std::make_shared<Tensor>(std::move(tensorData)); }
     TensorRef Tensor::MakeTensor(TensorDataRef &tensorData) { return std::make_shared<Tensor>(std::move(tensorData)); }
 
@@ -39,11 +40,6 @@ namespace IdealNN {
 
     Tensor::Tensor(TensorDataRef tensorData) {
         data = std::move(tensorData);
-        gradients = Utils::MakeTensorData(data->rows(), data->cols());
-    }
-
-    Tensor::Tensor(TensorData &tensorData) {
-        data = Utils::MakeTensorData( std::move(tensorData));
         gradients = Utils::MakeTensorData(data->rows(), data->cols());
     }
 
