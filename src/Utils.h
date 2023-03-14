@@ -22,22 +22,24 @@ namespace IdealNN::Utils{
     bool ScalarValueEqual(ScalarValue a, ScalarValue b);
 
     /// Cast vector size size_type (aka unsigned long) to standard ArraySize
-    /// @param vector Pointer to Vector
+    /// @param vector A vector
     template<typename T>
-    ArraySize getSize( shared_ptr<vector<T>> vector){
-        auto size = static_cast<ArraySize>(vector->size());
-        assert(size >= 0 && "IdealNN::Utils::getSize: conversion of size_t to unsigned did overflow."); //Overflow
+    ArraySize getSize( vector<T> vector){
+        auto size = static_cast<ArraySize>(vector.size());
+        if(size < 0){
+            auto msg = "[IdealNN::Utils::slice] Conversion from unsigned to signed to did overflow.";
+            throw std::runtime_error(msg);
+        }
         return size;
     }
 
     /// Cast vector size size_type (aka unsigned long) to standard ArraySize
-    /// @param vector Vector
+    /// @param vector Pointer to Vector
     template<typename T>
-    ArraySize getSize( vector<T> vector){
-        auto size = static_cast<ArraySize>(vector.size());
-        assert(size >= 0 && "IdealNN::Utils::getSize: conversion of size_t to unsigned did overflow."); //Overflow
-        return size;
+    ArraySize getSize( shared_ptr<vector<T>> vector){
+        return getSize((*vector));
     }
+
 
     /// Utility method to used to create an empty arrays of ScalarValues
     ScalarValueArrayRef MakeScalarValueArray();
@@ -54,7 +56,7 @@ namespace IdealNN::Utils{
     TensorDataRef MakeTensorData(ArraySize rows, ArraySize cols);
     /// Utility method to used to move the ownership of TensorData to a pointer
     /// @param tensorData TensorData to be wrapped by the pointer.
-    TensorDataRef MakeTensorData(TensorData tensorData);
+    TensorDataRef MakeTensorData(TensorData &&tensorData);
 
     /// Utility method to used to create an empty arrays of Matrices
     TensorDataArrayRef MakeTensorDataArray();

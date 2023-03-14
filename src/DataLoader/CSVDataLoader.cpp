@@ -7,7 +7,6 @@
 #include <Utils.h>
 #include <Tensor/Tensor.h>
 
-#include <iostream>
 #include <fstream>
 #include <algorithm>
 
@@ -16,6 +15,7 @@ namespace IdealNN {
 
 
     CSVDataLoader::CSVDataLoader(ArraySize batch_size, const string &fullpath){
+        rndEngine.seed(time(nullptr));
         rows = Tensor::MakeTensorArray();
         this->batch_size = batch_size;
 
@@ -24,7 +24,8 @@ namespace IdealNN {
 
         std::ifstream file(fullpath);
         if(!file.good()){
-            assert( false && "IdealNN::CSVDataLoader::constructor: The CSV file does not exists." );
+            auto msg = "[IdealNN::CSVDataLoader::constructor] The CSV file does not exists:\n" + fullpath;
+            throw std::runtime_error(msg);
         }
         string line, word;
         // determine number of columns in file

@@ -155,6 +155,7 @@ if (TEST_COVERAGE)
             --root ${PROJECT_SOURCE_DIR}
             --exclude ${PROJECT_SOURCE_DIR}/test/
             --exclude ${PROJECT_SOURCE_DIR}/third_party/
+            --exclude ".*.h"
             -v
             --html --html-details coverage/coverage.html
             COMMENT "Generating code coverage"

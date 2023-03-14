@@ -2,19 +2,15 @@
 // Created by cesare on 12/02/23.
 //
 
-#ifndef IDEALNN_UTILS_H
-#define IDEALNN_UTILS_H
-
-#include "Common.h"
-#include "Tensor/Tensor.h"
-#include "Layer/LinearLayer.h"
-#include "Utils.h"
+#include <Common.h>
+#include <Tensor/Tensor.h>
+#include <Layer/LinearLayer.h>
+#include <Utils.h>
 
 namespace IdealNN::Utils{
 
     TensorArrayRef slice(const TensorArrayRef& array, ArrayIndex start, ArraySize count){
-        auto as = static_cast<ArraySize>(array->size());
-        assert(as >= 0 && "IdealNN::Utils::slice: conversion of size_t to unsigned did overflow."); //Overflow
+        auto as = getSize(array);
 
         if(start + 1 >= as ) {return Tensor::MakeTensorArray();}
         auto items_count = start + count < as ? count : (as - start);
@@ -33,7 +29,7 @@ namespace IdealNN::Utils{
     ScalarValueArrayRef MakeScalarValueArray(ScalarValueArray scalarValueArray) { return std::make_shared<ScalarValueArray>(std::move(scalarValueArray)); }
 
     TensorDataRef MakeTensorData(ArraySize rows, ArraySize cols) { return std::make_shared<TensorData>(rows, cols); }
-    TensorDataRef MakeTensorData(TensorData tensorData) { return std::make_shared<TensorData>(std::move(tensorData)); }
+    TensorDataRef MakeTensorData(TensorData &&tensorData) { return std::make_shared<TensorData>(std::move(tensorData)); }
 
     TensorDataArrayRef MakeTensorDataArray() { return std::make_shared<TensorDataArray>(); }
     TensorDataArrayRef MakeTensorDataArray(ArraySize size) { return std::make_shared<TensorDataArray>(size); }
@@ -50,5 +46,4 @@ namespace IdealNN::Utils{
     //}
 }
 
-#endif //IDEALNN_UTILS_H
 

@@ -18,7 +18,7 @@ namespace IdealNN {
 
         auto learning_rate = 0.0001;
         auto batch_size = 5;
-        auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
+        auto path = "../../extra/iris/IRIS.csv";
         auto dl = CSVDataLoader::MakeCSVDataLoader(batch_size, path);
 
         auto xs = Tensor::MakeTensorArray();

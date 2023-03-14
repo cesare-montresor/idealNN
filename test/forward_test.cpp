@@ -9,7 +9,7 @@ namespace IdealNN {
         srand(0);
         std::cout<<"Forward: 2 layers"<<std::endl<<std::flush;
         auto batch_size = 3;
-        auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
+        auto path = "../../extra/iris/IRIS.csv";
         auto dl = CSVDataLoader::MakeCSVDataLoader(batch_size, path);
         auto batch = dl->getData();
         auto bs = Utils::getSize( batch );
@@ -44,7 +44,7 @@ namespace IdealNN {
         std::cout<<"Forward: 1 layers"<<std::endl<<std::flush;
 
         auto batch_size = 3;
-        auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
+        auto path = "../../extra/iris/IRIS.csv";
         auto dl = CSVDataLoader::MakeCSVDataLoader(batch_size, path);
         auto batch = dl->getData();
         auto bs = Utils::getSize(batch);

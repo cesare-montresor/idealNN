@@ -3,12 +3,8 @@
 #include <DataLoader/CSVDataLoader.h>
 #include <Utils.h>
 #include <Loss/MSELoss.h>
-#include <Loss/CrossEntropyLoss.h>
 #include <Optimizer/SDGOptimizer.h>
 #include <Activation/SigmoidActivation.h>
-#include <Activation/SoftmaxActivation.h>
-#include <Activation/RELUActivation.h>
-#include <Activation/TanhActivation.h>
 
 #include <catch2/catch.hpp>
 #include <iostream>
@@ -21,7 +17,7 @@ namespace IdealNN {
 
         auto learning_rate = 0.0001f;
         auto batch_size = 3;
-        auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.csv";
+        auto path = "../../extra/iris/IRIS.csv";
         auto dl = CSVDataLoader::MakeCSVDataLoader(batch_size, path);
         auto criterion = MSELoss::MakeMSELoss();
 

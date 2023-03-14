@@ -18,7 +18,7 @@ namespace IdealNN {
         std::cout << "Classification: train with SDG on multiple epochs" << std::endl << std::flush;
         auto learning_rate = 0.001;
         auto batch_size = 30;
-        auto path = "/home/cesare/Projects/idealNN/extra/iris/IRIS.norm.csv";
+        auto path = "../../extra/iris/IRIS.norm.csv";
         auto dl = CSVDataLoader::MakeCSVDataLoader(batch_size, path);
 
         auto xs = Tensor::MakeTensorArray();
