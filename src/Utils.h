@@ -36,7 +36,7 @@ namespace IdealNN::Utils{
     /// Cast vector size size_type (aka unsigned long) to standard ArraySize
     /// @param vector Pointer to Vector
     template<typename T>
-    ArraySize getSize( shared_ptr<vector<T>> vector){
+    ArraySize getSize(const shared_ptr<vector<T>> &vector){
         return getSize((*vector));
     }
 
