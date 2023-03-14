@@ -3,16 +3,10 @@ IdealNN is a simple Neural Network framework written in C++ that aims to provide
 The library is mainly intended for educational purposes to demistify the complexities behind neural network frameworks.    
 _NOTE: The framework is called IdealNN in the same sense of 'ideal filters' in the frequency domain._
 
-----
 
 ## Setup & Build
 In order to simplify setup and build and install bash scripts have been provided.
 
-## Release
-Build the project in release, build the docs and run make install.
-```bash
-./make_test.sh
-```
 
 ### Setup
 Install all dependencies and create the build directories.
@@ -20,19 +14,26 @@ Install all dependencies and create the build directories.
 ./setup_env.sh
 ```
 
-## Test
+### Release
+Build the project in release, build the docs and run make install.
+```bash
+./make_test.sh
+```
+
+
+### Test
 Build the project in debug and run tests.
 ```bash
 ./make_test.sh
 ```
 
-## Valgrind
+### Valgrind
 Build the project in debug and run valgrind on tests to check for memory leaks.
 ```bash
 ./make_valgrind.sh
 ```
 
-## Debug
+### Debug
 Build the project for debugging purposes.
 ```bash
 ./make_debug.sh
