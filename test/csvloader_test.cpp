@@ -8,7 +8,7 @@
 namespace IdealNN {
     
     TEST_CASE("CSVDataLoader: show batch") {
-        srand(0);
+        std::srand(0);
         std::cout<<"CSVDataLoader: show batch"<<std::endl<<std::flush;
         auto batch_size = 3;
         auto path = "../../extra/iris/IRIS.csv";
@@ -25,7 +25,7 @@ namespace IdealNN {
     }
 
     TEST_CASE("CSVDataLoader: show all batch") {
-        srand(0);
+        std::srand(0);
         std::cout<<"CSVDataLoader: show all batch"<<std::endl<<std::flush;
         auto numRows = 150; //Hardcoded for iris dataset
 
@@ -54,7 +54,7 @@ namespace IdealNN {
     }
 
     TEST_CASE("CSVDataLoader: rewind") {
-        srand(0);
+        std::srand(0);
         std::cout<<"CSVDataLoader: rewind"<<std::endl<<std::flush;
         auto numRows = 150; //Hardcoded for iris dataset
 
@@ -97,7 +97,7 @@ namespace IdealNN {
     }
 
     TEST_CASE("CSVDataLoader: shuffle") {
-        srand(0);
+        std::srand(0);
         std::cout<<"CSVDataLoader: shuffle"<<std::endl<<std::flush;
         auto class_idx = 4;
         auto batch_size = 50; //

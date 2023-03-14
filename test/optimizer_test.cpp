@@ -12,7 +12,7 @@
 namespace IdealNN {
 
     TEST_CASE("Optimizer: test SDG loss") {
-        srand(0);
+        std::srand(0);
         std::cout<<"Optimizer: test SDG loss"<<std::endl<<std::flush;
 
         auto learning_rate = 0.0001f;

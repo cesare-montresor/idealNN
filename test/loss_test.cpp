@@ -7,7 +7,7 @@
 
 namespace IdealNN {
     TEST_CASE("Loss: MSELoss") {
-        srand(0);
+        std::srand(0);
         std::cout<<"Loss: MSELoss"<<std::endl<<std::flush;
 
         auto batch_size = 3;

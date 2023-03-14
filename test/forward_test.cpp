@@ -6,7 +6,7 @@
 
 namespace IdealNN {
     TEST_CASE("Forward: 2 layers") {
-        srand(0);
+        std::srand(0);
         std::cout<<"Forward: 2 layers"<<std::endl<<std::flush;
         auto batch_size = 3;
         auto path = "../../extra/iris/IRIS.csv";
@@ -40,7 +40,7 @@ namespace IdealNN {
 
 
     TEST_CASE("Forward: 1 layer") {
-        srand(0);
+        std::srand(0);
         std::cout<<"Forward: 1 layers"<<std::endl<<std::flush;
 
         auto batch_size = 3;

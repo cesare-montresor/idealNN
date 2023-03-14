@@ -16,7 +16,7 @@ set(CMAKE_CXX_EXTENSIONS            OFF)
 
 
 # Produce a static lib
-option(STATIC_LIB "Produce a static lib" ON)
+option(STATIC_LIB "Produce a static lib" OFF)
 # Compile with coverage support
 option(TEST_COVERAGE "Enable test coverage" ON)
 # Undefined behavior checking at runtime

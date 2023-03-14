@@ -13,7 +13,7 @@
 namespace IdealNN {
 
     TEST_CASE("Regression: train with SDG on multiple epochs") {
-        srand(0);
+        std::srand(0);
         std::cout << "Regression: train with SDG on multiple epochs" << std::endl << std::flush;
 
         auto learning_rate = 0.0001;
