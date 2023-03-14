@@ -24,7 +24,7 @@ namespace IdealNN::Utils{
     /// Cast vector size size_type (aka unsigned long) to standard ArraySize
     /// @param vector A vector
     template<typename T>
-    ArraySize getSize( vector<T> vector){
+    ArraySize getSize(const vector<T> &vector){
         auto size = static_cast<ArraySize>(vector.size());
         if(size < 0){
             auto msg = "[IdealNN::Utils::slice] Conversion from unsigned to signed to did overflow.";
