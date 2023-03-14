@@ -21,24 +21,6 @@ namespace IdealNN::Utils{
     /// @param b A real value
     bool ScalarValueEqual(ScalarValue a, ScalarValue b);
 
-    /// Cast vector size size_type (aka unsigned long) to standard ArraySize
-    /// @param vector A vector
-    template<typename T>
-    ArraySize getSize(const vector<T> &vector){
-        auto size = static_cast<ArraySize>(vector.size());
-        if(size < 0){
-            auto msg = "[IdealNN::Utils::slice] Conversion from unsigned to signed to did overflow.";
-            throw std::runtime_error(msg);
-        }
-        return size;
-    }
-
-    /// Cast vector size size_type (aka unsigned long) to standard ArraySize
-    /// @param vector Pointer to Vector
-    template<typename T>
-    ArraySize getSize(const shared_ptr<vector<T>> &vector){
-        return getSize((*vector));
-    }
 
 
     /// Utility method to used to create an empty arrays of ScalarValues
@@ -80,11 +62,24 @@ namespace IdealNN::Utils{
 
 
 
+    /// Cast vector size size_type (aka unsigned long) to standard ArraySize
+    /// @param vector A vector
+    template<typename T>
+    ArraySize getSize(const vector<T> &vector){
+        auto size = static_cast<ArraySize>(vector.size());
+        if(size < 0){
+            throw std::runtime_error("[IdealNN::Utils::slice] Conversion from unsigned to signed to did overflow.");
+        }
+        return size;
+    }
 
+    /// Cast vector size size_type (aka unsigned long) to standard ArraySize
+    /// @param vector Pointer to Vector
+    template<typename T>
+    ArraySize getSize(const shared_ptr<vector<T>> &vector){
+        return getSize((*vector));
+    }
 
-
-    //TODO: Utility function used to produce output
-    //void Log();
 }
 
 #endif //IDEALNN_UTILS_H
