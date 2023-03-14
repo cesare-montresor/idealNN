@@ -26,10 +26,10 @@ Build the project in debug and run tests.
 ./make_test.sh
 ```
 
-## Valgind
+## Valgrind
 Build the project in debug and run valgrind on tests to check for memory leaks.
 ```bash
-./make_test.sh
+./make_valgrind.sh
 ```
 
 ## Debug
