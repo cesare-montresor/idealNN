@@ -70,7 +70,8 @@ else()
     add_library(idealnn ${SOURCES} )  #Non-static lib
 endif()
 
-target_include_directories(idealnn PUBLIC ${PROJECT_SOURCE_DIR}/src)
+# setup the /include folder
+target_include_directories(idealnn PUBLIC ${PROJECT_SOURCE_DIR}/include) # add .h
 
 # add Eigen3 as requirement
 find_package(Eigen3 REQUIRED)
